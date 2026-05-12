@@ -1,0 +1,3126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>YupCode Studio — Ship AI products 3–5x faster</title>
+<meta name="description" content="Outsourced AI, Web3 and automation engineering studio. We ship in 2–4 weeks what traditional studios deliver in 6+. Vibe-coding on Claude, founder team, production-grade discipline." />
+<link rel="icon" type="image/jpeg" href="yupcode-icon.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0b;
+    --bg-elev: #111114;
+    --bg-card: #15151a;
+    --bg-card-hover: #1c1c22;
+    --border: #2a2a32;
+    --border-bright: #3a3a44;
+    --text: #ededf0;
+    --text-dim: #a0a0aa;
+    --text-mute: #6a6a74;
+    --accent: #c8ff5a;
+    --accent-dim: #a8df3a;
+    --accent-soft: rgba(200, 255, 90, 0.1);
+    --code-bg: #1a1a20;
+    --radius: 14px;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      radial-gradient(circle at 20% 0%, rgba(200, 255, 90, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 100%, rgba(200, 255, 90, 0.04) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+    animation: bgDrift 20s ease-in-out infinite alternate;
+  }
+
+  @keyframes bgDrift {
+    0%   { transform: translate(0, 0); }
+    100% { transform: translate(-3%, 2%); }
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Nav */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(20px);
+    background: rgba(10, 10, 11, 0.7);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+  }
+
+  .brand-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .parent-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-mute);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .parent-link:hover {
+    color: var(--accent);
+    transform: translateX(-1px);
+  }
+
+  .brand-sep {
+    color: var(--text-mute);
+    opacity: 0.4;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    user-select: none;
+  }
+
+  .logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: -0.5px;
+    color: var(--text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s var(--ease-out);
+  }
+
+  .logo:hover { transform: translateY(-1px); }
+
+  .logo-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: block;
+    transition: filter 0.3s ease, transform 0.3s var(--ease-out);
+  }
+
+  .logo:hover .logo-icon {
+    filter: drop-shadow(0 0 10px rgba(160, 80, 220, 0.55));
+    transform: rotate(-4deg);
+  }
+
+  @media (max-width: 540px) {
+    .brand-wrap {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1px;
+    }
+    .parent-link { font-size: 10px; }
+    .brand-sep { display: none; }
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  .nav-links a:not(.btn):not(.lang-switch)::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s var(--ease-out);
+  }
+
+  .nav-links a:not(.btn):not(.lang-switch):hover::after { width: 100%; }
+  .nav-links a:hover { color: var(--text); }
+
+  .lang-switch {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dim);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 12px;
+    cursor: pointer;
+    transition: all 0.2s var(--ease-out);
+    letter-spacing: 0.05em;
+  }
+
+  .lang-switch:hover {
+    color: var(--accent);
+    border-color: var(--border-bright);
+    transform: translateY(-1px);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s var(--ease-out);
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.6s var(--ease-out);
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-dim);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px -10px rgba(200, 255, 90, 0.4);
+  }
+
+  .btn-primary:hover::before {
+    transform: translateX(100%);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border-bright);
+  }
+
+  .btn-secondary:hover {
+    background: var(--bg-card);
+    border-color: var(--text-mute);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 720px) {
+    .nav-links a:not(.btn):not(.lang-switch) { display: none; }
+  }
+
+  /* Hero */
+  .hero {
+    padding: 120px 0 100px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border: 1px solid var(--border-bright);
+    border-radius: 100px;
+    font-size: clamp(10px, 2.6vw, 13px);
+    color: var(--text-dim);
+    margin-bottom: 28px;
+    background: var(--bg-card);
+    white-space: nowrap;
+    max-width: 100%;
+    animation: fadeUp 0.7s var(--ease-out) backwards;
+    animation-delay: 0.05s;
+  }
+
+  .hero-badge .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h1 {
+    font-size: clamp(32px, 7vw, 76px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    color: var(--text);
+    overflow-wrap: break-word;
+    animation: fadeUp 0.8s var(--ease-out) backwards;
+    animation-delay: 0.15s;
+  }
+
+  h1 .accent {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 700;
+    background: linear-gradient(120deg, var(--accent), #e6ff8a, var(--accent));
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 4s linear infinite;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+
+  .hero-sub {
+    font-size: clamp(17px, 2vw, 21px);
+    color: var(--text-dim);
+    max-width: 720px;
+    margin: 0 auto 40px;
+    line-height: 1.55;
+    animation: fadeUp 0.8s var(--ease-out) backwards;
+    animation-delay: 0.25s;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+    animation: fadeUp 0.8s var(--ease-out) backwards;
+    animation-delay: 0.35s;
+  }
+
+  .hero-cta .btn {
+    padding: 14px 24px;
+    font-size: 15px;
+  }
+
+  /* Stats strip */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-card);
+    max-width: 900px;
+    margin: 0 auto;
+    overflow: hidden;
+    animation: fadeUp 0.9s var(--ease-out) backwards;
+    animation-delay: 0.45s;
+  }
+
+  .stat {
+    padding: 28px 24px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+    transition: background 0.3s ease;
+  }
+
+  .stat:hover { background: var(--bg-card-hover); }
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+
+  @media (max-width: 720px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(2) { border-right: none; }
+    .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--border); }
+  }
+
+  /* Section */
+  section { padding: 100px 0; }
+
+  .section-head {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+  }
+
+  .section-title {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .section-desc {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+  }
+
+  .reveal-stagger.is-visible > * { opacity: 1; transform: translateY(0); }
+  .reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0.00s; }
+  .reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 0.08s; }
+  .reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 0.16s; }
+  .reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 0.24s; }
+  .reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 0.32s; }
+  .reveal-stagger.is-visible > *:nth-child(6) { transition-delay: 0.40s; }
+  .reveal-stagger.is-visible > *:nth-child(7) { transition-delay: 0.48s; }
+  .reveal-stagger.is-visible > *:nth-child(8) { transition-delay: 0.56s; }
+  .reveal-stagger.is-visible > *:nth-child(9) { transition-delay: 0.64s; }
+  .reveal-stagger.is-visible > *:nth-child(10) { transition-delay: 0.72s; }
+  .reveal-stagger.is-visible > *:nth-child(11) { transition-delay: 0.80s; }
+  .reveal-stagger.is-visible > *:nth-child(12) { transition-delay: 0.88s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+    .reveal, .reveal-stagger > * { opacity: 1; transform: none; }
+  }
+
+  /* Why us / Pillars */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .pillar {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: all 0.3s var(--ease-out);
+  }
+
+  .pillar:hover {
+    border-color: var(--border-bright);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -20px rgba(0,0,0,0.5);
+  }
+
+  .pillar-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin-bottom: 18px;
+    transition: transform 0.4s var(--ease-out), background 0.3s ease;
+  }
+
+  .pillar:hover .pillar-icon {
+    transform: scale(1.12) rotate(-6deg);
+    background: rgba(200, 255, 90, 0.18);
+  }
+
+  .pillar h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .pillar p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 1000px) {
+    .pillars { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .pillars { grid-template-columns: 1fr; }
+  }
+
+  /* Services */
+  .services {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .service {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: all 0.3s var(--ease-out);
+  }
+
+  .service:hover {
+    border-color: var(--border-bright);
+    transform: translateY(-3px);
+  }
+
+  .service-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .service-icon {
+    font-size: 24px;
+    display: inline-block;
+    transition: transform 0.4s var(--ease-out);
+  }
+
+  .service:hover .service-icon { transform: rotate(8deg) scale(1.1); }
+
+  .service h3 {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .service ul {
+    list-style: none;
+  }
+
+  .service li {
+    padding: 8px 0;
+    font-size: 14px;
+    color: var(--text-dim);
+    border-bottom: 1px dashed var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    transition: color 0.2s, transform 0.2s var(--ease-out);
+  }
+
+  .service li:hover { color: var(--text); transform: translateX(3px); }
+  .service li:last-child { border-bottom: none; }
+
+  .service li::before {
+    content: '→';
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 900px) {
+    .services { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .services { grid-template-columns: 1fr; }
+  }
+
+  /* Cases */
+  .cases {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  .case {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0;
+    transition: all 0.3s var(--ease-out);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .case:hover {
+    border-color: var(--border-bright);
+    background: var(--bg-card-hover);
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px -24px rgba(0,0,0,0.6);
+  }
+
+  .case::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 2;
+  }
+
+  .case:hover::before { opacity: 1; }
+
+  .case-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, #0c0c10 0%, #16161c 100%);
+    overflow: hidden;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .case-image:has(img),
+  .case-image:has(video) { cursor: zoom-in; }
+
+  .case-image img,
+  .case-image video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.5s var(--ease-out);
+  }
+
+  .case-image.case-video video {
+    object-fit: contain;
+    background: #000;
+  }
+
+  .case:hover .case-image:has(img) img,
+  .case:hover .case-image:has(video) video { transform: scale(1.04); }
+
+  .case-image-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-mute);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    background-image:
+      linear-gradient(45deg, var(--border) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--border) 25%, transparent 25%);
+    background-size: 16px 16px;
+    background-position: 0 0, 8px 8px;
+    z-index: 1;
+  }
+
+  .case-shots-badge {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(10, 10, 11, 0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 6px 10px;
+    border-radius: 7px;
+    z-index: 3;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    pointer-events: none;
+  }
+
+  .case-shots-badge::before {
+    content: '▦';
+    color: var(--accent);
+    font-size: 12px;
+  }
+
+  .case-zoom-hint {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(10, 10, 11, 0.72);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-size: 15px;
+    z-index: 3;
+    border: 1px solid var(--border);
+    opacity: 0;
+    transform: translateY(-4px) scale(0.9);
+    transition: opacity 0.25s var(--ease-out), transform 0.25s var(--ease-out);
+    pointer-events: none;
+  }
+
+  .case:hover .case-image:has(img) .case-zoom-hint,
+  .case:hover .case-image:has(video) .case-zoom-hint {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 5, 7, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 80px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s var(--ease-out);
+  }
+
+  .lightbox.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lb-stage {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lb-img {
+    max-width: 100%;
+    max-height: calc(100vh - 140px);
+    width: auto;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.7);
+    display: block;
+  }
+
+  .lightbox.open .lb-img {
+    animation: lbPop 0.35s var(--ease-out);
+  }
+
+  @keyframes lbPop {
+    from { opacity: 0; transform: scale(0.96); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  .lb-close,
+  .lb-prev,
+  .lb-next {
+    position: absolute;
+    background: rgba(20, 20, 24, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    line-height: 1;
+    transition: all 0.2s var(--ease-out);
+    font-family: inherit;
+    padding: 0;
+  }
+
+  .lb-close { top: 20px; right: 20px; }
+  .lb-prev  { left: 20px;  top: 50%; transform: translateY(-50%); }
+  .lb-next  { right: 20px; top: 50%; transform: translateY(-50%); }
+
+  .lb-close:hover,
+  .lb-prev:hover,
+  .lb-next:hover {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+
+  .lb-prev:hover { transform: translateY(-50%) translateX(-3px); }
+  .lb-next:hover { transform: translateY(-50%) translateX(3px); }
+
+  .lb-counter {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: rgba(20, 20, 24, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 7px 16px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+  }
+
+  @media (max-width: 720px) {
+    .lightbox { padding: 56px 12px; }
+    .lb-close { top: 12px; right: 12px; width: 40px; height: 40px; font-size: 20px; }
+    .lb-prev  { left: 8px;  width: 40px; height: 40px; font-size: 18px; }
+    .lb-next  { right: 8px; width: 40px; height: 40px; font-size: 18px; }
+  }
+
+  /* Contact modal */
+  .contact-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 5, 7, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s var(--ease-out);
+  }
+
+  .contact-modal.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .cm-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px;
+    max-width: 460px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.7);
+    transform: scale(0.96);
+    transition: transform 0.3s var(--ease-out);
+  }
+
+  .contact-modal.open .cm-card {
+    transform: scale(1);
+  }
+
+  .cm-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    line-height: 1;
+    transition: all 0.2s var(--ease-out);
+    padding: 0;
+  }
+
+  .cm-close:hover {
+    color: var(--text);
+    border-color: var(--border-bright);
+  }
+
+  .cm-title {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+
+  .cm-sub {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+  }
+
+  .cm-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cm-option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s var(--ease-out);
+  }
+
+  .cm-option:hover {
+    border-color: var(--accent);
+    background: var(--bg-card-hover);
+    transform: translateX(2px);
+  }
+
+  .cm-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .cm-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .cm-meta {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .cm-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .cm-value {
+    font-size: 13px;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .cm-option .cm-arrow {
+    color: var(--text-mute);
+    font-family: 'JetBrains Mono', monospace;
+    transition: transform 0.2s var(--ease-out), color 0.2s ease;
+  }
+
+  .cm-option:hover .cm-arrow {
+    color: var(--accent);
+    transform: translateX(3px);
+  }
+
+  .case-body {
+    padding: 28px 32px 32px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .case-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+
+  .case-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    padding: 4px 10px;
+    background: var(--accent-soft);
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  .case h3 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+    line-height: 1.3;
+  }
+
+  .case-desc {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .case-metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .metric {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    padding: 5px 10px;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+  }
+
+  .metric-accent {
+    color: var(--accent);
+    border-color: rgba(200, 255, 90, 0.3);
+  }
+
+  .case-stack {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-mute);
+    line-height: 1.6;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .case-stack-label {
+    color: var(--text-dim);
+  }
+
+  .case-links {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .case-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1px solid rgba(200, 255, 90, 0.3);
+    border-radius: 6px;
+    transition: all 0.2s var(--ease-out);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .case-link:hover {
+    background: var(--accent-soft);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 1100px) {
+    .cases { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 700px) {
+    .cases { grid-template-columns: 1fr; }
+  }
+
+  /* Stack section */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .stack-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: all 0.3s var(--ease-out);
+  }
+
+  .stack-card:hover {
+    border-color: var(--border-bright);
+    transform: translateY(-2px);
+  }
+
+  .stack-card h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .stack-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .stack-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 4px 9px;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    color: var(--text-dim);
+    transition: all 0.2s var(--ease-out);
+  }
+
+  .stack-tag:hover {
+    color: var(--accent);
+    border-color: rgba(200, 255, 90, 0.3);
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 900px) {
+    .stack-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .stack-grid { gap: 12px; }
+    .stack-card { padding: 16px 14px; }
+    .stack-card h4 { font-size: 11px; margin-bottom: 12px; }
+    .stack-tag { font-size: 10px; padding: 3px 7px; }
+  }
+
+  /* Team */
+  .team {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .member {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: all 0.3s var(--ease-out);
+  }
+
+  .member:hover {
+    border-color: var(--border-bright);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -20px rgba(0,0,0,0.5);
+  }
+
+  .member-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    color: var(--bg);
+    font-size: 22px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s var(--ease-out);
+  }
+
+  .member:hover .member-avatar { transform: scale(1.06); }
+
+  .member-avatar img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .member-avatar.placeholder { /* dashed avatar for "+ network" slot */
+    background: var(--bg-card);
+    color: var(--accent);
+    border: 1px dashed var(--accent);
+  }
+
+  .member h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .member-role {
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 10px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .member-bio {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 900px) {
+    .team { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .team {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .member { padding: 14px 12px; }
+    .member-avatar { width: 44px; height: 44px; font-size: 16px; margin-bottom: 10px; }
+    .member h4 { font-size: 13px; }
+    .member-role { font-size: 10px; margin-bottom: 8px; letter-spacing: 0.02em; }
+    .member-bio { font-size: 11px; line-height: 1.4; }
+  }
+
+  /* Process */
+  .process {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    position: relative;
+  }
+
+  .step {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    position: relative;
+    transition: all 0.3s var(--ease-out);
+  }
+
+  .step:hover {
+    border-color: var(--border-bright);
+    transform: translateY(-3px);
+  }
+
+  .step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 14px;
+    letter-spacing: 0.1em;
+  }
+
+  .step h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .step p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 900px) {
+    .process { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .process { grid-template-columns: 1fr; }
+  }
+
+  /* CTA */
+  .cta-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 60px 40px;
+    text-align: center;
+    margin: 60px auto 0;
+    max-width: 900px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-block::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, var(--accent-soft) 0%, transparent 50%);
+    pointer-events: none;
+    animation: ctaGlow 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes ctaGlow {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(5%, -3%) scale(1.1); }
+  }
+
+  .cta-block > * { position: relative; }
+
+  .cta-block h2 {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .cta-block p {
+    font-size: 17px;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    margin-top: 100px;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 13px;
+    color: var(--text-mute);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--text); }
+
+  /* ===== Mobile overrides (kept at the end to win the cascade) ===== */
+  @media (max-width: 600px) {
+    /* Hard-cap horizontal overflow */
+    html, body { overflow-x: hidden; width: 100%; max-width: 100vw; }
+
+    .container { padding: 0 18px; }
+
+    .hero { padding: 16px 0 50px; }
+    .hero-badge { margin-bottom: 18px; padding: 5px 12px; }
+    .hero-sub { margin-bottom: 28px; font-size: 15px; }
+    h1 { font-size: 30px; line-height: 1.12; }
+
+    section { padding: 56px 0; }
+    .section-head { margin-bottom: 36px; }
+    .section-title { font-size: 26px; }
+    .section-desc { font-size: 15px; }
+    footer { margin-top: 50px; }
+    .cta-block { padding: 36px 20px; margin-top: 40px; }
+    .cta-block h2 { font-size: 24px; }
+    .cta-block p { font-size: 15px; }
+    .hero-cta .btn { padding: 13px 20px; font-size: 14px; }
+
+    /* Cases — 1 per row on mobile (default at <=700px already), just tighten gap */
+    .cases { gap: 16px; }
+
+    /* Team — horizontal auto-scroll carousel, 3 cards visible, avatar floats above text-card */
+    .team {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: visible;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      gap: 12px;
+      padding: 4px 0 14px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: auto;
+    }
+    .team::-webkit-scrollbar { display: none; }
+
+    .member {
+      flex: 0 0 calc((100% - 24px) / 3);
+      min-width: 0;
+      scroll-snap-align: start;
+      background: transparent;
+      border: 0;
+      padding: 0;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .member:hover {
+      transform: none;
+      box-shadow: none;
+      border-color: transparent;
+    }
+
+    .member-avatar {
+      width: 56px;
+      height: 56px;
+      font-size: 18px;
+      margin: 0 0 8px;
+      border: 2px solid rgba(200, 255, 90, 0.4);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Pseudo-card behind the text */
+    .member::after {
+      content: '';
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      z-index: 0;
+    }
+
+    .member h4,
+    .member-role,
+    .member-bio {
+      position: relative;
+      z-index: 1;
+    }
+    .member h4 { font-size: 13px; padding: 12px 10px 0; margin-bottom: 4px; }
+    .member-role { font-size: 9px; padding: 0 10px; margin-bottom: 6px; letter-spacing: 0.02em; }
+    .member-bio { font-size: 10px; padding: 0 10px 12px; line-height: 1.4; }
+
+    /* Pillars / services / process — single column on mobile, smaller text */
+    .pillars, .services, .process { gap: 12px; }
+
+    /* Stack */
+    .stack-grid { gap: 12px; }
+    .stack-card { padding: 16px 14px; }
+    .stack-card h4 { font-size: 11px; margin-bottom: 12px; }
+    .stack-tag { font-size: 10px; padding: 3px 7px; }
+  }
+
+  @media (max-width: 420px) {
+    h1 { font-size: 26px; }
+    .hero-cta { flex-direction: column; align-items: stretch; }
+    .hero-cta .btn { width: 100%; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <div class="brand-wrap">
+        <a href="https://yupland.io" target="_blank" rel="noopener" class="parent-link" title="Part of the Yupland ecosystem">
+          yupland.io ↗
+        </a>
+        <span class="brand-sep" aria-hidden="true">/</span>
+        <a href="#" class="logo">
+          <img src="yupcode-icon.jpg" alt="" class="logo-icon">
+          YupCode
+        </a>
+      </div>
+      <div class="nav-links">
+        <a href="#services" data-i18n="nav.services">Services</a>
+        <a href="#cases" data-i18n="nav.cases">Cases</a>
+        <a href="#stack" data-i18n="nav.stack">Stack</a>
+        <a href="#team" data-i18n="nav.team">Team</a>
+        <button class="lang-switch" type="button" onclick="toggleLang()" aria-label="Switch language">RU</button>
+        <a href="#contact" class="btn btn-primary" onclick="openContact(event)" data-i18n="nav.cta">
+          Book a call →
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      <span data-i18n="hero.badge">Available for new projects · 7 founder team</span>
+    </div>
+    <h1 data-i18n="hero.title">
+      Ship AI products <span class="accent">3–5× faster</span><br/>
+      than agencies hire engineers
+    </h1>
+    <p class="hero-sub" data-i18n="hero.sub">
+      We're an outsourced studio building AI, Web3, automation, bots, and web apps end-to-end.
+      What traditional teams deliver in 6+ weeks, we ship in 2 — through vibe-coding on Claude
+      and a tight founder team that owns delivery from scope to handover.
+    </p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-primary" onclick="openContact(event)" data-i18n="hero.cta1">
+        Book a 30-min discovery call →
+      </a>
+      <a href="#cases" class="btn btn-secondary" data-i18n="hero.cta2">
+        See our work
+      </a>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">2M+</div>
+        <div class="stat-label" data-i18n="stats.1">On-chain transactions<br/>(#1 on NEAR Protocol)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">12+</div>
+        <div class="stat-label" data-i18n="stats.2">Production AI &amp; Web3<br/>products shipped</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">10d</div>
+        <div class="stat-label" data-i18n="stats.3">Fastest first-commit<br/>to live production</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">7</div>
+        <div class="stat-label" data-i18n="stats.4">Co-founders, each<br/>shipped a flagship</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Why us / Pillars -->
+<section id="why">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow" data-i18n="why.eyebrow">// Why teams choose us</div>
+      <h2 class="section-title" data-i18n="why.title">Hiring takes months.<br/>We ship in weeks.</h2>
+      <p class="section-desc" data-i18n="why.desc">No hiring cycle, no onboarding, no long-term commitment. You bring a scoped problem — we deliver a working product, documented for handover.</p>
+    </div>
+
+    <div class="pillars reveal-stagger">
+      <div class="pillar">
+        <div class="pillar-icon">⚡</div>
+        <h3 data-i18n="pillar.1.title">AI-accelerated delivery</h3>
+        <p data-i18n="pillar.1.desc">Claude is the core of our workflow. One engineer with the right AI flow ships what used to take a team of 5.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🎯</div>
+        <h3 data-i18n="pillar.2.title">Founder team, not staff</h3>
+        <p data-i18n="pillar.2.desc">7 co-founders, each owns a product in our own ecosystem. We treat client work with the same accountability.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🛠</div>
+        <h3 data-i18n="pillar.3.title">Production discipline</h3>
+        <p data-i18n="pillar.3.desc">Two-environment CI/CD, healthchecks, rollback playbooks, documented handover. Not prototypes — products.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🧠</div>
+        <h3 data-i18n="pillar.4.title">End-to-end ownership</h3>
+        <p data-i18n="pillar.4.desc">System design, AI pipelines, infra, billing, mobile builds, SEO, content automation — we cover the whole stack.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section id="services">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow" data-i18n="services.eyebrow">// What we build</div>
+      <h2 class="section-title" data-i18n="services.title">Six directions,<br/>one production-grade studio</h2>
+      <p class="section-desc" data-i18n="services.desc">From AI agents and Telegram products to Web3 infrastructure and back-office automation — we take projects end-to-end or augment your team on specific scope.</p>
+    </div>
+
+    <div class="services reveal-stagger">
+      <div class="service">
+        <div class="service-head">
+          <span class="service-icon">🤖</span>
+          <h3 data-i18n="service.1.title">AI Integrations &amp; Automation</h3>
+        </div>
+        <ul data-i18n="service.1.items">
+          <li>AI agents with RAG on pgvector / Voyage AI</li>
+          <li>Multi-stage AI pipelines with fallback chains</li>
+          <li>Identity-preserving image generation</li>
+          <li>Content automation: text → voice → video → publish</li>
+          <li>AI agents trained on founder's voice</li>
+          <li>Multimodal pipelines (LLM + generative APIs)</li>
+          <li>Prompt engineering &amp; cost optimization</li>
+          <li>Voice synthesis, speech-to-text</li>
+        </ul>
+      </div>
+
+      <div class="service">
+        <div class="service-head">
+          <span class="service-icon">⛓</span>
+          <h3 data-i18n="service.2.title">Web3 &amp; Blockchain</h3>
+        </div>
+        <ul data-i18n="service.2.items">
+          <li>Smart contracts on NEAR, TON, EVM, Solana</li>
+          <li>NFT infrastructure: marketplaces, auctions, portfolios</li>
+          <li>Mass NFT distribution (10K+ wallets per campaign)</li>
+          <li>Custom blockchain indexers and parsers</li>
+          <li>Multi-chain crafting and game mechanics</li>
+          <li>Token launches and tokenomics design</li>
+          <li>NFT collection generation (trait engine + on-chain deploy)</li>
+          <li>DEX integrations and on-chain payments</li>
+        </ul>
+      </div>
+
+      <div class="service">
+        <div class="service-head">
+          <span class="service-icon">💬</span>
+          <h3 data-i18n="service.3.title">Telegram Bots &amp; Mini Apps</h3>
+        </div>
+        <ul data-i18n="service.3.items">
+          <li>Sales funnel bots with multi-step logic</li>
+          <li>Telegram Mini Apps (web apps inside Telegram)</li>
+          <li>Bots with CRM integration (GetCourse, custom APIs)</li>
+          <li>Bots with blockchain integration</li>
+          <li>Live-stream automation services</li>
+          <li>Admin panels for non-technical staff</li>
+          <li>Payment gateway integration (YuKassa, crypto)</li>
+          <li>Referral systems with anti-fraud</li>
+        </ul>
+      </div>
+
+      <div class="service">
+        <div class="service-head">
+          <span class="service-icon">🌐</span>
+          <h3 data-i18n="service.4.title">Web Applications</h3>
+        </div>
+        <ul data-i18n="service.4.items">
+          <li>Custom web apps in React / Next.js</li>
+          <li>Landing pages with SEO optimization</li>
+          <li>Custom sites for Web3 projects</li>
+          <li>SaaS interfaces and dashboards</li>
+          <li>Programmatic SEO (page generators)</li>
+          <li>Admin panels and back-office tools</li>
+          <li>Headless CMS integrations</li>
+          <li>Web3-wallet authentication flows</li>
+        </ul>
+      </div>
+
+      <div class="service">
+        <div class="service-head">
+          <span class="service-icon">⚙️</span>
+          <h3 data-i18n="service.5.title">Automation &amp; Data</h3>
+        </div>
+        <ul data-i18n="service.5.items">
+          <li>Workflow automation</li>
+          <li>Web scraping and data parsing</li>
+          <li>Database engineering (PostgreSQL, Supabase)</li>
+          <li>API integrations between services</li>
+          <li>CRM, payment &amp; analytics integration</li>
+          <li>Telegram notifications &amp; alerting</li>
+          <li>GitHub Actions / CI/CD pipelines</li>
+          <li>Cron jobs &amp; scheduled tasks</li>
+        </ul>
+      </div>
+
+      <div class="service">
+        <div class="service-head">
+          <span class="service-icon">📱</span>
+          <h3 data-i18n="service.6.title">Mobile (Capacitor)</h3>
+        </div>
+        <ul data-i18n="service.6.items">
+          <li>Native iOS &amp; Android via Capacitor 8</li>
+          <li>Single-codebase, multi-platform delivery</li>
+          <li>Payment integration in regulated markets</li>
+          <li>Push notifications &amp; deep links</li>
+          <li>Native bridges for hardware features</li>
+          <li>App Store &amp; Play Store submission</li>
+          <li>Mobile-first PWA conversion</li>
+          <li>Performance optimization for mobile web</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cases -->
+<section id="cases">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow" data-i18n="cases.eyebrow">// Selected work</div>
+      <h2 class="section-title" data-i18n="cases.title">12 production products,<br/>shipped end-to-end</h2>
+      <p class="section-desc" data-i18n="cases.desc">A mix of confidential client work (under NDA) and products from our own Web3 ecosystem. Each case is real, in production, with measurable outcomes.</p>
+    </div>
+
+    <div class="cases reveal-stagger">
+
+      <!-- 1. Yupland -->
+      <div class="case">
+        <div class="case-image"
+             data-shots-en="cases/yupland_en/yupland.jpeg,cases/yupland_en/yupland2.jpeg,cases/yupland_en/yupland3.jpeg,cases/yupland_en/yupland4.jpeg,cases/yupland_en/yupland5.jpeg,cases/yupland_en/yupland7.jpeg,cases/yupland_en/yupland8.jpeg"
+             data-shots-ru="cases/yupland_ru/yupland.jpeg,cases/yupland_ru/yupland2.jpeg,cases/yupland_ru/yupland3.jpeg,cases/yupland_ru/yupland4.jpeg,cases/yupland_ru/yupland5.jpeg">
+          <div class="case-image-placeholder">cases/yupland_title.jpeg</div>
+          <img src="cases/yupland_title.jpeg" alt="" onerror="this.remove()">
+        </div>
+        <div class="case-body">
+          <div class="case-head">
+            <h3 data-i18n="case.5.title">Yupland — Web3 Ecosystem</h3>
+            <span class="case-tag" data-i18n="case.5.tag">Web3 · Flagship</span>
+          </div>
+          <p class="case-desc" data-i18n="case.5.desc">Decentralized gaming ecosystem on NEAR Protocol with a unique "Reputation Game" mechanic. NFT marketplace, incubator, multi-chain crafting, games, clans, tokenomics. Active activity that doesn't depend on the bear market.</p>
+          <div class="case-metrics" data-i18n="case.5.metrics">
+            <span class="metric metric-accent">2M+ on-chain tx (#1 NEAR)</span>
+            <span class="metric">150K NFTs</span>
+            <span class="metric">9K+ reputation wallets</span>
+            <span class="metric">$3K BitGet pitch win</span>
+          </div>
+          <div class="case-stack">
+            <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> NEAR/TON smart contracts · React · Next.js · Node.js · TypeScript · Python · Telegram Bot API · custom indexers
+          </div>
+          <div class="case-links">
+            <a href="https://yupland.io" class="case-link" target="_blank" rel="noopener" data-i18n="case.link.live">Live →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. AI Music -->
+      <div class="case">
+        <div class="case-image"
+             data-shots-en="cases/ai-music-en/ai-music-en.jpeg,cases/ai-music-en/ai-music-en2.jpeg,cases/ai-music-en/ai-music-en3.jpeg,cases/ai-music-en/ai-music-en4.jpeg"
+             data-shots-ru="cases/ai-music-ru/ai-music.jpeg,cases/ai-music-ru/ai-music2.jpeg,cases/ai-music-ru/ai-music3.jpeg,cases/ai-music-ru/ai-music4.jpeg">
+          <div class="case-image-placeholder">cases/ai-music_title.jpeg</div>
+          <img src="cases/ai-music_title.jpeg" alt="" onerror="this.remove()">
+        </div>
+        <div class="case-body">
+          <div class="case-head">
+            <h3 data-i18n="case.1.title">AI Music Generation Platform</h3>
+            <span class="case-tag" data-i18n="case.1.tag">AI · Mobile</span>
+          </div>
+          <p class="case-desc" data-i18n="case.1.desc">End-to-end AI music platform: Telegram Mini App + native iOS + Android, unified backend, multi-stage AI pipeline with retry/failover, three payment integrations including card acquiring in a regulated market.</p>
+          <div class="case-metrics" data-i18n="case.1.metrics">
+            <span class="metric metric-accent">3 platforms</span>
+            <span class="metric">1 backend</span>
+            <span class="metric">3 payment integrations</span>
+            <span class="metric">Two-env CI/CD</span>
+          </div>
+          <div class="case-stack">
+            <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> Node.js · Telegram Bot SDK · Express · Supabase · Capacitor 8 · LLM provider · Music gen API · Sentry
+          </div>
+          <div class="case-links">
+            <a href="https://t.me/Yup_Soul_bot?start=ref_2A6XHS" class="case-link" target="_blank" rel="noopener" data-i18n="case.link.bot">Open bot →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. AI Sales -->
+      <div class="case">
+        <div class="case-image"
+             data-shots="cases/ai-sales/ai-sales.jpeg,cases/ai-sales/ai-sales2.jpeg,cases/ai-sales/ai-sales3.jpeg,cases/ai-sales/ai-sales4.jpeg">
+          <div class="case-image-placeholder">cases/ai-sales_title.jpeg</div>
+          <img src="cases/ai-sales_title.jpeg" alt="" onerror="this.remove()">
+        </div>
+        <div class="case-body">
+          <div class="case-head">
+            <h3 data-i18n="case.3.title">AI Sales Funnel + RAG Agent</h3>
+            <span class="case-tag" data-i18n="case.3.tag">AI · RAG</span>
+          </div>
+          <p class="case-desc" data-i18n="case.3.desc">Complete AI-powered sales funnel for an online education business: 2 landing pages, Telegram onboarding bot with multi-step logic, RAG agent in founder's voice trained on full content library, CRM integration, referral system, admin dashboard.</p>
+          <div class="case-metrics" data-i18n="case.3.metrics">
+            <span class="metric metric-accent">6 weeks delivery</span>
+            <span class="metric">Founder's voice RAG</span>
+            <span class="metric">GetCourse CRM</span>
+            <span class="metric">Anti-fraud referrals</span>
+          </div>
+          <div class="case-stack">
+            <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> Node.js · grammY · PostgreSQL/pgvector · Voyage AI · DeepSeek · Express · React · GetCourse API
+          </div>
+          <div class="case-links">
+            <!-- <a href="#" class="case-link" target="_blank" rel="noopener" data-i18n="case.link.live">Live →</a> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. NFT Sender -->
+      <div class="case">
+        <div class="case-image"
+             data-shots="cases/nft-sender/nft-sender.jpeg,cases/nft-sender/nft-sender2.jpeg,cases/nft-sender/nft-sender3.jpeg,cases/nft-sender/nft-sender4.jpeg,cases/nft-sender/nft-sender5.jpeg">
+          <div class="case-image-placeholder">cases/nft-sender_title.jpeg</div>
+          <img src="cases/nft-sender_title.jpeg" alt="" onerror="this.remove()">
+        </div>
+        <div class="case-body">
+          <div class="case-head">
+            <h3 data-i18n="case.6.title">NFT Sender Infrastructure</h3>
+            <span class="case-tag" data-i18n="case.6.tag">Web3 · Infra</span>
+          </div>
+          <p class="case-desc" data-i18n="case.6.desc">Multi-chain NFT operations platform powering all collection launches in our ecosystem. Mass-distribution to 10K+ wallets (120 NFTs per transaction with throttling workaround), marketplace with Sells/Orders/Auctions, portfolio management, reputation system.</p>
+          <div class="case-metrics" data-i18n="case.6.metrics">
+            <span class="metric metric-accent">10K+ wallets per campaign</span>
+            <span class="metric">120 NFTs per tx</span>
+            <span class="metric">#1 NFT distribution on NEAR</span>
+          </div>
+          <div class="case-stack">
+            <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> TypeScript · NEAR SDK · Smart Contracts (Rust) · custom indexers · blockchain RPC
+          </div>
+          <div class="case-links">
+            <a href="https://sendler.xyz" class="case-link" target="_blank" rel="noopener" data-i18n="case.link.live">Live →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. AI Content (text-only with video demo link) -->
+      <div class="case case-text-only">
+        <div class="case-body">
+          <div class="case-head">
+            <h3 data-i18n="case.4.title">AI Content Factory</h3>
+            <span class="case-tag" data-i18n="case.4.tag">AI · Pipeline</span>
+          </div>
+          <p class="case-desc" data-i18n="case.4.desc">Production AI pipeline generating videos and presentations from a single prompt: scripts, voice, visuals, motion, music, effects — fully automated. Fallback chains at every level across 10+ AI providers, hybrid free/paid for cost-efficiency.</p>
+          <div class="case-metrics" data-i18n="case.4.metrics">
+            <span class="metric metric-accent">10+ AI APIs orchestrated</span>
+            <span class="metric">Fallback at every stage</span>
+            <span class="metric">CI-based generation</span>
+          </div>
+          <div class="case-stack">
+            <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> TypeScript · Node.js · Python · GitHub Actions · ffmpeg · Pillow · Gemini · DeepSeek · Claude · FLUX · LTX-Video · ElevenLabs
+          </div>
+          <div class="case-links">
+            <a href="#demo" class="case-link" onclick="event.preventDefault(); openLightbox(['cases/ai-content/ai-content.mp4'], 0);" data-i18n="case.link.demo">Watch demo →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Alchemy Lab -->
+      <div class="case">
+        <div class="case-image"
+             data-shots="cases/alchemy/alchemy.jpeg,cases/alchemy/alchemy1.jpeg,cases/alchemy/alchemy2.jpeg,cases/alchemy/alchemy3.jpeg">
+          <div class="case-image-placeholder">cases/alchemy_title.jpeg</div>
+          <img src="cases/alchemy_title.jpeg" alt="" onerror="this.remove()">
+        </div>
+        <div class="case-body">
+          <div class="case-head">
+            <h3 data-i18n="case.7.title">Alchemy Lab — Cross-Chain Crafting</h3>
+            <span class="case-tag" data-i18n="case.7.tag">Web3 · Multi-chain</span>
+          </div>
+          <p class="case-desc" data-i18n="case.7.desc">Unique multi-chain NFT crafting mechanic across NEAR + TON. Users combine NFT components by recipes to mint new NFTs. Closed-loop economy with liquidity from two blockchains simultaneously.</p>
+          <div class="case-metrics" data-i18n="case.7.metrics">
+            <span class="metric metric-accent">9K+ crafts</span>
+            <span class="metric">283 recipes</span>
+            <span class="metric">TOP-2 on HOTCraft</span>
+            <span class="metric">NEAR + TON</span>
+          </div>
+          <div class="case-stack">
+            <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> NEAR/TON smart contracts · cross-chain bridge logic · React · custom recipe engine
+          </div>
+          <div class="case-links">
+            <a href="https://sendler.xyz" class="case-link" target="_blank" rel="noopener" data-i18n="case.link.live">Live →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. YupDar -->
+      <div class="case">
+        <div class="case-image"
+             data-shots="cases/yupdar/yupdar.jpeg,cases/yupdar/yupdar2.jpeg,cases/yupdar/yupdar3.jpeg,cases/yupdar/yupdar4.jpeg,cases/yupdar/yupdar5.jpeg,cases/yupdar/yupdar6.jpeg,cases/yupdar/yupdar7.jpeg">
+          <div class="case-image-placeholder">cases/yupdar_title.jpeg</div>
+          <img src="cases/yupdar_title.jpeg" alt="" onerror="this.remove()">
+        </div>
+        <div class="case-body">
+          <div class="case-head">
+            <h3 data-i18n="case.8.title">YupDar — AI Self-Discovery Platform</h3>
+            <span class="case-tag" data-i18n="case.8.tag">AI · Vibe-coding</span>
+          </div>
+          <p class="case-desc" data-i18n="case.8.desc">Production AI platform built by a non-developer book author via Claude Code (vibe-coding). Telegram Mini App + web on one codebase, AI-generated psychological portraits, 6 content generation types, in-app payments, referral system, gamification.</p>
+          <div class="case-metrics" data-i18n="case.8.metrics">
+            <span class="metric metric-accent">Vibe-coding success</span>
+            <span class="metric">338 commits in 1 month</span>
+            <span class="metric">11 API endpoints</span>
+            <span class="metric">DeepSeek + Groq fallback</span>
+          </div>
+          <div class="case-stack">
+            <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> Vanilla JS · HTML5 · Telegram Mini App SDK · Node.js · Vercel · Supabase · DeepSeek-V3 · Groq · YuKassa
+          </div>
+          <div class="case-links">
+            <a href="https://t.me/YupDarBot?startapp=ref_1065894799" class="case-link" target="_blank" rel="noopener" data-i18n="case.link.bot">Open bot →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. Lottery (text-only, no title cover) -->
+      <div class="case case-text-only">
+        <div class="case-body">
+          <div class="case-head">
+            <h3 data-i18n="case.10.title">Yupland Lottery — Live Stream Raffle</h3>
+            <span class="case-tag" data-i18n="case.10.tag">Automation</span>
+          </div>
+          <p class="case-desc" data-i18n="case.10.desc">Automated service for live-stream raffles. Replaced manual stream management with one-click automation: fair randomizer, admin dashboard, Telegram bot integration, real-time audience view, custom result formatting.</p>
+          <div class="case-metrics" data-i18n="case.10.metrics">
+            <span class="metric metric-accent">One-click automation</span>
+            <span class="metric">Real-time event sync</span>
+            <span class="metric">Telegram delivery</span>
+          </div>
+          <div class="case-stack">
+            <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> TypeScript · Node.js · Telegram Bot API · real-time event sync
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. Duplo -->
+      <div class="case">
+        <div class="case-image"
+             data-shots="cases/duplo/duplo.png,cases/duplo/duplo2.png">
+          <div class="case-image-placeholder">cases/duplo_title.jpeg</div>
+          <img src="cases/duplo_title.jpeg" alt="" onerror="this.remove()">
+        </div>
+        <div class="case-body">
+          <div class="case-head">
+            <h3 data-i18n="case.11.title">Duplo Combo Tracker</h3>
+            <span class="case-tag" data-i18n="case.11.tag">Web3 · Parsing</span>
+          </div>
+          <p class="case-desc" data-i18n="case.11.desc">Blockchain-aware NFT combo tracker. Parses on-chain NFT/token transfers to a game wallet in real-time, identifies valid combinations, calculates rewards. Multi-asset combo detection (NFT + token bundles).</p>
+          <div class="case-metrics" data-i18n="case.11.metrics">
+            <span class="metric metric-accent">Real-time on-chain parsing</span>
+            <span class="metric">Multi-asset combos</span>
+            <span class="metric">Time-window logic</span>
+          </div>
+          <div class="case-stack">
+            <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> TypeScript · blockchain RPC · custom parsing engines
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. NFT Launch -->
+      <div class="case">
+        <div class="case-image"
+             data-shots="cases/nft-launch/nft-launch.jpeg">
+          <div class="case-image-placeholder">cases/nft-launch_title.jpeg</div>
+          <img src="cases/nft-launch_title.jpeg" alt="" onerror="this.remove()">
+        </div>
+        <div class="case-body">
+          <div class="case-head">
+            <h3 data-i18n="case.12.title">NFT Collection Launch Service</h3>
+            <span class="case-tag" data-i18n="case.12.tag">Web3 · Pipeline</span>
+          </div>
+          <p class="case-desc" data-i18n="case.12.desc">Full pipeline for launching custom NFT collections on NEAR and TON — from art assembly to on-chain deploy. Trait generator from art components, smart contract templates, custom token tooling, mint flow integrated with launch landings.</p>
+          <div class="case-metrics" data-i18n="case.12.metrics">
+            <span class="metric metric-accent">Used in multiple launches</span>
+            <span class="metric">NEAR + TON</span>
+            <span class="metric">Art → contract → mint</span>
+          </div>
+          <div class="case-stack">
+            <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> TypeScript · NEAR/TON smart contracts · image processing · Node.js
+          </div>
+        </div>
+      </div>
+
+      <!--
+        Currently hidden — not in the new ordering. Uncomment to bring back.
+
+        AI Image Generation Bot (case.2):
+        <div class="case">
+          <div class="case-image"
+               data-shots="cases/ai-image/ai-image.jpeg,cases/ai-image/ai-image2.jpeg,cases/ai-image/ai-image3.jpeg,cases/ai-image/ai-image4.jpeg">
+            <div class="case-image-placeholder">cases/ai-image/ai-image.jpeg</div>
+            <img src="cases/ai-image/ai-image.jpeg" alt="" onerror="this.remove()">
+          </div>
+          <div class="case-body">
+            <div class="case-head">
+              <h3 data-i18n="case.2.title">AI Image Generation Bot</h3>
+              <span class="case-tag" data-i18n="case.2.tag">AI · Telegram</span>
+            </div>
+            <p class="case-desc" data-i18n="case.2.desc">Production Telegram bot generating stylized personal images with identity preserved across generations. Multimodal input layer, dual-API failover for cost optimization, async job architecture, crypto payments.</p>
+            <div class="case-metrics" data-i18n="case.2.metrics">
+              <span class="metric metric-accent">10 days to production</span>
+              <span class="metric">Dual-API failover</span>
+              <span class="metric">Crypto payments</span>
+            </div>
+            <div class="case-stack">
+              <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> Node.js · Telegram Bot SDK · Express · Supabase · Image gen + fallback · STT · Blockchain payments
+            </div>
+          </div>
+        </div>
+
+        Bee Farm Play-to-Earn (case.9):
+        <div class="case">
+          <div class="case-image">
+            <div class="case-image-placeholder">cases/beefarm/beefarm.jpeg</div>
+            <img src="cases/beefarm/beefarm.jpeg" alt="" onerror="this.remove()">
+          </div>
+          <div class="case-body">
+            <div class="case-head">
+              <h3 data-i18n="case.9.title">Bee Farm — Play-to-Earn Game</h3>
+              <span class="case-tag" data-i18n="case.9.tag">Web3 · Game</span>
+            </div>
+            <p class="case-desc" data-i18n="case.9.desc">HTML5 Play-to-Earn farming simulator with full Web3 integration on NEAR. Multi-resource economy, on-chain deposits, withdrawals, in-game purchases via smart contracts, real-time balance tracking.</p>
+            <div class="case-metrics" data-i18n="case.9.metrics">
+              <span class="metric metric-accent">P2E mechanics</span>
+              <span class="metric">On-chain economy</span>
+              <span class="metric">Real-time balance sync</span>
+            </div>
+            <div class="case-stack">
+              <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> TypeScript · HTML5 Canvas · NEAR smart contracts · Node.js backend
+            </div>
+          </div>
+        </div>
+      -->
+
+    </div>
+  </div>
+</section>
+
+<!-- Stack -->
+<section id="stack">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow" data-i18n="stack.eyebrow">// Technology</div>
+      <h2 class="section-title" data-i18n="stack.title">Full-stack across<br/>AI, Web3 and product</h2>
+      <p class="section-desc" data-i18n="stack.desc">We pick the right tool for each problem and integrate up to 10+ providers in a single pipeline with graceful fallback.</p>
+    </div>
+
+    <div class="stack-grid reveal-stagger">
+      <div class="stack-card">
+        <h4 data-i18n="stack.cat.1">LLM Providers</h4>
+        <div class="stack-tags">
+          <span class="stack-tag">Claude (Anthropic)</span>
+          <span class="stack-tag">GPT (OpenAI)</span>
+          <span class="stack-tag">DeepSeek-V3</span>
+          <span class="stack-tag">Gemini 2.5</span>
+          <span class="stack-tag">Groq Llama 3.3 70B</span>
+          <span class="stack-tag">Llama 3.1 8B</span>
+        </div>
+      </div>
+
+      <div class="stack-card">
+        <h4 data-i18n="stack.cat.2">Generative APIs</h4>
+        <div class="stack-tags">
+          <span class="stack-tag">Suno (music)</span>
+          <span class="stack-tag">FLUX</span>
+          <span class="stack-tag">Pollinations.ai</span>
+          <span class="stack-tag">LTX-Video</span>
+          <span class="stack-tag">Zeroscope</span>
+          <span class="stack-tag">Luma Dream Machine</span>
+          <span class="stack-tag">Fal.ai</span>
+          <span class="stack-tag">ElevenLabs</span>
+        </div>
+      </div>
+
+      <div class="stack-card">
+        <h4 data-i18n="stack.cat.3">Voice &amp; Audio</h4>
+        <div class="stack-tags">
+          <span class="stack-tag">Microsoft edge-tts</span>
+          <span class="stack-tag">ElevenLabs</span>
+          <span class="stack-tag">Whisper</span>
+          <span class="stack-tag">faster-whisper</span>
+          <span class="stack-tag" data-i18n="stack.tag.timestamps">Word-level timestamps</span>
+        </div>
+      </div>
+
+      <div class="stack-card">
+        <h4 data-i18n="stack.cat.4">Embeddings &amp; RAG</h4>
+        <div class="stack-tags">
+          <span class="stack-tag">Voyage AI</span>
+          <span class="stack-tag">pgvector</span>
+          <span class="stack-tag">OpenAI embeddings</span>
+          <span class="stack-tag" data-i18n="stack.tag.hybrid">Hybrid search</span>
+        </div>
+      </div>
+
+      <div class="stack-card">
+        <h4 data-i18n="stack.cat.5">Frontend</h4>
+        <div class="stack-tags">
+          <span class="stack-tag">React</span>
+          <span class="stack-tag">Next.js</span>
+          <span class="stack-tag">TypeScript</span>
+          <span class="stack-tag">Tailwind</span>
+          <span class="stack-tag">shadcn/ui</span>
+          <span class="stack-tag">Vanilla JS</span>
+          <span class="stack-tag">PDF.js</span>
+        </div>
+      </div>
+
+      <div class="stack-card">
+        <h4 data-i18n="stack.cat.6">Backend</h4>
+        <div class="stack-tags">
+          <span class="stack-tag">Node.js</span>
+          <span class="stack-tag">Express</span>
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">Vercel Serverless</span>
+          <span class="stack-tag">Render.com</span>
+          <span class="stack-tag">GitHub Actions</span>
+          <span class="stack-tag">Sentry</span>
+        </div>
+      </div>
+
+      <div class="stack-card">
+        <h4 data-i18n="stack.cat.7">Database</h4>
+        <div class="stack-tags">
+          <span class="stack-tag">PostgreSQL</span>
+          <span class="stack-tag">Supabase</span>
+          <span class="stack-tag">pgvector</span>
+          <span class="stack-tag">RLS &amp; Auth</span>
+          <span class="stack-tag">sql.js (local)</span>
+        </div>
+      </div>
+
+      <div class="stack-card">
+        <h4 data-i18n="stack.cat.8">Web3 / Blockchain</h4>
+        <div class="stack-tags">
+          <span class="stack-tag">NEAR Protocol</span>
+          <span class="stack-tag">TON</span>
+          <span class="stack-tag">Ethereum / EVM</span>
+          <span class="stack-tag">Solana</span>
+          <span class="stack-tag" data-i18n="stack.tag.rust">Rust contracts</span>
+          <span class="stack-tag" data-i18n="stack.tag.indexers">Custom indexers</span>
+          <span class="stack-tag" data-i18n="stack.tag.templates">Smart contract templates</span>
+        </div>
+      </div>
+
+      <div class="stack-card">
+        <h4 data-i18n="stack.cat.9">Telegram</h4>
+        <div class="stack-tags">
+          <span class="stack-tag">grammY</span>
+          <span class="stack-tag">Bot API (raw)</span>
+          <span class="stack-tag">Mini App SDK</span>
+          <span class="stack-tag">HMAC-SHA256 auth</span>
+        </div>
+      </div>
+
+      <div class="stack-card">
+        <h4 data-i18n="stack.cat.10">Payments</h4>
+        <div class="stack-tags">
+          <span class="stack-tag" data-i18n="stack.tag.yukassa">YuKassa (RU acquiring)</span>
+          <span class="stack-tag" data-i18n="stack.tag.crypto">Crypto payments</span>
+          <span class="stack-tag">GetCourse API</span>
+          <span class="stack-tag" data-i18n="stack.tag.acquiring">Card acquiring (regulated)</span>
+        </div>
+      </div>
+
+      <div class="stack-card">
+        <h4 data-i18n="stack.cat.11">Mobile</h4>
+        <div class="stack-tags">
+          <span class="stack-tag">Capacitor 8</span>
+          <span class="stack-tag" data-i18n="stack.tag.single">iOS + Android single codebase</span>
+          <span class="stack-tag" data-i18n="stack.tag.bridges">Native bridges</span>
+          <span class="stack-tag" data-i18n="stack.tag.push">Push notifications</span>
+        </div>
+      </div>
+
+      <div class="stack-card">
+        <h4 data-i18n="stack.cat.12">Tools &amp; Infra</h4>
+        <div class="stack-tags">
+          <span class="stack-tag">ffmpeg</span>
+          <span class="stack-tag">Pillow / PIL</span>
+          <span class="stack-tag" data-i18n="stack.tag.worktree">Worktree dev flow</span>
+          <span class="stack-tag">Vercel Preview</span>
+          <span class="stack-tag" data-i18n="stack.tag.memory">Claude Code memory system</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Team -->
+<section id="team">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow" data-i18n="team.eyebrow">// The team</div>
+      <h2 class="section-title" data-i18n="team.title">Seven co-founders.<br/>Each shipped a flagship.</h2>
+      <p class="section-desc" data-i18n="team.desc">We're not a freelance marketplace or a generic dev shop. Every member of YupCode co-founded a product in our Yupland Web3 ecosystem — so we treat client work with the same ownership we treat our own.</p>
+    </div>
+
+    <div class="team reveal-stagger">
+      <div class="member">
+        <div class="member-avatar">
+          A
+          <img src="team/angelina.jpg" alt="Angelina" onerror="this.remove()">
+        </div>
+        <h4 data-i18n="member.1.name">Angelina</h4>
+        <div class="member-role" data-i18n="member.1.role">// Founder · CCO</div>
+        <p class="member-bio" data-i18n="member.1.bio">Founder of YupCode and Yupland, concept designer of the ecosystem, public face of the team.</p>
+      </div>
+
+      <div class="member">
+        <div class="member-avatar">
+          A
+          <img src="team/alla.jpg" alt="Alla" onerror="this.remove()">
+        </div>
+        <h4 data-i18n="member.2.name">Alla</h4>
+        <div class="member-role" data-i18n="member.2.role">// AI Engineer</div>
+        <p class="member-bio" data-i18n="member.2.bio">Built AI Music Platform and AI Image Bot. Co-author of YupSelf. Multimodal pipelines and Mini Apps.</p>
+      </div>
+
+      <div class="member">
+        <div class="member-avatar">
+          M
+          <img src="team/mikhail.jpg" alt="Mikhail" onerror="this.remove()">
+        </div>
+        <h4 data-i18n="member.3.name">Mikhail</h4>
+        <div class="member-role" data-i18n="member.3.role">// Web3 Developer</div>
+        <p class="member-bio" data-i18n="member.3.bio">Telegram bots, NFT infrastructure, P2E games, blockchain parsing. AI Content Factory creator.</p>
+      </div>
+
+      <div class="member">
+        <div class="member-avatar">
+          Y
+          <img src="team/yaroslav.jpg" alt="Yaroslav" onerror="this.remove()">
+        </div>
+        <h4 data-i18n="member.4.name">Yaroslav</h4>
+        <div class="member-role" data-i18n="member.4.role">// Lead Game Designer</div>
+        <p class="member-bio" data-i18n="member.4.bio">Game design and economy across the ecosystem. Co-author of YupSelf AI avatars.</p>
+      </div>
+
+      <div class="member">
+        <div class="member-avatar">
+          I
+          <img src="team/ilya.jpg" alt="Ilya" onerror="this.remove()">
+        </div>
+        <h4 data-i18n="member.5.name">Ilya</h4>
+        <div class="member-role" data-i18n="member.5.role">// Full-stack Engineer</div>
+        <p class="member-bio" data-i18n="member.5.bio">Creator of YupLand Portal with DEX, YupPay, YupXBet, YupJarvis and other services.</p>
+      </div>
+
+      <div class="member">
+        <div class="member-avatar">
+          R
+          <img src="team/roman.jpg" alt="Roman" onerror="this.remove()">
+        </div>
+        <h4 data-i18n="member.6.name">Roman</h4>
+        <div class="member-role" data-i18n="member.6.role">// Web3 Backend</div>
+        <p class="member-bio" data-i18n="member.6.bio">NEAR indexers, smart contracts, NFT Sender (#1 distribution on NEAR), marketplace infrastructure.</p>
+      </div>
+
+      <div class="member">
+        <div class="member-avatar">
+          S
+          <img src="team/svetlana.jpg" alt="Svetlana" onerror="this.remove()">
+        </div>
+        <h4 data-i18n="member.7.name">Svetlana</h4>
+        <div class="member-role" data-i18n="member.7.role">// Vibe-coder · Author</div>
+        <p class="member-bio" data-i18n="member.7.bio">Built YupDar as a non-developer book author via Claude Code. Living proof that vibe-coding ships products.</p>
+      </div>
+
+      <div class="member">
+        <div class="member-avatar placeholder">+</div>
+        <h4 data-i18n="member.8.name">And a network</h4>
+        <div class="member-role" data-i18n="member.8.role">// Specialists on call</div>
+        <p class="member-bio" data-i18n="member.8.bio">Designers, translators and domain experts we bring in when project scope requires it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section id="process">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow" data-i18n="process.eyebrow">// How we work</div>
+      <h2 class="section-title" data-i18n="process.title">From inquiry to handover<br/>in four steps</h2>
+      <p class="section-desc" data-i18n="process.desc">Predictable process, predictable outputs. No surprises, no scope creep without a written change.</p>
+    </div>
+
+    <div class="process reveal-stagger">
+      <div class="step">
+        <div class="step-num" data-i18n="step.1.num">01 — DISCOVERY</div>
+        <h4 data-i18n="step.1.title">30-minute call</h4>
+        <p data-i18n="step.1.desc">We read your brief, ask sharp questions, push back on weak assumptions. You leave with a realistic scope, timeline and price. Free.</p>
+      </div>
+      <div class="step">
+        <div class="step-num" data-i18n="step.2.num">02 — SCOPE</div>
+        <h4 data-i18n="step.2.title">Written agreement</h4>
+        <p data-i18n="step.2.desc">Fixed deliverables, fixed timeline. Or hourly with a weekly cap if scope is fluid. Staged payments by milestone.</p>
+      </div>
+      <div class="step">
+        <div class="step-num" data-i18n="step.3.num">03 — BUILD</div>
+        <h4 data-i18n="step.3.title">Daily updates</h4>
+        <p data-i18n="step.3.desc">You see progress every day in your preferred channel (Slack, Telegram, email). No "find out two days before delivery that nothing is ready."</p>
+      </div>
+      <div class="step">
+        <div class="step-num" data-i18n="step.4.num">04 — HANDOVER</div>
+        <h4 data-i18n="step.4.title">Documented delivery</h4>
+        <p data-i18n="step.4.desc">Deploy-ready code, env notes, rollback playbook, 30-minute walkthrough call. Your team can extend or take over without us.</p>
+      </div>
+    </div>
+
+    <div class="cta-block reveal">
+      <h2 data-i18n="cta.title">Have a defined scope but no engineering bandwidth?</h2>
+      <p data-i18n="cta.desc">Send a 2–3 sentence brief and we'll come back with a realistic scope, timeline and price within 24 hours. Discovery call is free.</p>
+      <a href="#contact" class="btn btn-primary" onclick="openContact(event)" style="padding: 14px 28px; font-size: 15px;" data-i18n="cta.btn">
+        Book a 30-min discovery call →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Screenshot viewer">
+  <button class="lb-close" type="button" onclick="closeLightbox()" aria-label="Close">×</button>
+  <button class="lb-prev"  type="button" onclick="prevShot()"     aria-label="Previous">‹</button>
+  <button class="lb-next"  type="button" onclick="nextShot()"     aria-label="Next">›</button>
+  <div class="lb-stage">
+    <img class="lb-img" alt="" />
+  </div>
+  <div class="lb-counter">1 / 1</div>
+</div>
+
+<!-- Contact modal -->
+<div class="contact-modal" id="contactModal" aria-hidden="true" role="dialog" aria-label="Contact options">
+  <div class="cm-card">
+    <button class="cm-close" type="button" onclick="closeContact()" aria-label="Close">×</button>
+    <h3 class="cm-title" data-i18n="contact.title">Get in touch</h3>
+    <p class="cm-sub" data-i18n="contact.sub">Pick whatever's most convenient</p>
+    <div class="cm-options">
+      <a class="cm-option" href="https://t.me/kaylani_way" target="_blank" rel="noopener">
+        <span class="cm-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 4.3 18.4 19c-.2 1-.9 1.3-1.7.8l-4.7-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.7 8.6-7.8c.4-.3-.1-.5-.6-.2L6.4 13l-4.6-1.4c-1-.3-1-1 .2-1.5L20 3.1c.8-.3 1.6.2 1.5 1.2z"/></svg>
+        </span>
+        <div class="cm-meta">
+          <div class="cm-label">Telegram</div>
+          <div class="cm-value">@kaylani_way</div>
+        </div>
+        <span class="cm-arrow">→</span>
+      </a>
+
+      <a class="cm-option" href="https://wa.me/375445562654" target="_blank" rel="noopener">
+        <span class="cm-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.6-.8-2.7-1.5-3.8-3.4-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5-.1-.2-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.2 3.3 5.3 4.6 2 .8 2.7.9 3.7.7.6-.1 1.7-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.2-.6-.4zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.4 5L2 22l5.2-1.3c1.4.8 3 1.3 4.8 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+        </span>
+        <div class="cm-meta">
+          <div class="cm-label">WhatsApp</div>
+          <div class="cm-value">+375 44 556-26-54</div>
+        </div>
+        <span class="cm-arrow">→</span>
+      </a>
+
+      <a class="cm-option" href="mailto:yupland.team@gmail.com">
+        <span class="cm-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        </span>
+        <div class="cm-meta">
+          <div class="cm-label">Email</div>
+          <div class="cm-value">yupland.team@gmail.com</div>
+        </div>
+        <span class="cm-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div data-i18n="footer.copy">© 2026 YupCode Studio · Part of the Yupland ecosystem</div>
+      <div class="footer-links">
+        <a href="https://t.me/yupcode_studio" target="_blank" rel="noopener" data-i18n="footer.tg">Telegram channel</a>
+        <a href="#contact" onclick="openContact(event)" data-i18n="footer.contact">Direct contact</a>
+        <a href="https://yupland.io" target="_blank" rel="noopener">Yupland.io</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ========== i18n ========== */
+  const I18N = {
+    en: {
+      "meta.title": "YupCode Studio — Ship AI products 3–5x faster",
+      "meta.desc": "Outsourced AI, Web3 and automation engineering studio. We ship in 2–4 weeks what traditional studios deliver in 6+. Vibe-coding on Claude, founder team, production-grade discipline.",
+
+      "nav.services": "Services",
+      "nav.cases": "Cases",
+      "nav.stack": "Stack",
+      "nav.team": "Team",
+      "nav.cta": "Book a call →",
+
+      "hero.badge": "Available for new projects · Founders, not freelancers",
+      "hero.title": 'Ship AI products <span class="accent">3–5× faster</span><br/>than agencies hire engineers',
+      "hero.sub": "We're an outsourced studio building AI, Web3, automation, bots, and web apps end-to-end. What traditional teams deliver in 6+ weeks, we ship in 2 — through vibe-coding on Claude and a tight founder team that owns delivery from scope to handover.",
+      "hero.cta1": "Book a 30-min discovery call →",
+      "hero.cta2": "See our work",
+
+      "stats.1": "On-chain transactions<br/>(#1 on NEAR Protocol)",
+      "stats.2": "Production AI &amp; Web3<br/>products shipped",
+      "stats.3": "Fastest first-commit<br/>to live production",
+      "stats.4": "Co-founders, each<br/>shipped a flagship",
+
+      "why.eyebrow": "// Why teams choose us",
+      "why.title": "Hiring takes months.<br/>We ship in weeks.",
+      "why.desc": "No hiring cycle, no onboarding, no long-term commitment. You bring a scoped problem — we deliver a working product, documented for handover.",
+      "pillar.1.title": "AI-accelerated delivery",
+      "pillar.1.desc": "Claude is the core of our workflow. One engineer with the right AI flow ships what used to take a team of 5.",
+      "pillar.2.title": "Founder team, not staff",
+      "pillar.2.desc": "7 co-founders, each owns a product in our own ecosystem. We treat client work with the same accountability.",
+      "pillar.3.title": "Production discipline",
+      "pillar.3.desc": "Two-environment CI/CD, healthchecks, rollback playbooks, documented handover. Not prototypes — products.",
+      "pillar.4.title": "End-to-end ownership",
+      "pillar.4.desc": "System design, AI pipelines, infra, billing, mobile builds, SEO, content automation — we cover the whole stack.",
+
+      "services.eyebrow": "// What we build",
+      "services.title": "Six directions,<br/>one production-grade studio",
+      "services.desc": "From AI agents and Telegram products to Web3 infrastructure and back-office automation — we take projects end-to-end or augment your team on specific scope.",
+      "service.1.title": "AI Integrations &amp; Automation",
+      "service.1.items": "<li>AI agents with RAG on pgvector / Voyage AI</li><li>Multi-stage AI pipelines with fallback chains</li><li>Identity-preserving image generation</li><li>Content automation: text → voice → video → publish</li><li>AI agents trained on founder's voice</li><li>Multimodal pipelines (LLM + generative APIs)</li><li>Prompt engineering &amp; cost optimization</li><li>Voice synthesis, speech-to-text</li>",
+      "service.2.title": "Web3 &amp; Blockchain",
+      "service.2.items": "<li>Smart contracts on NEAR, TON, EVM, Solana</li><li>NFT infrastructure: marketplaces, auctions, portfolios</li><li>Mass NFT distribution (10K+ wallets per campaign)</li><li>Custom blockchain indexers and parsers</li><li>Multi-chain crafting and game mechanics</li><li>Token launches and tokenomics design</li><li>NFT collection generation (trait engine + on-chain deploy)</li><li>DEX integrations and on-chain payments</li>",
+      "service.3.title": "Telegram Bots &amp; Mini Apps",
+      "service.3.items": "<li>Sales funnel bots with multi-step logic</li><li>Telegram Mini Apps (web apps inside Telegram)</li><li>Bots with CRM integration (GetCourse, custom APIs)</li><li>Bots with blockchain integration</li><li>Live-stream automation services</li><li>Admin panels for non-technical staff</li><li>Payment gateway integration (YuKassa, crypto)</li><li>Referral systems with anti-fraud</li>",
+      "service.4.title": "Web Applications",
+      "service.4.items": "<li>Custom web apps in React / Next.js</li><li>Landing pages with SEO optimization</li><li>Custom sites for Web3 projects</li><li>SaaS interfaces and dashboards</li><li>Programmatic SEO (page generators)</li><li>Admin panels and back-office tools</li><li>Headless CMS integrations</li><li>Web3-wallet authentication flows</li>",
+      "service.5.title": "Automation &amp; Data",
+      "service.5.items": "<li>Workflow automation</li><li>Web scraping and data parsing</li><li>Database engineering (PostgreSQL, Supabase)</li><li>API integrations between services</li><li>CRM, payment &amp; analytics integration</li><li>Telegram notifications &amp; alerting</li><li>GitHub Actions / CI/CD pipelines</li><li>Cron jobs &amp; scheduled tasks</li>",
+      "service.6.title": "Mobile (Capacitor)",
+      "service.6.items": "<li>Native iOS &amp; Android via Capacitor 8</li><li>Single-codebase, multi-platform delivery</li><li>Payment integration in regulated markets</li><li>Push notifications &amp; deep links</li><li>Native bridges for hardware features</li><li>App Store &amp; Play Store submission</li><li>Mobile-first PWA conversion</li><li>Performance optimization for mobile web</li>",
+
+      "cases.eyebrow": "// Selected work",
+      "cases.title": "12 production products,<br/>shipped end-to-end",
+      "cases.desc": "A mix of confidential client work (under NDA) and products from our own Web3 ecosystem. Each case is real, in production, with measurable outcomes.",
+      "case.stack.label": "Stack:",
+      "case.link.live": "Live →",
+      "case.link.bot": "Open bot →",
+      "case.link.demo": "Watch demo →",
+
+      "case.1.title": "AI Music Generation Platform",
+      "case.1.tag": "AI · Mobile",
+      "case.1.desc": "End-to-end AI music platform: Telegram Mini App + native iOS + Android, unified backend, multi-stage AI pipeline with retry/failover, three payment integrations including card acquiring in a regulated market.",
+      "case.1.metrics": '<span class="metric metric-accent">3 platforms</span><span class="metric">1 backend</span><span class="metric">3 payment integrations</span><span class="metric">Two-env CI/CD</span>',
+
+      "case.2.title": "AI Image Generation Bot",
+      "case.2.tag": "AI · Telegram",
+      "case.2.desc": "Production Telegram bot generating stylized personal images with identity preserved across generations. Multimodal input layer, dual-API failover for cost optimization, async job architecture, crypto payments.",
+      "case.2.metrics": '<span class="metric metric-accent">10 days to production</span><span class="metric">Dual-API failover</span><span class="metric">Crypto payments</span>',
+
+      "case.3.title": "AI Sales Funnel + RAG Agent",
+      "case.3.tag": "AI · RAG",
+      "case.3.desc": "Complete AI-powered sales funnel for an online education business: 2 landing pages, Telegram onboarding bot with multi-step logic, RAG agent in founder's voice trained on full content library, CRM integration, referral system, admin dashboard.",
+      "case.3.metrics": '<span class="metric metric-accent">6 weeks delivery</span><span class="metric">Founder\'s voice RAG</span><span class="metric">GetCourse CRM</span><span class="metric">Anti-fraud referrals</span>',
+
+      "case.4.title": "AI Content Factory",
+      "case.4.tag": "AI · Pipeline",
+      "case.4.desc": "Production AI pipeline generating videos and presentations from a single prompt: scripts, voice, visuals, motion, music, effects — fully automated. Fallback chains at every level across 10+ AI providers, hybrid free/paid for cost-efficiency.",
+      "case.4.metrics": '<span class="metric metric-accent">10+ AI APIs orchestrated</span><span class="metric">Fallback at every stage</span><span class="metric">CI-based generation</span>',
+
+      "case.5.title": "Yupland — Web3 Ecosystem",
+      "case.5.tag": "Web3 · Flagship",
+      "case.5.desc": 'Decentralized gaming ecosystem on NEAR Protocol with a unique "Reputation Game" mechanic. NFT marketplace, incubator, multi-chain crafting, games, clans, tokenomics. Active activity that doesn\'t depend on the bear market.',
+      "case.5.metrics": '<span class="metric metric-accent">2M+ on-chain tx (#1 NEAR)</span><span class="metric">150K NFTs</span><span class="metric">9K+ reputation wallets</span><span class="metric">$3K BitGet pitch win</span>',
+
+      "case.6.title": "NFT Sender Infrastructure",
+      "case.6.tag": "Web3 · Infra",
+      "case.6.desc": "Multi-chain NFT operations platform powering all collection launches in our ecosystem. Mass-distribution to 10K+ wallets (120 NFTs per transaction with throttling workaround), marketplace with Sells/Orders/Auctions, portfolio management, reputation system.",
+      "case.6.metrics": '<span class="metric metric-accent">10K+ wallets per campaign</span><span class="metric">120 NFTs per tx</span><span class="metric">#1 NFT distribution on NEAR</span>',
+
+      "case.7.title": "Alchemy Lab — Cross-Chain Crafting",
+      "case.7.tag": "Web3 · Multi-chain",
+      "case.7.desc": "Unique multi-chain NFT crafting mechanic across NEAR + TON. Users combine NFT components by recipes to mint new NFTs. Closed-loop economy with liquidity from two blockchains simultaneously.",
+      "case.7.metrics": '<span class="metric metric-accent">9K+ crafts</span><span class="metric">283 recipes</span><span class="metric">TOP-2 on HOTCraft</span><span class="metric">NEAR + TON</span>',
+
+      "case.8.title": "YupDar — AI Self-Discovery Platform",
+      "case.8.tag": "AI · Vibe-coding",
+      "case.8.desc": "Production AI platform built by a non-developer book author via Claude Code (vibe-coding). Telegram Mini App + web on one codebase, AI-generated psychological portraits, 6 content generation types, in-app payments, referral system, gamification.",
+      "case.8.metrics": '<span class="metric metric-accent">Vibe-coding success</span><span class="metric">338 commits in 1 month</span><span class="metric">11 API endpoints</span><span class="metric">DeepSeek + Groq fallback</span>',
+
+      "case.9.title": "Bee Farm — Play-to-Earn Game",
+      "case.9.tag": "Web3 · Game",
+      "case.9.desc": "HTML5 Play-to-Earn farming simulator with full Web3 integration on NEAR. Multi-resource economy, on-chain deposits, withdrawals, in-game purchases via smart contracts, real-time balance tracking.",
+      "case.9.metrics": '<span class="metric metric-accent">P2E mechanics</span><span class="metric">On-chain economy</span><span class="metric">Real-time balance sync</span>',
+
+      "case.10.title": "Yupland Lottery — Live Stream Raffle",
+      "case.10.tag": "Automation",
+      "case.10.desc": "Automated service for live-stream raffles. Replaced manual stream management with one-click automation: fair randomizer, admin dashboard, Telegram bot integration, real-time audience view, custom result formatting.",
+      "case.10.metrics": '<span class="metric metric-accent">One-click automation</span><span class="metric">Real-time event sync</span><span class="metric">Telegram delivery</span>',
+
+      "case.11.title": "Duplo Combo Tracker",
+      "case.11.tag": "Web3 · Parsing",
+      "case.11.desc": "Blockchain-aware NFT combo tracker. Parses on-chain NFT/token transfers to a game wallet in real-time, identifies valid combinations, calculates rewards. Multi-asset combo detection (NFT + token bundles).",
+      "case.11.metrics": '<span class="metric metric-accent">Real-time on-chain parsing</span><span class="metric">Multi-asset combos</span><span class="metric">Time-window logic</span>',
+
+      "case.12.title": "NFT Collection Launch Service",
+      "case.12.tag": "Web3 · Pipeline",
+      "case.12.desc": "Full pipeline for launching custom NFT collections on NEAR and TON — from art assembly to on-chain deploy. Trait generator from art components, smart contract templates, custom token tooling, mint flow integrated with launch landings.",
+      "case.12.metrics": '<span class="metric metric-accent">Used in multiple launches</span><span class="metric">NEAR + TON</span><span class="metric">Art → contract → mint</span>',
+
+      "stack.eyebrow": "// Technology",
+      "stack.title": "Full-stack across<br/>AI, Web3 and product",
+      "stack.desc": "We pick the right tool for each problem and integrate up to 10+ providers in a single pipeline with graceful fallback.",
+      "stack.cat.1": "LLM Providers",
+      "stack.cat.2": "Generative APIs",
+      "stack.cat.3": "Voice &amp; Audio",
+      "stack.cat.4": "Embeddings &amp; RAG",
+      "stack.cat.5": "Frontend",
+      "stack.cat.6": "Backend",
+      "stack.cat.7": "Database",
+      "stack.cat.8": "Web3 / Blockchain",
+      "stack.cat.9": "Telegram",
+      "stack.cat.10": "Payments",
+      "stack.cat.11": "Mobile",
+      "stack.cat.12": "Tools &amp; Infra",
+      "stack.tag.timestamps": "Word-level timestamps",
+      "stack.tag.hybrid": "Hybrid search",
+      "stack.tag.rust": "Rust contracts",
+      "stack.tag.indexers": "Custom indexers",
+      "stack.tag.templates": "Smart contract templates",
+      "stack.tag.yukassa": "YuKassa (RU acquiring)",
+      "stack.tag.crypto": "Crypto payments",
+      "stack.tag.acquiring": "Card acquiring (regulated)",
+      "stack.tag.single": "iOS + Android single codebase",
+      "stack.tag.bridges": "Native bridges",
+      "stack.tag.push": "Push notifications",
+      "stack.tag.worktree": "Worktree dev flow",
+      "stack.tag.memory": "Claude Code memory system",
+
+      "team.eyebrow": "// The team",
+      "team.title": "Seven co-founders.<br/>Each shipped a flagship.",
+      "team.desc": "We're not a freelance marketplace or a generic dev shop. Every member of YupCode co-founded a product in our Yupland Web3 ecosystem — so we treat client work with the same ownership we treat our own.",
+      "member.1.name": "Angelina",
+      "member.1.role": "// Founder · CCO",
+      "member.1.bio": "Founder of YupCode and Yupland, concept designer of the ecosystem, public face of the team.",
+      "member.2.name": "Alla",
+      "member.2.role": "// AI Engineer",
+      "member.2.bio": "Built AI Music Platform and AI Image Bot. Co-author of YupSelf. Multimodal pipelines and Mini Apps.",
+      "member.3.name": "Mikhail",
+      "member.3.role": "// Web3 Developer",
+      "member.3.bio": "Telegram bots, NFT infrastructure, P2E games, blockchain parsing. AI Content Factory creator.",
+      "member.4.name": "Yaroslav",
+      "member.4.role": "// Lead Game Designer",
+      "member.4.bio": "Game design and economy across the ecosystem. Co-author of YupSelf AI avatars.",
+      "member.5.name": "Ilya",
+      "member.5.role": "// Full-stack Engineer",
+      "member.5.bio": "Creator of YupLand Portal with DEX, YupPay, YupXBet, YupJarvis and other services.",
+      "member.6.name": "Roman",
+      "member.6.role": "// Web3 Backend",
+      "member.6.bio": "NEAR indexers, smart contracts, NFT Sender (#1 distribution on NEAR), marketplace infrastructure.",
+      "member.7.name": "Svetlana",
+      "member.7.role": "// Vibe-coder · Author",
+      "member.7.bio": "Built YupDar as a non-developer book author via Claude Code. Living proof that vibe-coding ships products.",
+      "member.8.name": "And a network",
+      "member.8.role": "// Specialists on call",
+      "member.8.bio": "Designers, translators and domain experts we bring in when project scope requires it.",
+
+      "process.eyebrow": "// How we work",
+      "process.title": "From inquiry to handover<br/>in four steps",
+      "process.desc": "Predictable process, predictable outputs. No surprises, no scope creep without a written change.",
+      "step.1.num": "01 — DISCOVERY",
+      "step.1.title": "30-minute call",
+      "step.1.desc": "We read your brief, ask sharp questions, push back on weak assumptions. You leave with a realistic scope, timeline and price. Free.",
+      "step.2.num": "02 — SCOPE",
+      "step.2.title": "Written agreement",
+      "step.2.desc": "Fixed deliverables, fixed timeline. Or hourly with a weekly cap if scope is fluid. Staged payments by milestone.",
+      "step.3.num": "03 — BUILD",
+      "step.3.title": "Daily updates",
+      "step.3.desc": 'You see progress every day in your preferred channel (Slack, Telegram, email). No "find out two days before delivery that nothing is ready."',
+      "step.4.num": "04 — HANDOVER",
+      "step.4.title": "Documented delivery",
+      "step.4.desc": "Deploy-ready code, env notes, rollback playbook, 30-minute walkthrough call. Your team can extend or take over without us.",
+
+      "cta.title": "Have a defined scope but no engineering bandwidth?",
+      "cta.desc": "Send a 2–3 sentence brief and we'll come back with a realistic scope, timeline and price within 24 hours. Discovery call is free.",
+      "cta.btn": "Book a 30-min discovery call →",
+
+      "footer.copy": "© 2026 YupCode Studio · Part of the Yupland ecosystem",
+      "footer.tg": "Telegram channel",
+      "footer.contact": "Direct contact",
+
+      "contact.title": "Get in touch",
+      "contact.sub": "Pick whatever's most convenient"
+    },
+
+    ru: {
+      "meta.title": "YupCode Studio — Запускаем AI-продукты в 3–5× быстрее",
+      "meta.desc": "Outsource-студия разработки AI, Web3 и автоматизации. Запускаем за 2–4 недели то, на что обычным студиям нужно 6+. Vibe-coding на Claude, команда фаундеров, production-дисциплина.",
+
+      "nav.services": "Услуги",
+      "nav.cases": "Кейсы",
+      "nav.stack": "Стек",
+      "nav.team": "Команда",
+      "nav.cta": "Связаться →",
+
+      "hero.badge": "Открыты для новых проектов · Фаундеры, а не фрилансеры",
+      "hero.title": 'Запускаем AI-продукты <span class="accent">в 3–5× быстрее</span>,<br/>чем агентства нанимают инженеров',
+      "hero.sub": "Мы — outsource-студия. Делаем AI, Web3, автоматизацию, ботов и веб-приложения под ключ. То, что обычные команды делают 6+ недель, мы релизим за 2 — за счёт vibe-coding на Claude и сплочённой команды фаундеров, которая ведёт проект от ТЗ до сдачи.",
+      "hero.cta1": "Заказать 30-минутный созвон →",
+      "hero.cta2": "Посмотреть работы",
+
+      "stats.1": "On-chain транзакций<br/>(#1 на NEAR Protocol)",
+      "stats.2": "Production-продуктов<br/>в AI и Web3 запущено",
+      "stats.3": "От первого коммита<br/>до production",
+      "stats.4": "Со-фаундеров,<br/>каждый запустил флагман",
+
+      "why.eyebrow": "// Почему выбирают нас",
+      "why.title": "Найм идёт месяцами.<br/>Мы релизим за недели.",
+      "why.desc": "Никакого цикла найма, онбординга и долгосрочных обязательств. Вы приносите задачу — мы отдаём рабочий продукт с документацией для передачи.",
+      "pillar.1.title": "Разработка с AI-ускорением",
+      "pillar.1.desc": "Claude — основа нашего workflow. Один инженер с правильным AI-флоу делает то, на что раньше уходила команда из 5 человек.",
+      "pillar.2.title": "Команда фаундеров, не наёмники",
+      "pillar.2.desc": "7 со-фаундеров, у каждого свой продукт в нашей экосистеме. К клиентским задачам относимся с той же ответственностью.",
+      "pillar.3.title": "Production-дисциплина",
+      "pillar.3.desc": "CI/CD с двумя средами, healthcheck'и, playbook'и отката, документация для передачи. Не прототипы — продукты.",
+      "pillar.4.title": "Полное владение задачей",
+      "pillar.4.desc": "Архитектура, AI-пайплайны, инфра, биллинг, мобильные сборки, SEO, контент-автоматизация — закрываем весь стек.",
+
+      "services.eyebrow": "// Что мы делаем",
+      "services.title": "Шесть направлений,<br/>одна production-студия",
+      "services.desc": "От AI-агентов и Telegram-продуктов до Web3-инфраструктуры и бэк-офис автоматизации — берём проекты под ключ или усиливаем вашу команду на конкретном скоупе.",
+      "service.1.title": "AI-интеграции и автоматизация",
+      "service.1.items": "<li>AI-агенты с RAG на pgvector / Voyage AI</li><li>Многоступенчатые AI-пайплайны с fallback-цепочками</li><li>Генерация изображений с сохранением личности</li><li>Контент-автоматизация: текст → голос → видео → публикация</li><li>AI-агенты, обученные на голосе фаундера</li><li>Мультимодальные пайплайны (LLM + генеративные API)</li><li>Prompt engineering и оптимизация стоимости</li><li>Синтез голоса, распознавание речи</li>",
+      "service.2.title": "Web3 и блокчейн",
+      "service.2.items": "<li>Смарт-контракты на NEAR, TON, EVM, Solana</li><li>NFT-инфраструктура: маркетплейсы, аукционы, портфолио</li><li>Массовая раздача NFT (10K+ кошельков за кампанию)</li><li>Кастомные индексеры и парсеры блокчейна</li><li>Кросс-чейн крафтинг и игровые механики</li><li>Запуск токенов и дизайн токеномики</li><li>Генерация NFT-коллекций (движок трейтов + on-chain деплой)</li><li>DEX-интеграции и on-chain платежи</li>",
+      "service.3.title": "Telegram-боты и Mini Apps",
+      "service.3.items": "<li>Воронки продаж с многошаговой логикой</li><li>Telegram Mini Apps (веб-приложения внутри Telegram)</li><li>Боты с CRM-интеграцией (GetCourse, кастомные API)</li><li>Боты с блокчейн-интеграцией</li><li>Сервисы автоматизации прямых эфиров</li><li>Админ-панели для не-технических сотрудников</li><li>Платёжные интеграции (ЮKassa, крипто)</li><li>Реферальные системы с anti-fraud</li>",
+      "service.4.title": "Веб-приложения",
+      "service.4.items": "<li>Кастомные веб-приложения на React / Next.js</li><li>Лендинги с SEO-оптимизацией</li><li>Сайты под Web3-проекты</li><li>SaaS-интерфейсы и дашборды</li><li>Программируемое SEO (генераторы страниц)</li><li>Админки и back-office инструменты</li><li>Интеграции с headless CMS</li><li>Авторизация по Web3-кошельку</li>",
+      "service.5.title": "Автоматизация и данные",
+      "service.5.items": "<li>Автоматизация бизнес-процессов</li><li>Web-скрапинг и парсинг данных</li><li>Базы данных (PostgreSQL, Supabase)</li><li>API-интеграции между сервисами</li><li>CRM, платёжные и аналитические интеграции</li><li>Уведомления и алёрты в Telegram</li><li>GitHub Actions / CI/CD пайплайны</li><li>Cron-задачи и шедулинг</li>",
+      "service.6.title": "Мобильные приложения (Capacitor)",
+      "service.6.items": "<li>Нативные iOS и Android через Capacitor 8</li><li>Единая кодовая база, мультиплатформенная сборка</li><li>Платежи в регулируемых рынках</li><li>Push-уведомления и deep links</li><li>Нативные мосты к hardware-фичам</li><li>Публикация в App Store и Play Store</li><li>Конвертация в mobile-first PWA</li><li>Оптимизация производительности под мобайл</li>",
+
+      "cases.eyebrow": "// Избранные работы",
+      "cases.title": "12 production-продуктов,<br/>запущенных под ключ",
+      "cases.desc": "Микс конфиденциальных клиентских проектов (под NDA) и продуктов нашей собственной Web3-экосистемы. Каждый кейс — реальный, в production, с измеримым результатом.",
+      "case.stack.label": "Стек:",
+      "case.link.live": "Открыть →",
+      "case.link.bot": "Открыть бот →",
+      "case.link.demo": "Смотреть демо →",
+
+      "case.1.title": "Платформа AI-генерации музыки",
+      "case.1.tag": "AI · Mobile",
+      "case.1.desc": "AI-платформа под ключ: Telegram Mini App + нативные iOS и Android, единый бэкенд, многоступенчатый AI-пайплайн с retry/failover, три платёжные интеграции, включая карточный эквайринг в регулируемом рынке.",
+      "case.1.metrics": '<span class="metric metric-accent">3 платформы</span><span class="metric">1 бэкенд</span><span class="metric">3 платёжных интеграции</span><span class="metric">CI/CD на 2 среды</span>',
+
+      "case.2.title": "Бот AI-генерации изображений",
+      "case.2.tag": "AI · Telegram",
+      "case.2.desc": "Production Telegram-бот для генерации стилизованных персональных изображений с сохранением личности между генерациями. Мультимодальный ввод, dual-API failover для оптимизации стоимости, async job-архитектура, крипто-платежи.",
+      "case.2.metrics": '<span class="metric metric-accent">10 дней до production</span><span class="metric">Dual-API failover</span><span class="metric">Крипто-платежи</span>',
+
+      "case.3.title": "AI-воронка продаж + RAG-агент",
+      "case.3.tag": "AI · RAG",
+      "case.3.desc": "Полноценная AI-воронка для онлайн-школы: 2 лендинга, Telegram-онбординг-бот с многошаговой логикой, RAG-агент в голосе фаундера, обученный на полной библиотеке контента, CRM-интеграция, реферальная система, админ-дашборд.",
+      "case.3.metrics": '<span class="metric metric-accent">6 недель сдача</span><span class="metric">RAG в голосе фаундера</span><span class="metric">GetCourse CRM</span><span class="metric">Anti-fraud рефералка</span>',
+
+      "case.4.title": "AI Content Factory",
+      "case.4.tag": "AI · Pipeline",
+      "case.4.desc": "Production AI-пайплайн, генерирующий видео и презентации из одного промпта: сценарии, голос, визуал, движение, музыка, эффекты — полностью автоматически. Fallback на каждом уровне между 10+ AI-провайдерами, гибрид free/paid для оптимизации стоимости.",
+      "case.4.metrics": '<span class="metric metric-accent">10+ AI API в оркестрации</span><span class="metric">Fallback на каждом шаге</span><span class="metric">Генерация на CI</span>',
+
+      "case.5.title": "Yupland — Web3-экосистема",
+      "case.5.tag": "Web3 · Флагман",
+      "case.5.desc": 'Децентрализованная игровая экосистема на NEAR Protocol с уникальной механикой «Игра в репутацию». NFT-маркетплейс, инкубатор, кросс-чейн крафтинг, игры, кланы, токеномика. Активность, которая не зависит от медвежьего рынка.',
+      "case.5.metrics": '<span class="metric metric-accent">2M+ on-chain tx (#1 NEAR)</span><span class="metric">150K NFT</span><span class="metric">9K+ репутационных кошельков</span><span class="metric">$3K за победу на BitGet</span>',
+
+      "case.6.title": "NFT Sender — инфраструктура",
+      "case.6.tag": "Web3 · Инфра",
+      "case.6.desc": "Мульти-чейн платформа NFT-операций, которая обслуживает все запуски коллекций в нашей экосистеме. Массовая раздача на 10K+ кошельков (120 NFT за транзакцию с обходом throttling), маркетплейс с Sells/Orders/Auctions, управление портфолио, репутационная система.",
+      "case.6.metrics": '<span class="metric metric-accent">10K+ кошельков за кампанию</span><span class="metric">120 NFT за tx</span><span class="metric">#1 раздача NFT на NEAR</span>',
+
+      "case.7.title": "Alchemy Lab — кросс-чейн крафтинг",
+      "case.7.tag": "Web3 · Multi-chain",
+      "case.7.desc": "Уникальная мульти-чейн механика крафтинга NFT через NEAR + TON. Пользователи комбинируют NFT-компоненты по рецептам и минтят новые NFT. Замкнутая экономика с ликвидностью одновременно из двух блокчейнов.",
+      "case.7.metrics": '<span class="metric metric-accent">9K+ крафтов</span><span class="metric">283 рецепта</span><span class="metric">TOP-2 на HOTCraft</span><span class="metric">NEAR + TON</span>',
+
+      "case.8.title": "YupDar — AI-платформа самопознания",
+      "case.8.tag": "AI · Vibe-coding",
+      "case.8.desc": "Production AI-платформа, построенная не-разработчиком (автором книги) через Claude Code (vibe-coding). Telegram Mini App + веб на одной кодовой базе, AI-генерация психологических портретов, 6 типов контента, in-app платежи, реферальная система, геймификация.",
+      "case.8.metrics": '<span class="metric metric-accent">Успешный vibe-coding</span><span class="metric">338 коммитов за месяц</span><span class="metric">11 API endpoint-ов</span><span class="metric">DeepSeek + Groq fallback</span>',
+
+      "case.9.title": "Bee Farm — игра Play-to-Earn",
+      "case.9.tag": "Web3 · Игра",
+      "case.9.desc": "HTML5 P2E фермерский симулятор с полной Web3-интеграцией на NEAR. Многоресурсная экономика, on-chain депозиты, выводы, внутриигровые покупки через смарт-контракты, real-time трекинг баланса.",
+      "case.9.metrics": '<span class="metric metric-accent">P2E механика</span><span class="metric">On-chain экономика</span><span class="metric">Real-time баланс</span>',
+
+      "case.10.title": "Yupland Lottery — розыгрыши на эфирах",
+      "case.10.tag": "Автоматизация",
+      "case.10.desc": "Автоматический сервис для розыгрышей на прямых эфирах. Заменили ручное управление стримом на one-click автоматизацию: честный рандомайзер, админ-дашборд, интеграция с Telegram-ботом, real-time view для аудитории, кастомный формат вывода результатов.",
+      "case.10.metrics": '<span class="metric metric-accent">One-click автоматизация</span><span class="metric">Real-time синхронизация</span><span class="metric">Доставка в Telegram</span>',
+
+      "case.11.title": "Duplo Combo Tracker",
+      "case.11.tag": "Web3 · Парсинг",
+      "case.11.desc": "Blockchain-aware трекер NFT-комбо. Парсит on-chain переводы NFT/токенов на игровой кошелёк в реальном времени, определяет валидные комбинации, рассчитывает награды. Мульти-ассет детекция (бандлы NFT + токены).",
+      "case.11.metrics": '<span class="metric metric-accent">Real-time on-chain парсинг</span><span class="metric">Мульти-ассет комбо</span><span class="metric">Логика временного окна</span>',
+
+      "case.12.title": "Сервис запуска NFT-коллекций",
+      "case.12.tag": "Web3 · Pipeline",
+      "case.12.desc": "Полный пайплайн запуска кастомных NFT-коллекций на NEAR и TON — от сборки арта до on-chain деплоя. Генератор трейтов из арт-компонентов, шаблоны смарт-контрактов, инструменты под токены, mint-флоу с интеграцией в лендинги запуска.",
+      "case.12.metrics": '<span class="metric metric-accent">Использован в нескольких запусках</span><span class="metric">NEAR + TON</span><span class="metric">Арт → контракт → mint</span>',
+
+      "stack.eyebrow": "// Технологии",
+      "stack.title": "Full-stack по<br/>AI, Web3 и продукту",
+      "stack.desc": "Подбираем правильный инструмент под каждую задачу и интегрируем до 10+ провайдеров в одном пайплайне с аккуратным fallback.",
+      "stack.cat.1": "LLM-провайдеры",
+      "stack.cat.2": "Generative API",
+      "stack.cat.3": "Голос и аудио",
+      "stack.cat.4": "Эмбеддинги и RAG",
+      "stack.cat.5": "Frontend",
+      "stack.cat.6": "Backend",
+      "stack.cat.7": "База данных",
+      "stack.cat.8": "Web3 / Блокчейн",
+      "stack.cat.9": "Telegram",
+      "stack.cat.10": "Платежи",
+      "stack.cat.11": "Мобильные",
+      "stack.cat.12": "Инструменты и инфра",
+      "stack.tag.timestamps": "Word-level timestamps",
+      "stack.tag.hybrid": "Гибридный поиск",
+      "stack.tag.rust": "Контракты на Rust",
+      "stack.tag.indexers": "Кастомные индексеры",
+      "stack.tag.templates": "Шаблоны смарт-контрактов",
+      "stack.tag.yukassa": "ЮKassa (RU эквайринг)",
+      "stack.tag.crypto": "Крипто-платежи",
+      "stack.tag.acquiring": "Карточный эквайринг (регулир.)",
+      "stack.tag.single": "iOS + Android в одной базе",
+      "stack.tag.bridges": "Нативные мосты",
+      "stack.tag.push": "Push-уведомления",
+      "stack.tag.worktree": "Worktree-флоу разработки",
+      "stack.tag.memory": "Claude Code memory system",
+
+      "team.eyebrow": "// Команда",
+      "team.title": "Семь со-фаундеров.<br/>У каждого свой флагман.",
+      "team.desc": "Мы не фриланс-маркетплейс и не общая dev-студия. Каждый в YupCode со-фаундер продукта в нашей экосистеме Yupland — поэтому к клиентским задачам относимся с тем же уровнем ответственности, что и к своим.",
+      "member.1.name": "Ангелина",
+      "member.1.role": "// Фаундер · CCO",
+      "member.1.bio": "Фаундер YupCode и Yupland, концептуальный дизайнер экосистемы, лицо команды.",
+      "member.2.name": "Алла",
+      "member.2.role": "// AI-инженер",
+      "member.2.bio": "Сделала AI Music Platform и AI Image Bot. Со-автор YupSelf. Мультимодальные пайплайны и Mini Apps.",
+      "member.3.name": "Михаил",
+      "member.3.role": "// Web3-разработчик",
+      "member.3.bio": "Telegram-боты, NFT-инфраструктура, P2E-игры, парсинг блокчейна. Создатель AI Content Factory.",
+      "member.4.name": "Ярослав",
+      "member.4.role": "// Lead Game Designer",
+      "member.4.bio": "Геймдизайн и экономика по всей экосистеме. Со-автор AI-аватаров YupSelf.",
+      "member.5.name": "Илья",
+      "member.5.role": "// Full-stack инженер",
+      "member.5.bio": "Создатель YupLand Portal с DEX, YupPay, YupXBet, YupJarvis и других сервисов.",
+      "member.6.name": "Роман",
+      "member.6.role": "// Web3 Backend",
+      "member.6.bio": "NEAR-индексеры, смарт-контракты, NFT Sender (#1 раздача на NEAR), инфраструктура маркетплейса.",
+      "member.7.name": "Светлана",
+      "member.7.role": "// Vibe-coder · Автор",
+      "member.7.bio": "Сделала YupDar, будучи не-разработчиком и автором книги, через Claude Code. Живое доказательство, что vibe-coding выпускает продукты.",
+      "member.8.name": "И сеть специалистов",
+      "member.8.role": "// Под задачи",
+      "member.8.bio": "Дизайнеры, переводчики и эксперты по доменам, которых подключаем под скоуп проекта.",
+
+      "process.eyebrow": "// Как мы работаем",
+      "process.title": "От запроса до сдачи —<br/>в четыре шага",
+      "process.desc": "Предсказуемый процесс, предсказуемый результат. Никаких сюрпризов и расширения скоупа без письменного изменения.",
+      "step.1.num": "01 — DISCOVERY",
+      "step.1.title": "30-минутный созвон",
+      "step.1.desc": "Читаем ваш бриф, задаём острые вопросы, оспариваем слабые предпосылки. Вы выходите с реалистичным скоупом, сроком и ценой. Бесплатно.",
+      "step.2.num": "02 — SCOPE",
+      "step.2.title": "Письменное соглашение",
+      "step.2.desc": "Фиксированные результаты, фиксированный срок. Или почасовка с недельным лимитом, если скоуп подвижный. Поэтапная оплата по майлстоунам.",
+      "step.3.num": "03 — BUILD",
+      "step.3.title": "Ежедневные апдейты",
+      "step.3.desc": "Вы видите прогресс каждый день в удобном канале (Slack, Telegram, email). Никаких «узнал за два дня до сдачи, что ничего не готово».",
+      "step.4.num": "04 — HANDOVER",
+      "step.4.title": "Документированная сдача",
+      "step.4.desc": "Готовый к деплою код, заметки по env, playbook отката, 30-минутный созвон-передача. Ваша команда сможет дорабатывать или забрать проект без нас.",
+
+      "cta.title": "Есть готовый скоуп, но нет инженерной мощности?",
+      "cta.desc": "Пришлите 2–3 предложения брифа, и в течение 24 часов вернёмся с реалистичным скоупом, сроком и ценой. Discovery-созвон — бесплатно.",
+      "cta.btn": "Заказать 30-минутный созвон →",
+
+      "footer.copy": "© 2026 YupCode Studio · Часть экосистемы Yupland",
+      "footer.tg": "Telegram-канал",
+      "footer.contact": "Прямой контакт",
+
+      "contact.title": "Связаться",
+      "contact.sub": "Выберите удобный способ"
+    }
+  };
+
+  function setLang(lang) {
+    if (!I18N[lang]) lang = 'en';
+    const dict = I18N[lang];
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (dict[key] !== undefined) {
+        el.innerHTML = dict[key];
+      }
+    });
+
+    document.title = dict['meta.title'];
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute('content', dict['meta.desc']);
+
+    const btn = document.querySelector('.lang-switch');
+    if (btn) btn.textContent = lang === 'en' ? 'RU' : 'EN';
+
+    try { localStorage.setItem('yc-lang', lang); } catch (e) {}
+
+    if (typeof _applyImageLang === 'function') _applyImageLang(lang);
+    if (typeof updateShotBadges === 'function') updateShotBadges();
+  }
+
+  function toggleLang() {
+    const cur = document.documentElement.lang || 'en';
+    setLang(cur === 'en' ? 'ru' : 'en');
+  }
+
+  /* ========== lightbox (case screenshots) ========== */
+  let _shots = [];
+  let _shotIndex = 0;
+
+  function _shotLabel(n, lang) {
+    if (lang === 'ru') {
+      const m10 = n % 10, m100 = n % 100;
+      if (m10 === 1 && m100 !== 11) return n + ' скрин';
+      if ([2, 3, 4].includes(m10) && ![12, 13, 14].includes(m100)) return n + ' скрина';
+      return n + ' скринов';
+    }
+    return n + (n === 1 ? ' screenshot' : ' screenshots');
+  }
+
+  function _isVideoSrc(src) {
+    return /\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(src || '');
+  }
+
+  function _renderShot() {
+    const stage   = document.querySelector('.lb-stage');
+    const counter = document.querySelector('.lb-counter');
+    const prev    = document.querySelector('.lb-prev');
+    const next    = document.querySelector('.lb-next');
+    const src     = _shots[_shotIndex];
+
+    stage.innerHTML = '';
+    if (_isVideoSrc(src)) {
+      const v = document.createElement('video');
+      v.className = 'lb-img';
+      v.src = src;
+      v.controls = true;
+      v.autoplay = true;
+      v.playsInline = true;
+      v.preload = 'metadata';
+      stage.appendChild(v);
+    } else {
+      const i = document.createElement('img');
+      i.className = 'lb-img';
+      i.src = src;
+      i.alt = '';
+      stage.appendChild(i);
+    }
+
+    if (_shots.length > 1) {
+      counter.style.display = '';
+      counter.textContent = (_shotIndex + 1) + ' / ' + _shots.length;
+      prev.style.display = '';
+      next.style.display = '';
+    } else {
+      counter.style.display = 'none';
+      prev.style.display = 'none';
+      next.style.display = 'none';
+    }
+  }
+
+  function _getCaseShots(el) {
+    const lang = document.documentElement.lang || 'en';
+    const langAttr = el.getAttribute('data-shots-' + lang);
+    const baseAttr = el.getAttribute('data-shots');
+    if (langAttr) return langAttr.split(',').map(s => s.trim()).filter(Boolean);
+    if (baseAttr) return baseAttr.split(',').map(s => s.trim()).filter(Boolean);
+    const media = el.querySelector('img, video');
+    if (media && media.getAttribute('src')) return [media.getAttribute('src')];
+    return [];
+  }
+
+  function openLightbox(shots, startIndex) {
+    if (!shots || !shots.length) return;
+    _shots = shots;
+    _shotIndex = startIndex || 0;
+    _renderShot();
+    const lb = document.getElementById('lightbox');
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    const lb = document.getElementById('lightbox');
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  function prevShot() {
+    if (!_shots.length) return;
+    _shotIndex = (_shotIndex - 1 + _shots.length) % _shots.length;
+    _renderShot();
+  }
+
+  function nextShot() {
+    if (!_shots.length) return;
+    _shotIndex = (_shotIndex + 1) % _shots.length;
+    _renderShot();
+  }
+
+  function updateShotBadges() {
+    const lang = document.documentElement.lang || 'en';
+    document.querySelectorAll('.case-image').forEach(el => {
+      const shots = _getCaseShots(el);
+      let badge = el.querySelector('.case-shots-badge');
+      if (shots.length > 1) {
+        if (!badge) {
+          badge = document.createElement('div');
+          badge.className = 'case-shots-badge';
+          el.appendChild(badge);
+        }
+        badge.dataset.count = shots.length;
+        badge.textContent = _shotLabel(shots.length, lang);
+      } else if (badge) {
+        badge.remove();
+      }
+    });
+  }
+
+  function _applyImageLang(lang) {
+    document.querySelectorAll('.case-image').forEach(el => {
+      const media = el.querySelector('img, video');
+      if (!media) return;
+      const langSrc = media.getAttribute('data-src-' + lang);
+      if (langSrc && media.getAttribute('src') !== langSrc) {
+        media.setAttribute('src', langSrc);
+        const ph = el.querySelector('.case-image-placeholder');
+        if (ph) ph.textContent = langSrc;
+      }
+    });
+  }
+
+  function initCaseLightbox() {
+    document.querySelectorAll('.case-image').forEach(el => {
+      // open on click — uses lang-aware shots
+      el.addEventListener('click', () => {
+        const media = el.querySelector('img, video');
+        if (!media) return; // failed to load — placeholder is showing
+        const shots = _getCaseShots(el);
+        if (!shots.length) return;
+        openLightbox(shots, 0);
+      });
+
+      // zoom hint (visible on hover via CSS)
+      if (!el.querySelector('.case-zoom-hint')) {
+        const hint = document.createElement('div');
+        hint.className = 'case-zoom-hint';
+        hint.textContent = '⤢';
+        el.appendChild(hint);
+      }
+    });
+
+    // keyboard
+    document.addEventListener('keydown', (e) => {
+      const lb = document.getElementById('lightbox');
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape')     closeLightbox();
+      if (e.key === 'ArrowLeft')  prevShot();
+      if (e.key === 'ArrowRight') nextShot();
+    });
+
+    // click outside image closes
+    document.getElementById('lightbox').addEventListener('click', (e) => {
+      if (e.target.id === 'lightbox' || e.target.classList.contains('lb-stage')) {
+        closeLightbox();
+      }
+    });
+
+    updateShotBadges();
+  }
+
+  /* ========== contact modal ========== */
+  function openContact(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    const m = document.getElementById('contactModal');
+    m.classList.add('open');
+    m.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeContact() {
+    const m = document.getElementById('contactModal');
+    m.classList.remove('open');
+    m.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  function initContactModal() {
+    const m = document.getElementById('contactModal');
+    if (!m) return;
+    // click backdrop closes
+    m.addEventListener('click', (e) => {
+      if (e.target === m) closeContact();
+    });
+    // ESC closes
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && m.classList.contains('open')) closeContact();
+    });
+  }
+
+  /* ========== team carousel (mobile auto-scroll) ========== */
+  function initTeamCarousel() {
+    const team = document.querySelector('.team');
+    if (!team) return;
+
+    let direction = 1;
+    let lastInteraction = 0;
+
+    function onInteract() { lastInteraction = Date.now(); }
+    ['touchstart', 'pointerdown', 'wheel'].forEach(evt => {
+      team.addEventListener(evt, onInteract, { passive: true });
+    });
+
+    setInterval(() => {
+      // only act when there's something to scroll (mobile flex mode)
+      const max = team.scrollWidth - team.clientWidth;
+      if (max <= 0) return;
+      if (Date.now() - lastInteraction < 1500) return;
+
+      const next = team.scrollLeft + 2 * direction;
+      if (next >= max) {
+        team.scrollLeft = max;
+        direction = -1;
+      } else if (next <= 0) {
+        team.scrollLeft = 0;
+        direction = 1;
+      } else {
+        team.scrollLeft = next;
+      }
+    }, 30);
+  }
+
+  /* ========== scroll reveal ========== */
+  function initReveal() {
+    if (!('IntersectionObserver' in window)) {
+      document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => el.classList.add('is-visible'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -30px 0px' });
+
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => io.observe(el));
+  }
+
+  /* ========== init ========== */
+  (function init() {
+    let saved = 'en';
+    try {
+      const fromStorage = localStorage.getItem('yc-lang');
+      if (fromStorage) saved = fromStorage;
+      else if ((navigator.language || '').toLowerCase().startsWith('ru')) saved = 'ru';
+    } catch (e) {}
+    initCaseLightbox();
+    initContactModal();
+    setLang(saved);
+    initReveal();
+    initTeamCarousel();
+  })();
+</script>
+
+</body>
+</html>
