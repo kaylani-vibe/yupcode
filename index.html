@@ -3,6 +3,20 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script>
+  // Mark JS as available — scroll-reveal CSS only hides content when this class is present,
+  // so if JS is off/blocked the content stays visible from the start.
+  document.documentElement.className += ' js';
+  // Failsafe: if the reveal system never initializes (old / in-app browser, script error),
+  // force every reveal block visible shortly after load so content is never stuck hidden.
+  window.addEventListener('load', function () {
+    setTimeout(function () {
+      if (window.__revealReady) return;
+      var els = document.querySelectorAll('.reveal, .reveal-stagger');
+      for (var i = 0; i < els.length; i++) els[i].classList.add('is-visible');
+    }, 1500);
+  });
+</script>
 <title>YupCode Studio — Ship AI products 3–5x faster</title>
 <meta name="description" content="Outsourced AI, Web3 and automation engineering studio. We ship in 2–4 weeks what traditional studios deliver in 6+. Vibe-coding on Claude, founder team, production-grade discipline." />
 <link rel="icon" type="image/jpeg" href="yupcode-icon.jpg">
@@ -330,6 +344,16 @@
     box-decoration-break: clone;
   }
 
+  /* Fallback for browsers without background-clip: text — show solid accent text
+     instead of a transparent (invisible) / solid-green-bar artifact */
+  @supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+    h1 .accent {
+      background: none;
+      -webkit-text-fill-color: var(--accent);
+      color: var(--accent);
+    }
+  }
+
   @keyframes shimmer {
     0% { background-position: 0% 50%; }
     100% { background-position: 200% 50%; }
@@ -438,8 +462,9 @@
     margin: 0 auto;
   }
 
-  /* Scroll reveal */
-  .reveal {
+  /* Scroll reveal — only hide content when JS is available to reveal it again.
+     Without the .js class (JS off / blocked / failed early) content stays visible. */
+  .js .reveal {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
@@ -450,7 +475,7 @@
     transform: translateY(0);
   }
 
-  .reveal-stagger > * {
+  .js .reveal-stagger > * {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
@@ -3090,8 +3115,9 @@
 
   /* ========== scroll reveal ========== */
   function initReveal() {
+    window.__revealReady = true;
     if (!('IntersectionObserver' in window)) {
-      document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => el.classList.add('is-visible'));
+      document.querySelectorAll('.reveal, .reveal-stagger').forEach(function (el) { el.classList.add('is-visible'); });
       return;
     }
     const io = new IntersectionObserver((entries) => {
@@ -3114,11 +3140,12 @@
       if (fromStorage) saved = fromStorage;
       else if ((navigator.language || '').toLowerCase().startsWith('ru')) saved = 'ru';
     } catch (e) {}
-    initCaseLightbox();
-    initContactModal();
-    setLang(saved);
-    initReveal();
-    initTeamCarousel();
+    function safe(fn) { try { fn(); } catch (e) { /* one failure must not block the rest */ } }
+    safe(initReveal);                 // first: makes all content visible
+    safe(function () { setLang(saved); });
+    safe(initCaseLightbox);
+    safe(initContactModal);
+    safe(initTeamCarousel);
   })();
 </script>
 
