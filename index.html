@@ -1797,7 +1797,178 @@
     opacity: 0.9;
   }
 
-  /* Security section: nogo list (red-toned) + standards row (green-toned) */
+  /* FAQ accordion */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .faq-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s var(--ease-out), background 0.2s var(--ease-out);
+  }
+  .faq-item[open] {
+    background: var(--bg-card-hover);
+    border-color: var(--border-bright);
+  }
+  .faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 20px 22px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 14px;
+    align-items: center;
+    user-select: none;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::marker { display: none; }
+  .faq-q-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+  .faq-q-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+    letter-spacing: -0.005em;
+  }
+  .faq-toggle {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 22px;
+    color: var(--accent);
+    font-weight: 400;
+    line-height: 1;
+    transition: transform 0.25s var(--ease-out);
+  }
+  .faq-item[open] .faq-toggle {
+    transform: rotate(45deg);
+  }
+  .faq-item summary:hover .faq-q-text { color: var(--accent); }
+  .faq-answer {
+    padding: 4px 22px 22px;
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .faq-answer p { margin: 0 0 14px; }
+  .faq-answer p:last-child { margin-bottom: 0; }
+  .faq-answer .faq-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .faq-answer .faq-bullets li {
+    position: relative;
+    padding-left: 22px;
+  }
+  .faq-answer .faq-bullets li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    top: -1px;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 700;
+  }
+  .faq-answer .faq-bullets strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .faq-answer code {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    background: rgba(255,255,255,0.06);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 12.5px;
+    color: var(--text);
+  }
+  .faq-nogo {
+    margin-top: 6px;
+    padding: 14px 16px;
+    background: rgba(255, 122, 107, 0.05);
+    border: 1px solid rgba(255, 122, 107, 0.16);
+    border-radius: 10px;
+  }
+  .faq-nogo-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 10.5px;
+    color: #ff7a6b;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .faq-nogo-title::before { content: '// '; opacity: 0.6; }
+  .faq-nogo ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px 16px;
+  }
+  .faq-nogo li { font-size: 13px; color: var(--text-dim); }
+  .faq-nogo .nogo-x {
+    color: #ff7a6b;
+    font-weight: 700;
+    margin-right: 6px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  .faq-standards {
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: rgba(200, 255, 90, 0.04);
+    border: 1px solid rgba(200, 255, 90, 0.14);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+  }
+  .faq-note {
+    margin-top: 10px !important;
+    font-size: 12.5px !important;
+    color: var(--text-mute);
+    font-style: italic;
+  }
+  .standards-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-right: 4px;
+  }
+  .standard-tag {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    padding: 3px 9px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 720px) {
+    .faq-item summary { padding: 16px 16px; gap: 10px; }
+    .faq-q-text { font-size: 14.5px; }
+    .faq-answer { padding: 4px 16px 18px; font-size: 13.5px; }
+    .faq-nogo ul { grid-template-columns: 1fr; }
+  }
+
+  /* Legacy Security section: nogo list (red-toned) + standards row — kept for reference */
   .security-nogo {
     margin-top: 40px;
     background: rgba(255, 122, 107, 0.04);
@@ -2094,11 +2265,11 @@
       </div>
       <div class="nav-links">
         <a href="#services" data-i18n="nav.services">Services</a>
-        <a href="#security" data-i18n="nav.security">Security</a>
         <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
         <a href="#cases" data-i18n="nav.cases">Cases</a>
         <a href="#stack" data-i18n="nav.stack">Stack</a>
         <a href="#team" data-i18n="nav.team">Team</a>
+        <a href="#faq" data-i18n="nav.faq">FAQ</a>
         <a href="#process" data-i18n="nav.process">Process</a>
         <button class="lang-switch" type="button" onclick="toggleLang()" aria-label="Switch language">RU</button>
         <a href="#contact" class="btn btn-primary" onclick="openContact(event)" data-i18n="nav.cta">
@@ -2187,57 +2358,6 @@
         <h3 data-i18n="pillar.4.title">End-to-end ownership</h3>
         <p data-i18n="pillar.4.desc">System design, AI pipelines, infra, billing, mobile builds, SEO, content automation — we cover the whole stack.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- Security -->
-<section id="security">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="section-eyebrow" data-i18n="security.eyebrow">// Security &amp; data</div>
-      <h2 class="section-title" data-i18n="security.title">Security by default —<br/>not an add-on</h2>
-      <p class="section-desc" data-i18n="security.desc">For mid-market and corporate clients in regulated markets (152-ФЗ, GDPR, PII, financial data) security is the #1 criterion. We design the architecture so client data never reaches public LLMs, never leaks through logs, never trains foreign models. The model is treated as an untrusted user; rights live in a deterministic tool layer with audit and human approval on irreversible actions.</p>
-    </div>
-
-    <div class="pillars reveal-stagger">
-      <div class="pillar">
-        <div class="pillar-icon">🔒</div>
-        <h3 data-i18n="security.1.title">LLM = untrusted user, not a service</h3>
-        <p data-i18n="security.1.desc">The model holds no rights directly. Every action goes through a deterministic tool layer that checks permissions in the context of a specific human user. A prompt injection can&#39;t &#34;ask&#34; to delete data — the policy engine rejects the call.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar-icon">🛡️</div>
-        <h3 data-i18n="security.2.title">Sensitive data → internal contour</h3>
-        <p data-i18n="security.2.desc">For PII, financial and regulated data — a local model (vLLM / Ollama on your GPUs) or enterprise tiers with Zero Data Retention. Public LLMs never see raw data. Sensitivity-aware routing through an AI Gateway (LiteLLM).</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar-icon">📋</div>
-        <h3 data-i18n="security.3.title">Audit on every action</h3>
-        <p data-i18n="security.3.desc">Each tool call is written to an immutable audit log: who, what, when, which prompt, what result, allowed or denied. Incident investigation takes minutes, not days. Alerts on anomalous request patterns.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar-icon">👤</div>
-        <h3 data-i18n="security.4.title">Human approval on irreversible</h3>
-        <p data-i18n="security.4.desc">Payments, data deletion, outbound mail, prod config changes — always through an approval queue. Autonomy only on read-only and reversible actions. No cascading-error scenarios.</p>
-      </div>
-    </div>
-
-    <!-- What we deliberately don't do -->
-    <div class="security-nogo reveal">
-      <h3 data-i18n="security.nogo.title">What we deliberately don&#39;t do</h3>
-      <ul data-i18n="security.nogo.items"><li><span class="nogo-x">×</span> Give the model raw <code>run_sql(query)</code> — that&#39;s a path to disaster</li><li><span class="nogo-x">×</span> Run agents under an admin service account</li><li><span class="nogo-x">×</span> &#34;Defend ourselves with a system prompt&#34; — that&#39;s text, not security</li><li><span class="nogo-x">×</span> RAG without document-level ACL</li><li><span class="nogo-x">×</span> Log raw prompts containing PII or secrets</li><li><span class="nogo-x">×</span> Direct model → DB / CRM / ERP connection</li></ul>
-    </div>
-
-    <!-- Standards row -->
-    <div class="security-standards reveal">
-      <span class="standards-label" data-i18n="security.standards.label">Working knowledge of:</span>
-      <span class="standard-tag">152-ФЗ (RF)</span>
-      <span class="standard-tag">GDPR</span>
-      <span class="standard-tag">ISO 27001 controls</span>
-      <span class="standard-tag">OWASP LLM Top 10</span>
-      <span class="standard-tag">SOC 2 patterns</span>
-      <span class="standards-cta" data-i18n="security.standards.cta">Full engineering brief (40-page guide) — on request</span>
     </div>
   </div>
 </section>
@@ -3617,6 +3737,141 @@
   </div>
 </section>
 
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow" data-i18n="faq.eyebrow">// FAQ</div>
+      <h2 class="section-title" data-i18n="faq.title">Frequently asked</h2>
+      <p class="section-desc" data-i18n="faq.desc">The things B2B partners and corporate clients ask before saying yes. Click a question to expand.</p>
+    </div>
+
+    <div class="faq-list reveal-stagger">
+      <details class="faq-item">
+        <summary>
+          <span class="faq-q-icon">🏗</span>
+          <span class="faq-q-text" data-i18n="faq.2.q">Will it survive production load? Can vibe-coders handle that?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-answer" data-i18n="faq.2.a">
+          <p>Speed comes from vibe-coding, but underneath sits classical full-stack engineering. We understand databases, load behavior, security and the code itself — not just how to prompt Claude.</p>
+          <ul class="faq-bullets">
+            <li><strong>Two-environment CI/CD</strong> — staging and production, healthchecks, rollback playbooks, documented deploy.</li>
+            <li><strong>Schema design and indexing</strong> from day one — no &#34;works on 10 users, dies on 1,000&#34; surprises.</li>
+            <li><strong>Load patterns we&#39;ve already survived</strong> — Yupland ecosystem with 5.7M+ on-chain transactions, NFT-Sender at #1 on NEAR by volume, YupLand Portal with ~2M loot boxes / 30 days.</li>
+            <li><strong>Real engineers behind the AI flow</strong> — the team has years of production work before AI accelerated us. Vibe-coding is the multiplier; engineering is the base.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-q-icon">🧪</span>
+          <span class="faq-q-text" data-i18n="faq.3.q">Can we start with a small pilot before committing?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-answer" data-i18n="faq.3.a">
+          <p>Yes — that&#39;s the recommended way to start.</p>
+          <ul class="faq-bullets">
+            <li><strong>Discovery call is free.</strong> 30 minutes, no sales pitch, no obligation. You leave with a realistic scope, timeline and price.</li>
+            <li><strong>MVP scope is welcome.</strong> We can take a single narrow piece (one bot flow, one landing, one AI agent) and ship it in 1–2 weeks before any larger commitment.</li>
+            <li><strong>Hourly with weekly cap</strong> works if the scope is still moving. You see exactly what time was spent on what.</li>
+            <li><strong>Milestone-based payment</strong> for fixed-scope projects. You only pay for what&#39;s delivered.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-q-icon">📜</span>
+          <span class="faq-q-text" data-i18n="faq.4.q">Who owns the code after the project?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-answer" data-i18n="faq.4.a">
+          <p>You do — fully. We don&#39;t try to lock you in.</p>
+          <ul class="faq-bullets">
+            <li><strong>Full repository transfer</strong> on completion — your GitHub/GitLab, your account.</li>
+            <li><strong>Documented handover</strong> — env notes, secrets list, deployment instructions, rollback playbook, 30-minute walkthrough call.</li>
+            <li><strong>No proprietary &#34;framework&#34;</strong> that ties you to us — we build on standard, popular stacks any team can pick up.</li>
+            <li><strong>Your team or another contractor</strong> can continue the work without us. We&#39;d rather you come back because you want to, not because you have to.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-q-icon">🛠</span>
+          <span class="faq-q-text" data-i18n="faq.5.q">What if something breaks after handover?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-answer" data-i18n="faq.5.a">
+          <p>Production discipline is baked in from the start — we plan for things breaking so you don&#39;t scramble when they do.</p>
+          <ul class="faq-bullets">
+            <li><strong>Rollback playbook</strong> ships with the project — one command brings the previous version back.</li>
+            <li><strong>Healthchecks and alerts</strong> set up before launch — you know about an outage before users do.</li>
+            <li><strong>Two-environment CI/CD</strong> — every change tested on staging before reaching production.</li>
+            <li><strong>Post-launch support</strong> available on a separate agreement — hourly retainer or fixed monthly. We help during incidents even when there&#39;s no retainer; we just bill the hours.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-q-icon">🤖</span>
+          <span class="faq-q-text" data-i18n="faq.6.q">What if the AI makes a mistake in production?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-answer" data-i18n="faq.6.a">
+          <p>AI gets things wrong. The architecture is what determines whether those mistakes hurt you.</p>
+          <ul class="faq-bullets">
+            <li><strong>Human approval on irreversible actions</strong> — payments, deletions, outbound communication, prod config changes always need a person to click &#34;approve&#34;. Autonomy is reserved for read-only and reversible operations.</li>
+            <li><strong>Provider fallback chain</strong> — if one AI provider returns nonsense or goes down, we automatically retry on another. No silent failures.</li>
+            <li><strong>Validation on every tool call</strong> — schema checks, business-rule checks, argument whitelists. The model can&#39;t &#34;ask&#34; to do something unsupported.</li>
+            <li><strong>Full audit log</strong> — every AI decision is traceable. If something does go wrong, we know exactly what the model saw, what it decided, and why.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>
+          <span class="faq-q-icon">🔒</span>
+          <span class="faq-q-text" data-i18n="faq.1.q">How do you keep our data safe?</span>
+          <span class="faq-toggle" aria-hidden="true">+</span>
+        </summary>
+        <div class="faq-answer" data-i18n="faq.1.a">
+          <p>For mid-market and corporate clients in regulated markets (152-ФЗ, GDPR, PII, financial data) security is the #1 criterion. We treat the model as an untrusted user — rights live in a deterministic tool layer with audit and human approval on irreversible actions.</p>
+          <ul class="faq-bullets">
+            <li><strong>LLM ≠ a service with rights.</strong> Every action goes through a deterministic tool layer that checks permissions in the context of a specific user. A prompt injection can&#39;t &#34;ask&#34; to delete data — the policy engine rejects the call.</li>
+            <li><strong>Sensitive data → internal contour.</strong> Local model (vLLM / Ollama on your GPUs) or enterprise tiers with Zero Data Retention. Public LLMs never see raw data. Sensitivity-aware routing through an AI Gateway.</li>
+            <li><strong>Audit on every action.</strong> Each tool call written to an immutable log: who, what, when, which prompt, what result, allowed or denied. Alerts on anomalous patterns.</li>
+            <li><strong>Human approval on irreversible.</strong> Payments, data deletion, outbound mail, prod config changes — always through an approval queue.</li>
+          </ul>
+          <div class="faq-nogo">
+            <div class="faq-nogo-title">What we deliberately don&#39;t do:</div>
+            <ul>
+              <li><span class="nogo-x">×</span> Give the model raw <code>run_sql(query)</code></li>
+              <li><span class="nogo-x">×</span> Run agents under an admin service account</li>
+              <li><span class="nogo-x">×</span> Defend ourselves with a system prompt only</li>
+              <li><span class="nogo-x">×</span> RAG without document-level ACL</li>
+              <li><span class="nogo-x">×</span> Log raw prompts containing PII or secrets</li>
+              <li><span class="nogo-x">×</span> Direct model → DB / CRM / ERP connection</li>
+            </ul>
+          </div>
+          <div class="faq-standards">
+            <span class="standards-label">Working knowledge of:</span>
+            <span class="standard-tag">152-ФЗ (RF)</span>
+            <span class="standard-tag">GDPR</span>
+            <span class="standard-tag">ISO 27001 controls</span>
+            <span class="standard-tag">OWASP LLM Top 10</span>
+            <span class="standard-tag">SOC 2 patterns</span>
+          </div>
+          <p class="faq-note">Full engineering brief (40-page guide) available on request.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
 <!-- Process -->
 <section id="process">
   <div class="container">
@@ -3743,11 +3998,11 @@
       "meta.desc": "Outsourced AI, Web3 and automation engineering studio. We ship in 2–4 weeks what traditional studios deliver in 6+. Vibe-coding on Claude, a team that ships its own products, production-grade discipline.",
 
       "nav.services": "Services",
-      "nav.security": "Security",
       "nav.pricing": "Pricing",
       "nav.cases": "Cases",
       "nav.stack": "Stack",
       "nav.team": "Team",
+      "nav.faq": "FAQ",
       "nav.process": "Process",
       "nav.cta": "Book a call →",
 
@@ -3774,21 +4029,21 @@
       "pillar.4.title": "End-to-end ownership",
       "pillar.4.desc": "System design, AI pipelines, infra, billing, mobile builds, SEO, content automation — we cover the whole stack.",
 
-      "security.eyebrow": "// Security &amp; data",
-      "security.title": "Security by default —<br/>not an add-on",
-      "security.desc": "For mid-market and corporate clients in regulated markets (152-ФЗ, GDPR, PII, financial data) security is the #1 criterion. We design the architecture so client data never reaches public LLMs, never leaks through logs, never trains foreign models. The model is treated as an untrusted user; rights live in a deterministic tool layer with audit and human approval on irreversible actions.",
-      "security.1.title": "LLM = untrusted user, not a service",
-      "security.1.desc": "The model holds no rights directly. Every action goes through a deterministic tool layer that checks permissions in the context of a specific human user. A prompt injection can&#39;t &#34;ask&#34; to delete data — the policy engine rejects the call.",
-      "security.2.title": "Sensitive data → internal contour",
-      "security.2.desc": "For PII, financial and regulated data — a local model (vLLM / Ollama on your GPUs) or enterprise tiers with Zero Data Retention. Public LLMs never see raw data. Sensitivity-aware routing through an AI Gateway (LiteLLM).",
-      "security.3.title": "Audit on every action",
-      "security.3.desc": "Each tool call is written to an immutable audit log: who, what, when, which prompt, what result, allowed or denied. Incident investigation takes minutes, not days. Alerts on anomalous request patterns.",
-      "security.4.title": "Human approval on irreversible",
-      "security.4.desc": "Payments, data deletion, outbound mail, prod config changes — always through an approval queue. Autonomy only on read-only and reversible actions. No cascading-error scenarios.",
-      "security.nogo.title": "What we deliberately don&#39;t do",
-      "security.nogo.items": '<li><span class="nogo-x">×</span> Give the model raw <code>run_sql(query)</code> — that&#39;s a path to disaster</li><li><span class="nogo-x">×</span> Run agents under an admin service account</li><li><span class="nogo-x">×</span> &#34;Defend ourselves with a system prompt&#34; — that&#39;s text, not security</li><li><span class="nogo-x">×</span> RAG without document-level ACL</li><li><span class="nogo-x">×</span> Log raw prompts containing PII or secrets</li><li><span class="nogo-x">×</span> Direct model → DB / CRM / ERP connection</li>',
-      "security.standards.label": "Working knowledge of:",
-      "security.standards.cta": "Full engineering brief (40-page guide) — on request",
+      "faq.eyebrow": "// FAQ",
+      "faq.title": "Frequently asked",
+      "faq.desc": "The things B2B partners and corporate clients ask before saying yes. Click a question to expand.",
+      "faq.1.q": "How do you keep our data safe?",
+      "faq.1.a": '<p>For mid-market and corporate clients in regulated markets (152-ФЗ, GDPR, PII, financial data) security is the #1 criterion. We treat the model as an untrusted user — rights live in a deterministic tool layer with audit and human approval on irreversible actions.</p><ul class="faq-bullets"><li><strong>LLM ≠ a service with rights.</strong> Every action goes through a deterministic tool layer that checks permissions in the context of a specific user. A prompt injection can&#39;t &#34;ask&#34; to delete data — the policy engine rejects the call.</li><li><strong>Sensitive data → internal contour.</strong> Local model (vLLM / Ollama on your GPUs) or enterprise tiers with Zero Data Retention. Public LLMs never see raw data. Sensitivity-aware routing through an AI Gateway.</li><li><strong>Audit on every action.</strong> Each tool call written to an immutable log: who, what, when, which prompt, what result, allowed or denied. Alerts on anomalous patterns.</li><li><strong>Human approval on irreversible.</strong> Payments, data deletion, outbound mail, prod config changes — always through an approval queue.</li></ul><div class="faq-nogo"><div class="faq-nogo-title">What we deliberately don&#39;t do:</div><ul><li><span class="nogo-x">×</span> Give the model raw <code>run_sql(query)</code></li><li><span class="nogo-x">×</span> Run agents under an admin service account</li><li><span class="nogo-x">×</span> Defend ourselves with a system prompt only</li><li><span class="nogo-x">×</span> RAG without document-level ACL</li><li><span class="nogo-x">×</span> Log raw prompts containing PII or secrets</li><li><span class="nogo-x">×</span> Direct model → DB / CRM / ERP connection</li></ul></div><div class="faq-standards"><span class="standards-label">Working knowledge of:</span><span class="standard-tag">152-ФЗ (RF)</span><span class="standard-tag">GDPR</span><span class="standard-tag">ISO 27001 controls</span><span class="standard-tag">OWASP LLM Top 10</span><span class="standard-tag">SOC 2 patterns</span></div><p class="faq-note">Full engineering brief (40-page guide) available on request.</p>',
+      "faq.2.q": "Will it survive production load? Can vibe-coders handle that?",
+      "faq.2.a": '<p>Speed comes from vibe-coding, but underneath sits classical full-stack engineering. We understand databases, load behavior, security and the code itself — not just how to prompt Claude.</p><ul class="faq-bullets"><li><strong>Two-environment CI/CD</strong> — staging and production, healthchecks, rollback playbooks, documented deploy.</li><li><strong>Schema design and indexing</strong> from day one — no &#34;works on 10 users, dies on 1,000&#34; surprises.</li><li><strong>Load patterns we&#39;ve already survived</strong> — Yupland ecosystem with 5.7M+ on-chain transactions, NFT-Sender at #1 on NEAR by volume, YupLand Portal with ~2M loot boxes / 30 days.</li><li><strong>Real engineers behind the AI flow</strong> — the team has years of production work before AI accelerated us. Vibe-coding is the multiplier; engineering is the base.</li></ul>',
+      "faq.3.q": "Can we start with a small pilot before committing?",
+      "faq.3.a": '<p>Yes — that&#39;s the recommended way to start.</p><ul class="faq-bullets"><li><strong>Discovery call is free.</strong> 30 minutes, no sales pitch, no obligation. You leave with a realistic scope, timeline and price.</li><li><strong>MVP scope is welcome.</strong> We can take a single narrow piece (one bot flow, one landing, one AI agent) and ship it in 1–2 weeks before any larger commitment.</li><li><strong>Hourly with weekly cap</strong> works if the scope is still moving. You see exactly what time was spent on what.</li><li><strong>Milestone-based payment</strong> for fixed-scope projects. You only pay for what&#39;s delivered.</li></ul>',
+      "faq.4.q": "Who owns the code after the project?",
+      "faq.4.a": '<p>You do — fully. We don&#39;t try to lock you in.</p><ul class="faq-bullets"><li><strong>Full repository transfer</strong> on completion — your GitHub/GitLab, your account.</li><li><strong>Documented handover</strong> — env notes, secrets list, deployment instructions, rollback playbook, 30-minute walkthrough call.</li><li><strong>No proprietary &#34;framework&#34;</strong> that ties you to us — we build on standard, popular stacks any team can pick up.</li><li><strong>Your team or another contractor</strong> can continue the work without us. We&#39;d rather you come back because you want to, not because you have to.</li></ul>',
+      "faq.5.q": "What if something breaks after handover?",
+      "faq.5.a": '<p>Production discipline is baked in from the start — we plan for things breaking so you don&#39;t scramble when they do.</p><ul class="faq-bullets"><li><strong>Rollback playbook</strong> ships with the project — one command brings the previous version back.</li><li><strong>Healthchecks and alerts</strong> set up before launch — you know about an outage before users do.</li><li><strong>Two-environment CI/CD</strong> — every change tested on staging before reaching production.</li><li><strong>Post-launch support</strong> available on a separate agreement — hourly retainer or fixed monthly. We help during incidents even when there&#39;s no retainer; we just bill the hours.</li></ul>',
+      "faq.6.q": "What if the AI makes a mistake in production?",
+      "faq.6.a": '<p>AI gets things wrong. The architecture is what determines whether those mistakes hurt you.</p><ul class="faq-bullets"><li><strong>Human approval on irreversible actions</strong> — payments, deletions, outbound communication, prod config changes always need a person to click &#34;approve&#34;. Autonomy is reserved for read-only and reversible operations.</li><li><strong>Provider fallback chain</strong> — if one AI provider returns nonsense or goes down, we automatically retry on another. No silent failures.</li><li><strong>Validation on every tool call</strong> — schema checks, business-rule checks, argument whitelists. The model can&#39;t &#34;ask&#34; to do something unsupported.</li><li><strong>Full audit log</strong> — every AI decision is traceable. If something does go wrong, we know exactly what the model saw, what it decided, and why.</li></ul>',
 
       "services.eyebrow": "// What we build",
       "services.title": "Six directions —<br/>one full-cycle team",
@@ -4075,11 +4330,11 @@
       "meta.desc": "Outsource-студия разработки AI, Web3 и автоматизации. Запускаем за 2–4 недели то, на что обычным студиям нужно 6+. Vibe-coding на Claude, команда со своими продуктами, production-дисциплина.",
 
       "nav.services": "Услуги",
-      "nav.security": "Безопасность",
       "nav.pricing": "Цены",
       "nav.cases": "Кейсы",
       "nav.stack": "Стек",
       "nav.team": "Команда",
+      "nav.faq": "FAQ",
       "nav.process": "Процесс",
       "nav.cta": "Связаться →",
 
@@ -4106,21 +4361,21 @@
       "pillar.4.title": "Полное владение задачей",
       "pillar.4.desc": "Архитектура, AI-пайплайны, инфра, биллинг, мобильные сборки, SEO, контент-автоматизация — закрываем весь стек.",
 
-      "security.eyebrow": "// Безопасность и данные",
-      "security.title": "Безопасность по умолчанию —<br/>не как опция",
-      "security.desc": "Для среднего и крупного бизнеса в регулируемых рынках (152-ФЗ, GDPR, PII, финансовые данные) безопасность — критерий №1. Архитектуру строим так, чтобы данные клиентов не попадали в публичные LLM, не утекали через логи и не уходили в обучение чужих моделей. Модель рассматриваем как недоверенного пользователя — права живут в детерминированном tool-слое с аудитом и человеческим подтверждением на необратимых действиях.",
-      "security.1.title": "LLM = недоверенный пользователь, не сервис",
-      "security.1.desc": "Модель не имеет прав напрямую. Все действия идут через детерминированный tool-слой, который проверяет права от имени конкретного пользователя. Prompt injection не может «попросить» удалить данные — policy engine отклоняет вызов.",
-      "security.2.title": "Чувствительные данные → внутренний контур",
-      "security.2.desc": "Для PII, финансовых и регулируемых данных — локальная модель (vLLM / Ollama на ваших GPU) или enterprise-тиры с Zero Data Retention. Публичные LLM не видят сырых данных. Маршрутизация по чувствительности через AI Gateway (LiteLLM).",
-      "security.3.title": "Аудит каждого действия",
-      "security.3.desc": "Каждый tool call логируется в иммутабельный audit: кто, что, когда, какой prompt, какой результат, разрешено или отклонено. Расследование инцидента — за минуты, не за дни. Алерты на аномальные паттерны запросов.",
-      "security.4.title": "Human approval на необратимом",
-      "security.4.desc": "Платежи, удаление данных, исходящие письма, изменения prod-конфигов — всегда через approval queue. Автономия — только для read-only и обратимых действий. Каскад ошибок невозможен.",
-      "security.nogo.title": "Что мы намеренно НЕ делаем",
-      "security.nogo.items": '<li><span class="nogo-x">×</span> Не даём модели сырой <code>run_sql(query)</code> — путь к катастрофе</li><li><span class="nogo-x">×</span> Не запускаем агентов под админ-сервис-аккаунтом</li><li><span class="nogo-x">×</span> Не «защищаемся системным промптом» — это текст, не безопасность</li><li><span class="nogo-x">×</span> Не делаем RAG без document-level ACL</li><li><span class="nogo-x">×</span> Не логируем сырые prompt&#39;ы с PII или секретами</li><li><span class="nogo-x">×</span> Не подключаем модель напрямую к БД / CRM / ERP</li>',
-      "security.standards.label": "Работаем по принципам:",
-      "security.standards.cta": "Полный инженерный гайд (40-страничный документ) — по запросу",
+      "faq.eyebrow": "// FAQ",
+      "faq.title": "Частые вопросы",
+      "faq.desc": "Вопросы, которые B2B-партнёры и корпоративные клиенты задают перед тем, как сказать «да». Кликни по вопросу, чтобы развернуть.",
+      "faq.1.q": "Как обеспечивается безопасность данных?",
+      "faq.1.a": '<p>Для среднего и крупного бизнеса в регулируемых рынках (152-ФЗ, GDPR, PII, финансовые данные) безопасность — критерий №1. Модель рассматриваем как недоверенного пользователя — права живут в детерминированном tool-слое с аудитом и human approval на необратимых действиях.</p><ul class="faq-bullets"><li><strong>LLM ≠ сервис с правами.</strong> Все действия идут через детерминированный tool-слой, который проверяет права от имени конкретного пользователя. Prompt injection не может «попросить» удалить данные — policy engine отклоняет вызов.</li><li><strong>Чувствительные данные → внутренний контур.</strong> Локальная модель (vLLM / Ollama на ваших GPU) или enterprise-тиры с Zero Data Retention. Публичные LLM не видят сырых данных. Маршрутизация по чувствительности через AI Gateway.</li><li><strong>Аудит каждого действия.</strong> Каждый tool call логируется в иммутабельный audit: кто, что, когда, какой prompt, какой результат, разрешено или отклонено. Алерты на аномальные паттерны.</li><li><strong>Human approval на необратимом.</strong> Платежи, удаление данных, исходящие письма, изменения prod-конфигов — всегда через approval queue.</li></ul><div class="faq-nogo"><div class="faq-nogo-title">Что мы намеренно НЕ делаем:</div><ul><li><span class="nogo-x">×</span> Не даём модели сырой <code>run_sql(query)</code></li><li><span class="nogo-x">×</span> Не запускаем агентов под админ-сервис-аккаунтом</li><li><span class="nogo-x">×</span> Не «защищаемся системным промптом» — это текст, не безопасность</li><li><span class="nogo-x">×</span> Не делаем RAG без document-level ACL</li><li><span class="nogo-x">×</span> Не логируем сырые prompt&#39;ы с PII или секретами</li><li><span class="nogo-x">×</span> Не подключаем модель напрямую к БД / CRM / ERP</li></ul></div><div class="faq-standards"><span class="standards-label">Работаем по принципам:</span><span class="standard-tag">152-ФЗ (РФ)</span><span class="standard-tag">GDPR</span><span class="standard-tag">ISO 27001 controls</span><span class="standard-tag">OWASP LLM Top 10</span><span class="standard-tag">SOC 2 patterns</span></div><p class="faq-note">Полный инженерный гайд (40-страничный документ) — по запросу.</p>',
+      "faq.2.q": "Под нагрузкой не упадёт? Вайбкодеры справятся с продом?",
+      "faq.2.a": '<p>Скорость даёт vibe-coding, но под капотом — классическая full-stack разработка. Понимаем как работают базы данных, поведение под нагрузкой, безопасность и сам код — не только как промптить Claude.</p><ul class="faq-bullets"><li><strong>CI/CD с двумя средами</strong> — staging и production, healthcheck&#39;и, playbook&#39;и отката, документированный деплой.</li><li><strong>Дизайн схемы и индексов</strong> с первого дня — никаких «работает на 10 юзерах, падает на 1000».</li><li><strong>Реальные нагрузки, которые уже выдержали</strong> — экосистема Yupland с 5.7M+ on-chain транзакциями, NFT-Sender #1 на NEAR по объёму, YupLand Portal с ~2M лутбоксов / 30 дней.</li><li><strong>Реальные инженеры за AI-флоу</strong> — у команды годы production-работы до того, как AI ускорил нас. Vibe-coding — это множитель; инжиниринг — это база.</li></ul>',
+      "faq.3.q": "Можно ли начать с маленького пилота?",
+      "faq.3.a": '<p>Да — это рекомендуемый способ начать.</p><ul class="faq-bullets"><li><strong>Discovery-созвон бесплатный.</strong> 30 минут, без коммерческой презентации, без обязательств. Уходишь с реалистичным скоупом, сроком и ценой.</li><li><strong>MVP-скоуп приветствуется.</strong> Можем взять один узкий кусок (один флоу бота, один лендинг, одного AI-агента) и сдать за 1–2 недели до большого коммита.</li><li><strong>Почасовка с потолком на неделю</strong> работает, если скоуп ещё движется. Видишь точно, на что и сколько времени ушло.</li><li><strong>Оплата по майлстоунам</strong> для fixed-scope проектов. Платишь только за то, что сделано.</li></ul>',
+      "faq.4.q": "Кому принадлежит код после проекта?",
+      "faq.4.a": '<p>Вам — полностью. Мы не привязываем к себе.</p><ul class="faq-bullets"><li><strong>Полная передача репозитория</strong> на финале — ваш GitHub/GitLab, ваш аккаунт.</li><li><strong>Документированная сдача</strong> — env-заметки, список секретов, инструкции по деплою, playbook отката, 30-минутный walkthrough-созвон.</li><li><strong>Никакого «проприетарного фреймворка»</strong>, который привязывает к нам — собираем на стандартных популярных стеках, которые любая команда может подхватить.</li><li><strong>Ваша команда или другой подрядчик</strong> могут продолжить без нас. Мы хотим, чтобы вы возвращались, потому что хотите, а не потому что должны.</li></ul>',
+      "faq.5.q": "Что если что-то сломается после сдачи?",
+      "faq.5.a": '<p>Production-дисциплина заложена с самого начала — планируем поломки, чтобы вы не паниковали, когда они случаются.</p><ul class="faq-bullets"><li><strong>Playbook отката</strong> поставляется с проектом — одной командой возвращается предыдущая версия.</li><li><strong>Healthcheck&#39;и и алерты</strong> настроены до запуска — вы узнаёте об аварии раньше пользователей.</li><li><strong>CI/CD с двумя средами</strong> — каждое изменение тестируется на staging до прода.</li><li><strong>Поддержка после запуска</strong> доступна по отдельному соглашению — почасовой ретейнер или фиксированный месячный. Помогаем при инцидентах и без ретейнера; просто счёт за часы.</li></ul>',
+      "faq.6.q": "Что если AI ошибётся в проде?",
+      "faq.6.a": '<p>AI ошибается. Архитектура определяет, навредят ли вам эти ошибки.</p><ul class="faq-bullets"><li><strong>Human approval на необратимых действиях</strong> — платежи, удаления, исходящая коммуникация, изменения prod-конфига всегда требуют человеческого «approve». Автономия — только для read-only и обратимых операций.</li><li><strong>Fallback-цепочка провайдеров</strong> — если один AI-провайдер выдал бред или упал, автоматически переключаемся на другого. Никаких тихих сбоев.</li><li><strong>Валидация на каждом tool call</strong> — schema-проверки, бизнес-правила, whitelist аргументов. Модель не может «попросить» сделать что-то неподдержанное.</li><li><strong>Полный audit log</strong> — каждое AI-решение трассируется. Если что-то пошло не так, мы знаем точно, что модель увидела, что решила и почему.</li></ul>',
 
       "services.eyebrow": "// Что мы делаем",
       "services.title": "Шесть направлений —<br/>одна команда полного цикла",
