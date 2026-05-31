@@ -18,7 +18,7 @@
   });
 </script>
 <title>YupCode Studio — Ship AI products 3–5x faster</title>
-<meta name="description" content="Outsourced AI, Web3 and automation engineering studio. We ship in 2–4 weeks what traditional studios deliver in 6+. Vibe-coding on Claude, founder team, production-grade discipline." />
+<meta name="description" content="Outsourced AI, Web3 and automation engineering studio. We ship in 2–4 weeks what traditional studios deliver in 6+. Vibe-coding on Claude, a team that ships its own products, production-grade discipline." />
 <link rel="icon" type="image/jpeg" href="yupcode-icon.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -638,45 +638,86 @@
     .services { grid-template-columns: 1fr; }
   }
 
-  /* Cases */
+  /* Cases — compact "shop window" cards */
   .cases {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
   }
 
   .case {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 0;
-    transition: all 0.3s var(--ease-out);
+    cursor: pointer;
     position: relative;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    transition: border-color 0.25s var(--ease-out), transform 0.25s var(--ease-out), background 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
   }
 
   .case:hover {
-    border-color: var(--border-bright);
+    border-color: var(--accent);
     background: var(--bg-card-hover);
     transform: translateY(-4px);
     box-shadow: 0 24px 48px -24px rgba(0,0,0,0.6);
   }
 
-  .case::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    opacity: 0;
-    transition: opacity 0.3s;
-    z-index: 2;
+  .case-face {
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    min-height: 188px;
   }
 
-  .case:hover::before { opacity: 1; }
+  .case-face .case-tag { align-self: flex-start; }
+
+  .case-face h3 {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .case-face-stack {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-mute);
+    line-height: 1.5;
+  }
+
+  .case-more {
+    margin-top: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.2s var(--ease-out);
+  }
+
+  .case:hover .case-more { gap: 11px; }
+
+  /* Full content lives here, hidden until moved into the modal */
+  .case-details { display: none; }
+
+  /* Modal head: title (white sans), tag (filled green pill) below — avatar pinned top-left */
+  .case-detail-head { margin-bottom: 18px; }
+
+  .case-detail-head h3 {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+
+  .case-detail-head .case-tag { display: inline-block; }
 
   .case-image {
     width: 100%;
@@ -792,7 +833,7 @@
     background: rgba(5, 5, 7, 0.92);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    z-index: 1000;
+    z-index: 1100;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1073,13 +1114,7 @@
     white-space: nowrap;
   }
 
-  .case h3 {
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    margin-bottom: 14px;
-    line-height: 1.3;
-  }
+  /* (case title sizing handled by .case-face h3 and .case-detail-head h3) */
 
   .case-desc {
     font-size: 14px;
@@ -1150,9 +1185,12 @@
   }
 
   @media (max-width: 1100px) {
+    .cases { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 760px) {
     .cases { grid-template-columns: repeat(2, 1fr); }
   }
-  @media (max-width: 700px) {
+  @media (max-width: 440px) {
     .cases { grid-template-columns: 1fr; }
   }
 
@@ -1435,6 +1473,378 @@
 
   .footer-links a:hover { color: var(--text); }
 
+  /* Pricing */
+  .pricing-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  .price-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 26px;
+    transition: all 0.2s var(--ease-out);
+  }
+
+  .price-row:hover {
+    border-color: var(--border-bright);
+    background: var(--bg-card-hover);
+    transform: translateX(3px);
+  }
+
+  .price-row-info { flex: 1; min-width: 0; }
+
+  .price-row h3 {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 5px;
+  }
+
+  .price-row p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .price-tag {
+    flex-shrink: 0;
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .price-tag .price-from {
+    display: block;
+    font-size: 11px;
+    color: var(--text-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 2px;
+  }
+
+  .price-tag .price-amount {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .pricing-note {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-mute);
+    max-width: 600px;
+    margin: 28px auto 0;
+    line-height: 1.5;
+  }
+
+  /* Case detail modal */
+  .case-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 5, 7, 0.9);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    z-index: 1000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 60px 24px;
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s var(--ease-out);
+  }
+
+  .case-modal.open { opacity: 1; pointer-events: auto; }
+
+  .case-modal-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    max-width: 720px;
+    width: 100%;
+    margin: auto;
+    position: relative;
+    padding: 32px;
+    box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.7);
+    transform: translateY(14px);
+    transition: transform 0.3s var(--ease-out);
+  }
+
+  .case-modal.open .case-modal-card { transform: translateY(0); }
+
+  .case-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(20, 20, 24, 0.7);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    transition: all 0.2s var(--ease-out);
+  }
+
+  .case-modal-close:hover {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+
+  .case-modal-body .case-details { display: block; }
+
+  .case-modal-body .case-image {
+    border-radius: 12px;
+    border-bottom: none;
+    margin-bottom: 20px;
+  }
+
+  .case-modal-body .case-image:hover .case-zoom-hint {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Round project mark — pinned top-left of modal card, height = 2 lines (title + tag) */
+  .cs-hero.case-image {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    width: 64px;
+    height: 64px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    margin: 0;
+    background: linear-gradient(135deg, #0c0c10, #16161c);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 18px -6px rgba(0, 0, 0, 0.55);
+    overflow: hidden;
+    z-index: 2;
+  }
+  .cs-hero.case-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    transform: scale(1.18);
+    transform-origin: center center;
+  }
+  /* Hide overlays on the round mark — it's a clean project tag */
+  .cs-hero.case-image .case-zoom-hint,
+  .cs-hero.case-image .case-shots-badge,
+  .cs-hero.case-image .case-image-placeholder { display: none; }
+  /* Reserve space left of title row for the avatar */
+  .case-modal-card .case-detail-head { padding-left: 80px; min-height: 64px; }
+
+  .cs-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text-mute);
+    margin-top: 4px;
+  }
+
+  .cs-lead {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--text);
+    margin: 22px 0 28px;
+  }
+
+  .cs-section { margin-bottom: 24px; }
+
+  .cs-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .cs-label::before {
+    content: '// ';
+    opacity: 0.6;
+  }
+  /* Tone the challenge label warm/red (problem), solution stays accent-green */
+  .cs-label[data-i18n="cs.challenge"] { color: #ff7a6b; }
+  .cs-label[data-i18n="cs.underhood"] { color: #ffb86b; }
+
+  .cs-section p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-dim);
+    margin: 0;
+  }
+
+  .cs-shots-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 8px 0 28px;
+  }
+
+  .cs-shots-row .cs-shot.case-image {
+    aspect-ratio: 1170 / 2532;
+    border-radius: 12px;
+    border-bottom: none;
+    margin: 0;
+  }
+
+  .cs-shots-row .cs-shot.case-image img { object-fit: cover; }
+
+  /* full-width / landscape shot */
+  .cs-shot-wide.case-image {
+    aspect-ratio: 16 / 10;
+    border-radius: 12px;
+    border-bottom: none;
+    margin: 8px 0 8px;
+  }
+  .cs-shot-wide.case-image img { object-fit: cover; }
+
+  .cs-caption {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-mute);
+    margin: 0 0 26px;
+    text-align: center;
+  }
+
+  /* meta grid — terminal data block */
+  .cs-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 16px 0 22px;
+  }
+  .cs-fact { background: rgba(0, 0, 0, 0.4); padding: 12px 14px; }
+  .cs-fact-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--text-mute);
+    margin-bottom: 6px;
+  }
+  .cs-fact-value {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12.5px;
+    color: var(--text);
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+  }
+
+  /* feature subsections */
+  .cs-features { margin: 4px 0 8px; }
+  .cs-feature { margin: 0 0 16px; }
+  .cs-feature h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 5px;
+    letter-spacing: -0.01em;
+  }
+  .cs-feature h4::before { content: '▹ '; color: var(--accent); }
+  .cs-feature p { font-size: 14px; line-height: 1.6; color: var(--text-dim); margin: 0; }
+
+  /* pull-quote — terminal "// QUOTE" inset, agent-card style */
+  .cs-quote {
+    position: relative;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.005em;
+    padding: 34px 20px 18px;
+    background: rgba(0, 0, 0, 0.38);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    margin: 26px 0;
+  }
+  .cs-quote::before {
+    content: '// QUOTE';
+    position: absolute;
+    top: 12px;
+    left: 20px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    opacity: 0.9;
+  }
+
+  /* under-the-hood highlights — terminal output */
+  .cs-highlights {
+    list-style: none;
+    padding: 14px 18px;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.32);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  .cs-highlights li {
+    position: relative;
+    padding: 7px 0 7px 22px;
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+  }
+  .cs-highlights li:last-child { border-bottom: none; }
+  .cs-highlights li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 700;
+  }
+
+  /* process / steps */
+  .cs-steps { display: flex; flex-direction: column; gap: 10px; margin: 8px 0 26px; }
+  .cs-step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 16px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .cs-step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+  .cs-step-text { font-size: 13px; color: var(--text-dim); line-height: 1.55; }
+  .cs-step-text strong { color: var(--text); font-weight: 600; }
+
   /* ===== Mobile overrides (kept at the end to win the cascade) ===== */
   @media (max-width: 600px) {
     /* Hard-cap horizontal overflow */
@@ -1538,6 +1948,33 @@
     .stack-card { padding: 16px 14px; }
     .stack-card h4 { font-size: 11px; margin-bottom: 12px; }
     .stack-tag { font-size: 10px; padding: 3px 7px; }
+
+    /* Pricing */
+    .price-row { flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px; }
+    .price-tag { text-align: left; }
+    .price-tag .price-amount { font-size: 18px; }
+    .price-row h3 { font-size: 15px; }
+    .price-row p { font-size: 12px; }
+    .pricing-note { font-size: 12px; }
+
+    /* Cases — compact face + modal */
+    .cases { gap: 12px; }
+    .case-face { padding: 16px 14px; min-height: 150px; gap: 8px; }
+    .case-face h3 { font-size: 14px; }
+    .case-face-stack { font-size: 10px; }
+    .case-more { font-size: 11px; }
+    .case-modal { padding: 40px 12px; }
+    .case-modal-card { padding: 22px 18px; border-radius: 16px; }
+    .case-detail-head h3 { font-size: 20px; }
+    .case-modal-card .case-detail-head { padding-left: 68px; min-height: 54px; }
+    .cs-hero.case-image { width: 54px; height: 54px; top: 14px; left: 14px; }
+    .cs-lead { font-size: 15px; }
+    .cs-shots-row { grid-template-columns: repeat(2, 1fr); }
+    .cs-meta-grid { grid-template-columns: repeat(2, 1fr); }
+    .cs-quote { font-size: 15px; padding: 30px 16px 16px; }
+    .cs-quote::before { left: 16px; top: 10px; }
+    .cs-highlights { padding: 10px 14px; }
+    .cs-highlights li { font-size: 12.5px; }
   }
 
   @media (max-width: 420px) {
@@ -1565,6 +2002,7 @@
       </div>
       <div class="nav-links">
         <a href="#services" data-i18n="nav.services">Services</a>
+        <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
         <a href="#cases" data-i18n="nav.cases">Cases</a>
         <a href="#stack" data-i18n="nav.stack">Stack</a>
         <a href="#team" data-i18n="nav.team">Team</a>
@@ -1582,7 +2020,7 @@
   <div class="container">
     <div class="hero-badge">
       <span class="dot"></span>
-      <span data-i18n="hero.badge">Available for new projects · 7 founder team</span>
+      <span data-i18n="hero.badge">Available for new projects · We build our own products</span>
     </div>
     <h1 data-i18n="hero.title">
       Ship AI products <span class="accent">3–5× faster</span><br/>
@@ -1591,7 +2029,7 @@
     <p class="hero-sub" data-i18n="hero.sub">
       We're an outsourced studio building AI, Web3, automation, bots, and web apps end-to-end.
       What traditional teams deliver in 6+ weeks, we ship in 2 — through vibe-coding on Claude
-      and a tight founder team that owns delivery from scope to handover.
+      and a tight team that owns delivery from scope to handover.
     </p>
     <div class="hero-cta">
       <a href="#contact" class="btn btn-primary" onclick="openContact(event)" data-i18n="hero.cta1">
@@ -1617,7 +2055,7 @@
       </div>
       <div class="stat">
         <div class="stat-num">7</div>
-        <div class="stat-label" data-i18n="stats.4">Co-founders, each<br/>shipped a flagship</div>
+        <div class="stat-label" data-i18n="stats.4">in the team, each<br/>shipped a flagship</div>
       </div>
     </div>
   </div>
@@ -1640,8 +2078,8 @@
       </div>
       <div class="pillar">
         <div class="pillar-icon">🎯</div>
-        <h3 data-i18n="pillar.2.title">Founder team, not staff</h3>
-        <p data-i18n="pillar.2.desc">7 co-founders, each owns a product in our own ecosystem. We treat client work with the same accountability.</p>
+        <h3 data-i18n="pillar.2.title">We own what we build</h3>
+        <p data-i18n="pillar.2.desc">Each of us builds and runs a product in our own ecosystem — so we treat client work with the same accountability.</p>
       </div>
       <div class="pillar">
         <div class="pillar-icon">🛠</div>
@@ -1772,6 +2210,76 @@
   </div>
 </section>
 
+<!-- Pricing -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow" data-i18n="pricing.eyebrow">// Pricing</div>
+      <h2 class="section-title" data-i18n="pricing.title">Popular services &amp; starting prices</h2>
+      <p class="section-desc" data-i18n="pricing.desc">Our most-requested directions. Final price depends on scope.</p>
+    </div>
+
+    <div class="pricing-list reveal-stagger">
+      <div class="price-row">
+        <div class="price-row-info">
+          <h3 data-i18n="price.1.title">AI implementation</h3>
+          <p data-i18n="price.1.desc">AI agents, RAG, LLM chatbots, AI-driven process automation</p>
+        </div>
+        <div class="price-tag">
+          <span class="price-from" data-i18n="price.from">from</span>
+          <span class="price-amount" data-i18n="price.1.amount">$1,500</span>
+        </div>
+      </div>
+
+      <div class="price-row">
+        <div class="price-row-info">
+          <h3 data-i18n="price.2.title">Web development</h3>
+          <p data-i18n="price.2.desc">Landing pages, websites, web apps, SaaS dashboards, admin panels</p>
+        </div>
+        <div class="price-tag">
+          <span class="price-from" data-i18n="price.from">from</span>
+          <span class="price-amount" data-i18n="price.2.amount">$1,000</span>
+        </div>
+      </div>
+
+      <div class="price-row">
+        <div class="price-row-info">
+          <h3 data-i18n="price.3.title">Telegram bots &amp; Mini Apps</h3>
+          <p data-i18n="price.3.desc">Bots with logic, payments, CRM integration, Mini Apps</p>
+        </div>
+        <div class="price-tag">
+          <span class="price-from" data-i18n="price.from">from</span>
+          <span class="price-amount" data-i18n="price.3.amount">$800</span>
+        </div>
+      </div>
+
+      <div class="price-row">
+        <div class="price-row-info">
+          <h3 data-i18n="price.4.title">Automation &amp; integrations</h3>
+          <p data-i18n="price.4.desc">Connecting services via API, CRM, notifications, CI/CD, cron jobs</p>
+        </div>
+        <div class="price-tag">
+          <span class="price-from" data-i18n="price.from">from</span>
+          <span class="price-amount" data-i18n="price.4.amount">$700</span>
+        </div>
+      </div>
+
+      <div class="price-row">
+        <div class="price-row-info">
+          <h3 data-i18n="price.5.title">Big data processing</h3>
+          <p data-i18n="price.5.desc">Parsing, scraping, data pipelines, databases, analytics</p>
+        </div>
+        <div class="price-tag">
+          <span class="price-from" data-i18n="price.from">from</span>
+          <span class="price-amount" data-i18n="price.5.amount">$1,200</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="pricing-note" data-i18n="pricing.note">Final price is set after a free discovery call — it depends on scope and complexity.</p>
+  </div>
+</section>
+
 <!-- Cases -->
 <section id="cases">
   <div class="container">
@@ -1784,25 +2292,86 @@
     <div class="cases reveal-stagger">
 
       <!-- 1. Yupland -->
-      <div class="case">
-        <div class="case-image"
-             data-shots-en="cases/yupland_en/yupland.jpeg,cases/yupland_en/yupland2.jpeg,cases/yupland_en/yupland3.jpeg,cases/yupland_en/yupland4.jpeg,cases/yupland_en/yupland5.jpeg,cases/yupland_en/yupland7.jpeg,cases/yupland_en/yupland8.jpeg"
-             data-shots-ru="cases/yupland_ru/yupland.jpeg,cases/yupland_ru/yupland2.jpeg,cases/yupland_ru/yupland3.jpeg,cases/yupland_ru/yupland4.jpeg,cases/yupland_ru/yupland5.jpeg">
-          <div class="case-image-placeholder">cases/yupland_title.jpeg</div>
-          <img src="cases/yupland_title.jpeg" alt="" onerror="this.remove()">
+      <div class="case" role="button" tabindex="0" onclick="openCase(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCase(this);}">
+        <div class="case-face">
+          <span class="case-tag" data-i18n="case.5.tag">Web3 · Flagship</span>
+          <h3 data-i18n="case.5.title">Yupland — Web3 Ecosystem</h3>
+          <div class="case-face-stack">NEAR · TON · React · Node.js</div>
+          <span class="case-more" data-i18n="case.more">Details →</span>
         </div>
-        <div class="case-body">
-          <div class="case-head">
+        <div class="case-details">
+          <div class="case-detail-head">
             <h3 data-i18n="case.5.title">Yupland — Web3 Ecosystem</h3>
             <span class="case-tag" data-i18n="case.5.tag">Web3 · Flagship</span>
           </div>
-          <p class="case-desc" data-i18n="case.5.desc">Decentralized gaming ecosystem on NEAR Protocol with a unique "Reputation Game" mechanic. NFT marketplace, incubator, multi-chain crafting, games, clans, tokenomics. Active activity that doesn't depend on the bear market.</p>
-          <div class="case-metrics" data-i18n="case.5.metrics">
-            <span class="metric metric-accent">2M+ on-chain tx (#1 NEAR)</span>
-            <span class="metric">150K NFTs</span>
-            <span class="metric">9K+ reputation wallets</span>
-            <span class="metric">$3K BitGet pitch win</span>
+
+          <div class="cs-meta-grid" data-i18n="case.5.metainfo">
+            <div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">Full-cycle Web3</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Timeline</div><div class="cs-fact-value">1.5 years live</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Chains</div><div class="cs-fact-value">NEAR + TON</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Funding</div><div class="cs-fact-value">Self-funded</div></div>
           </div>
+
+          <div class="cs-hero case-image" data-shots="cases/yupland_title.jpeg">
+            <div class="case-image-placeholder">cases/yupland_title.jpeg</div>
+            <img src="cases/yupland_title.jpeg" alt="" onerror="this.remove()">
+          </div>
+
+          <p class="cs-lead" data-i18n="case.5.overview">A self-built, multi-chain Web3 ecosystem on NEAR — 15+ products linked by one economy and 21 tokens, where real users have lived, traded and crafted for two years across two market cycles.</p>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.challenge">The challenge</div>
+            <p data-i18n="case.5.challenge">Web3 games die with the market — in a bear, NFTs rot in wallets, communities scatter and metrics are bot-inflated. The goal: an ecosystem whose on-chain activity doesn't depend on price, driven by real wallets, not bots.</p>
+          </div>
+
+          <div class="cs-shots-row">
+            <div class="cs-shot case-image" data-shots="cases/yupland_en/yupland.jpeg"><img src="cases/yupland_en/yupland.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/yupland_en/yupland2.jpeg"><img src="cases/yupland_en/yupland2.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/yupland_en/yupland3.jpeg"><img src="cases/yupland_en/yupland3.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+          </div>
+          <div class="cs-caption" data-i18n="case.5.shotscaption">Screenshots: YupPortal — the ecosystem's hub &amp; navigator web app (marketplace · DEX · incubator)</div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.solution">What we built</div>
+            <p data-i18n="case.5.solution">The Reputation Game — an antifragile loop of trade → craft → burn → win that gets stronger under pressure. Cross-chain crafting (Alchemy Lab), a burn wallet (Duplo), mass NFT distribution (Sender — 120 NFTs per tx) and AI products, all live on NEAR + TON on custom indexers and smart contracts.</p>
+          </div>
+
+          <div class="cs-features" data-i18n="case.5.features">
+            <div class="cs-feature"><h4>Alchemy Lab</h4><p>Cross-chain NFT crafting across NEAR + TON — 29K+ crafts, 283 recipes. Burning solves inflation; recipes drive retention.</p></div>
+            <div class="cs-feature"><h4>NFT-Sender</h4><p>Mass multi-chain distribution at 120 NFTs per transaction, past the NEAR throughput limit — no analogs on the market.</p></div>
+            <div class="cs-feature"><h4>YupSoul — AI Music Oracle</h4><p>The flagship AI product: personal songs from a natal chart across web, Telegram, VK, iOS &amp; Android in 5 languages.</p></div>
+          </div>
+
+          <div class="cs-shots-row">
+            <div class="cs-shot case-image" data-shots="cases/yupland_en/yupland4.jpeg"><img src="cases/yupland_en/yupland4.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/yupland_en/yupland5.jpeg"><img src="cases/yupland_en/yupland5.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/yupland_en/yupland7.jpeg"><img src="cases/yupland_en/yupland7.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+          </div>
+
+          <div class="cs-quote" data-i18n="case.5.quote">5.7M+ on-chain transactions, 123K+ holders, 21 tokens — all self-built, on a chain that ignored us.</div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.underhood">Under the hood</div>
+            <ul class="cs-highlights" data-i18n="case.5.highlights">
+              <li>Custom NEAR indexers tracking every on-chain event in real time</li>
+              <li>Sender pushing 120 NFTs per transaction past the NEAR throughput limit</li>
+              <li>Cross-chain bridge logic uniting NEAR + TON liquidity in one loop</li>
+              <li>Self-sustaining for 1.5 years — zero grants, zero VC</li>
+            </ul>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.results">Results</div>
+            <div class="case-metrics" data-i18n="case.5.metrics">
+              <span class="metric metric-accent">5.7M+ on-chain tx</span>
+              <span class="metric">#1 by activity on NEAR</span>
+              <span class="metric">123K+ holders</span>
+              <span class="metric">190K+ NFTs</span>
+              <span class="metric">15+ products · 21 tokens</span>
+              <span class="metric">$3K BitGet win</span>
+            </div>
+          </div>
+
           <div class="case-stack">
             <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> NEAR/TON smart contracts · React · Next.js · Node.js · TypeScript · Python · Telegram Bot API · custom indexers
           </div>
@@ -1812,26 +2381,150 @@
         </div>
       </div>
 
-      <!-- 2. AI Music -->
-      <div class="case">
-        <div class="case-image"
-             data-shots-en="cases/ai-music-en/ai-music-en.jpeg,cases/ai-music-en/ai-music-en2.jpeg,cases/ai-music-en/ai-music-en3.jpeg,cases/ai-music-en/ai-music-en4.jpeg"
-             data-shots-ru="cases/ai-music-ru/ai-music.jpeg,cases/ai-music-ru/ai-music2.jpeg,cases/ai-music-ru/ai-music3.jpeg,cases/ai-music-ru/ai-music4.jpeg">
-          <div class="case-image-placeholder">cases/ai-music_title.jpeg</div>
-          <img src="cases/ai-music_title.jpeg" alt="" onerror="this.remove()">
+      <!-- 1b. YupLand Portal — Ecosystem Hub (within the Yupland ecosystem) -->
+      <div class="case" role="button" tabindex="0" onclick="openCase(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCase(this);}">
+        <div class="case-face">
+          <span class="case-tag" data-i18n="case.13.tag">Web3 · Portal</span>
+          <h3 data-i18n="case.13.title">YupLand Portal — Ecosystem Hub</h3>
+          <div class="case-face-stack">React · TS · Vite · NEAR + TON</div>
+          <span class="case-more" data-i18n="case.more">Details →</span>
         </div>
-        <div class="case-body">
-          <div class="case-head">
+        <div class="case-details">
+          <div class="case-detail-head">
+            <h3 data-i18n="case.13.title">YupLand Portal — Ecosystem Hub</h3>
+            <span class="case-tag" data-i18n="case.13.tag">Web3 · Portal</span>
+          </div>
+
+          <div class="cs-meta-grid" data-i18n="case.13.metainfo">
+            <div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">Full-stack</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Platform</div><div class="cs-fact-value">Web + Telegram Mini App</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Built by</div><div class="cs-fact-value">1 engineer</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Live since</div><div class="cs-fact-value">Oct 2025</div></div>
+          </div>
+
+          <div class="cs-hero case-image" data-shots="cases/portal_title.jpeg">
+            <div class="case-image-placeholder">cases/portal_title.jpeg</div>
+            <img src="cases/portal_title.jpeg" alt="" onerror="this.remove()">
+          </div>
+
+          <p class="cs-lead" data-i18n="case.13.overview">YupLand Portal is the navigation layer of the Yupland ecosystem — one app, web + Telegram Mini App, that bundles a custom CMS, DEX, incubator, wiki, gamification layer (levels / achievements / quests / loot boxes / NFT staking), YupPay, prediction market (Polymarket-style), YupDrop, subscriptions, referrals, social graph and a Telegram notification engine. Built solo by one engineer.</p>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.challenge">The challenge</div>
+            <p data-i18n="case.13.challenge">The Yupland ecosystem has 15+ products and 21 tokens spread across NEAR + TON. Users needed one place to navigate the whole world — wallet, balances, staking, games, marketplace, governance — without bouncing between apps. The portal also had to host games and services built by the community and incubator projects, not just by the studio.</p>
+          </div>
+
+          <div class="cs-shots-row">
+            <div class="cs-shot case-image" data-shots="cases/yupland_en/yupland.jpeg"><img src="cases/yupland_en/yupland.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/yupland_en/yupland2.jpeg"><img src="cases/yupland_en/yupland2.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/yupland_en/yupland3.jpeg"><img src="cases/yupland_en/yupland3.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.solution">What we built</div>
+            <p data-i18n="case.13.solution">A single full-stack app — web + Telegram Mini App on one codebase — wrapping the entire YupLand world. Custom CMS, DEX trading every ecosystem token pair (13 NEAR FTs + 8 TON jettons), incubator with no-strings community funding, gamification layer (levels, achievements, quests, daily loot boxes, NFT staking), YupPay, YupDrop, Polymarket-style prediction market, subscriptions in Darai, in-portal transactions, friends graph, events calendar, promo codes, reward pool and a Telegram notification engine for users and admins. Vibe-coded end-to-end.</p>
+          </div>
+
+          <div class="cs-features" data-i18n="case.13.features">
+            <div class="cs-feature"><h4>Wallet &amp; DEX</h4><p>Connect a wallet, see your Yupland tokens live on-chain, watch the Darai chart. Built-in DEX trades every ecosystem pair across 13 NEAR FTs and 8 TON jettons — from MED to Darai to bees.</p></div>
+            <div class="cs-feature"><h4>Gamification + Energy economy</h4><p>Levels, achievements, quests and the daily Duplo loot loop — ~2M boxes opened per month (rewards batched into single transactions to save NEAR gas). NFT staking earns Energy, spent on the same loot loop.</p></div>
+            <div class="cs-feature"><h4>Games marketplace (hybrid build)</h4><p>10+ mini-games in one portal — Flappy, 2048+, Reputation Calculator, YupLottery, YupLink, feeding checkers, plus deep links into YupSoul, YupDar, Sender and KeksVPN. Built by the studio, by the community and via the incubator.</p></div>
+            <div class="cs-feature"><h4>Incubator (no-strings crowdfunding)</h4><p>Project applies → admin approves → community funds it freely in NEAR / USDT / Energy / Darai. 9 projects live. Some become standalone ecosystem products.</p></div>
+          </div>
+
+          <div class="cs-shots-row">
+            <div class="cs-shot case-image" data-shots="cases/yupland_en/yupland4.jpeg"><img src="cases/yupland_en/yupland4.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/yupland_en/yupland5.jpeg"><img src="cases/yupland_en/yupland5.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/yupland_en/yupland8.jpeg"><img src="cases/yupland_en/yupland8.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+          </div>
+
+          <div class="cs-quote" data-i18n="case.13.quote">~2M loot boxes opened in 30 days, a DEX trading every token in the ecosystem, 9 funded projects in the incubator — all from a Web + TMA app built solo by one engineer.</div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.underhood">Under the hood</div>
+            <ul class="cs-highlights" data-i18n="case.13.highlights">
+              <li>Web and Telegram Mini App share a single codebase</li>
+              <li>Custom indexer mirrors YupAI NFTs from the wallet without moving them</li>
+              <li>Loot-reward batching — multiple rewards stacked into one transaction to save NEAR gas</li>
+              <li>Throughout: workarounds for NEAR API rate limits and throughput constraints</li>
+              <li>Telegram notification engine — rewards for users, low-pool alerts for admins</li>
+            </ul>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.results">Results (last 30 days)</div>
+            <div class="case-metrics" data-i18n="case.13.metrics">
+              <span class="metric metric-accent">~2M loot boxes / 30d</span>
+              <span class="metric">MAU ~200</span>
+              <span class="metric">~700 wallets connected</span>
+              <span class="metric">9 projects in incubator</span>
+              <span class="metric">Built solo · vibe-coded</span>
+            </div>
+          </div>
+
+          <div class="case-stack">
+            <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> React · TypeScript · Vite · Node.js · PostgreSQL · FastAPI · Realtime · Edge Functions · Tailwind + shadcn/ui · NEAR + TON SDKs · Cursor + Claude Code (vibe-coding)
+          </div>
+          <div class="case-links">
+            <a href="https://yupland.io" class="case-link" target="_blank" rel="noopener" data-i18n="case.link.live">Live →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. AI Music -->
+      <div class="case" role="button" tabindex="0" onclick="openCase(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCase(this);}">
+        <div class="case-face">
+          <span class="case-tag" data-i18n="case.1.tag">AI · Mobile</span>
+          <h3 data-i18n="case.1.title">AI Music Generation Platform</h3>
+          <div class="case-face-stack">Telegram · Capacitor 8 · Node.js · LLM</div>
+          <span class="case-more" data-i18n="case.more">Details →</span>
+        </div>
+        <div class="case-details">
+          <div class="case-detail-head">
             <h3 data-i18n="case.1.title">AI Music Generation Platform</h3>
             <span class="case-tag" data-i18n="case.1.tag">AI · Mobile</span>
           </div>
-          <p class="case-desc" data-i18n="case.1.desc">End-to-end AI music platform: Telegram Mini App + native iOS + Android, unified backend, multi-stage AI pipeline with retry/failover, three payment integrations including card acquiring in a regulated market.</p>
-          <div class="case-metrics" data-i18n="case.1.metrics">
-            <span class="metric metric-accent">3 platforms</span>
-            <span class="metric">1 backend</span>
-            <span class="metric">3 payment integrations</span>
-            <span class="metric">Two-env CI/CD</span>
+
+          <div class="cs-meta-grid" data-i18n="case.1.metainfo">
+            <div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">AI engineering</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Platforms</div><div class="cs-fact-value">TG Mini App + iOS & Android</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Type</div><div class="cs-fact-value">Client product</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Backend</div><div class="cs-fact-value">1 unified</div></div>
           </div>
+
+          <div class="cs-hero case-image" data-shots="cases/ai-music_title.jpeg">
+            <div class="case-image-placeholder">cases/ai-music_title.jpeg</div>
+            <img src="cases/ai-music_title.jpeg" alt="" onerror="this.remove()">
+          </div>
+
+          <p class="cs-lead" data-i18n="case.1.overview">An end-to-end AI music platform delivered across three surfaces — a Telegram Mini App and native iOS & Android apps — all on one unified backend.</p>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.challenge">The challenge</div>
+            <p data-i18n="case.1.challenge">Generate music reliably at scale and accept payments in a regulated market — all from a single codebase that ships to web and both app stores.</p>
+          </div>
+
+          <div class="cs-shots-row">
+            <div class="cs-shot case-image" data-shots="cases/ai-music-en/ai-music-en.jpeg"><img src="cases/ai-music-en/ai-music-en.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/ai-music-en/ai-music-en2.jpeg"><img src="cases/ai-music-en/ai-music-en2.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/ai-music-en/ai-music-en3.jpeg"><img src="cases/ai-music-en/ai-music-en3.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.solution">What we built</div>
+            <p data-i18n="case.1.solution">A multi-stage AI pipeline with retry/failover, one backend powering all three clients, three payment integrations including card acquiring in a regulated market, and two-environment CI/CD with Sentry monitoring.</p>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.results">Results</div>
+            <div class="case-metrics" data-i18n="case.1.metrics">
+              <span class="metric metric-accent">3 platforms</span>
+              <span class="metric">1 backend</span>
+              <span class="metric">3 payment integrations</span>
+              <span class="metric">Two-env CI/CD</span>
+            </div>
+          </div>
+
           <div class="case-stack">
             <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> Node.js · Telegram Bot SDK · Express · Supabase · Capacitor 8 · LLM provider · Music gen API · Sentry
           </div>
@@ -1842,24 +2535,54 @@
       </div>
 
       <!-- 3. AI Sales -->
-      <div class="case">
-        <div class="case-image"
-             data-shots="cases/ai-sales/ai-sales.jpeg,cases/ai-sales/ai-sales2.jpeg,cases/ai-sales/ai-sales3.jpeg,cases/ai-sales/ai-sales4.jpeg">
-          <div class="case-image-placeholder">cases/ai-sales_title.jpeg</div>
-          <img src="cases/ai-sales_title.jpeg" alt="" onerror="this.remove()">
+      <div class="case" role="button" tabindex="0" onclick="openCase(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCase(this);}">
+        <div class="case-face">
+          <span class="case-tag" data-i18n="case.3.tag">AI · RAG</span>
+          <h3 data-i18n="case.3.title">AI Sales Funnel + RAG Agent</h3>
+          <div class="case-face-stack">grammY · pgvector · DeepSeek · React</div>
+          <span class="case-more" data-i18n="case.more">Details →</span>
         </div>
-        <div class="case-body">
-          <div class="case-head">
+        <div class="case-details">
+          <div class="case-detail-head">
             <h3 data-i18n="case.3.title">AI Sales Funnel + RAG Agent</h3>
             <span class="case-tag" data-i18n="case.3.tag">AI · RAG</span>
           </div>
-          <p class="case-desc" data-i18n="case.3.desc">Complete AI-powered sales funnel for an online education business: 2 landing pages, Telegram onboarding bot with multi-step logic, RAG agent in founder's voice trained on full content library, CRM integration, referral system, admin dashboard.</p>
-          <div class="case-metrics" data-i18n="case.3.metrics">
-            <span class="metric metric-accent">6 weeks delivery</span>
-            <span class="metric">Founder's voice RAG</span>
-            <span class="metric">GetCourse CRM</span>
-            <span class="metric">Anti-fraud referrals</span>
+
+          <div class="cs-meta-grid" data-i18n="case.3.metainfo">
+            <div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">AI + full-stack</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Platform</div><div class="cs-fact-value">Web + Telegram</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Type</div><div class="cs-fact-value">Client (online school)</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Timeline</div><div class="cs-fact-value">6 weeks</div></div>
           </div>
+
+          <p class="cs-lead" data-i18n="case.3.overview">A complete AI-powered sales funnel for an online education business — from landing pages to a RAG agent that answers in the founder's own voice.</p>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.challenge">The challenge</div>
+            <p data-i18n="case.3.challenge">Turn a founder's huge content library into an always-on sales agent that genuinely sounds like them — wired into the existing CRM and protected from referral fraud.</p>
+          </div>
+
+          <div class="cs-shots-row">
+            <div class="cs-shot case-image" data-shots="cases/ai-sales/ai-sales.jpeg"><img src="cases/ai-sales/ai-sales.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/ai-sales/ai-sales2.jpeg"><img src="cases/ai-sales/ai-sales2.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/ai-sales/ai-sales3.jpeg"><img src="cases/ai-sales/ai-sales3.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.solution">What we built</div>
+            <p data-i18n="case.3.solution">Two landing pages, a multi-step Telegram onboarding bot, a RAG agent trained on the full content library, GetCourse CRM integration, an anti-fraud referral system and an admin dashboard — delivered in 6 weeks.</p>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.results">Results</div>
+            <div class="case-metrics" data-i18n="case.3.metrics">
+              <span class="metric metric-accent">6 weeks delivery</span>
+              <span class="metric">Founder's voice RAG</span>
+              <span class="metric">GetCourse CRM</span>
+              <span class="metric">Anti-fraud referrals</span>
+            </div>
+          </div>
+
           <div class="case-stack">
             <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> Node.js · grammY · PostgreSQL/pgvector · Voyage AI · DeepSeek · Express · React · GetCourse API
           </div>
@@ -1869,26 +2592,88 @@
         </div>
       </div>
 
-      <!-- 4. NFT Sender -->
-      <div class="case">
-        <div class="case-image"
-             data-shots="cases/nft-sender/nft-sender.jpeg,cases/nft-sender/nft-sender2.jpeg,cases/nft-sender/nft-sender3.jpeg,cases/nft-sender/nft-sender4.jpeg,cases/nft-sender/nft-sender5.jpeg">
-          <div class="case-image-placeholder">cases/nft-sender_title.jpeg</div>
-          <img src="cases/nft-sender_title.jpeg" alt="" onerror="this.remove()">
+      <!-- 4. NFT-Sender -->
+      <div class="case" role="button" tabindex="0" onclick="openCase(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCase(this);}">
+        <div class="case-face">
+          <span class="case-tag" data-i18n="case.6.tag">Web3 · Infra</span>
+          <h3 data-i18n="case.6.title">NFT-Sender — Multichain NFT Infrastructure</h3>
+          <div class="case-face-stack">NEAR · TON · EVM · Solana · Rust</div>
+          <span class="case-more" data-i18n="case.more">Details →</span>
         </div>
-        <div class="case-body">
-          <div class="case-head">
-            <h3 data-i18n="case.6.title">NFT Sender Infrastructure</h3>
+        <div class="case-details">
+          <div class="case-detail-head">
+            <h3 data-i18n="case.6.title">NFT-Sender — Multichain NFT Infrastructure</h3>
             <span class="case-tag" data-i18n="case.6.tag">Web3 · Infra</span>
           </div>
-          <p class="case-desc" data-i18n="case.6.desc">Multi-chain NFT operations platform powering all collection launches in our ecosystem. Mass-distribution to 10K+ wallets (120 NFTs per transaction with throttling workaround), marketplace with Sells/Orders/Auctions, portfolio management, reputation system.</p>
-          <div class="case-metrics" data-i18n="case.6.metrics">
-            <span class="metric metric-accent">10K+ wallets per campaign</span>
-            <span class="metric">120 NFTs per tx</span>
-            <span class="metric">#1 NFT distribution on NEAR</span>
+
+          <div class="cs-meta-grid" data-i18n="case.6.metainfo">
+            <div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">Web3 infrastructure</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Throughput</div><div class="cs-fact-value">Up to 120 NFTs / tx</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Chains</div><div class="cs-fact-value">NEAR · TON · EVM · Solana</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Status</div><div class="cs-fact-value">#1 on NEAR by tx</div></div>
           </div>
+
+          <div class="cs-hero case-image" data-shots="cases/nft-sender_title.jpeg">
+            <div class="case-image-placeholder">cases/nft-sender_title.jpeg</div>
+            <img src="cases/nft-sender_title.jpeg" alt="" onerror="this.remove()">
+          </div>
+
+          <p class="cs-lead" data-i18n="case.6.overview">NFT-Sender is the multichain NFT infrastructure powering bulk distribution, marketplace, on-chain auctions, an explorer and a reputation game across NEAR, TON, EVM and Solana. Currently #1 on NEAR by transaction volume — 1M+ on-chain transactions, 40 collections live, 10K+ wallets in the reputation system. Built from scratch — no analogs on the market.</p>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.challenge">The challenge</div>
+            <p data-i18n="case.6.challenge">Mass NFT distribution on NEAR runs straight into the chain's throughput limit — a few NFTs per transaction means days to airdrop a 10K-wallet campaign. Beyond raw distribution, an NFT ecosystem also needs the layers around it: a marketplace, auctions, a wallet-level explorer, and a reason for holders to actually engage with what they own. Ideally it should reach across chains, not just one.</p>
+          </div>
+
+          <div class="cs-shots-row">
+            <div class="cs-shot case-image" data-shots="cases/nft-sender/nft-sender.jpeg"><img src="cases/nft-sender/nft-sender.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/nft-sender/nft-sender2.jpeg"><img src="cases/nft-sender/nft-sender2.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/nft-sender/nft-sender3.jpeg"><img src="cases/nft-sender/nft-sender3.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.solution">What we built</div>
+            <p data-i18n="case.6.solution">A custom infrastructure that pushes up to 120 NFTs per transaction on NEAR — a workaround for the chain's throughput limit, with no analogs on the market. Around the distribution sit a built-in marketplace and on-chain auctions, an explorer that parses 10K+ wallet addresses with full on-chain data extraction, and a reputation game where each NFT carries a positive or negative reputation coefficient and wallets compete for TOP+ and TOP- rankings. Alchemy Lab — the cross-chain crafting mechanic — plugs in here too. Cross-chain by design: NEAR, TON, EVM and Solana through one interface.</p>
+          </div>
+
+          <div class="cs-features" data-i18n="case.6.features">
+            <div class="cs-feature"><h4>Mass distribution at scale</h4><p>Up to 120 NFTs per transaction — a workaround for NEAR&#39;s throughput limit. A 10K-wallet campaign goes out in a few transactions, not hundreds. Automated airdrops and reward systems for collection launches.</p></div>
+            <div class="cs-feature"><h4>Cross-chain by design</h4><p>NEAR, TON, EVM and Solana collections work through one interface. Single tooling for cross-chain airdrops, drops and partner collaborations.</p></div>
+            <div class="cs-feature"><h4>Marketplace, auctions &amp; explorer</h4><p>Sells, Orders and on-chain auctions inside the same service. A wallet explorer parses 10K+ addresses with full on-chain data extraction — holders, NFTs and tokens, all queryable.</p></div>
+            <div class="cs-feature"><h4>Reputation game built in</h4><p>Each NFT carries a positive or negative reputation coefficient. Wallets compete for TOP+ and TOP- rankings. Alchemy Lab — the cross-chain crafting mechanic — plugs in right here, turning distribution into a closed-loop economy.</p></div>
+          </div>
+
+          <div class="cs-shots-row">
+            <div class="cs-shot case-image" data-shots="cases/nft-sender/nft-sender4.jpeg"><img src="cases/nft-sender/nft-sender4.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/nft-sender/nft-sender5.jpeg"><img src="cases/nft-sender/nft-sender5.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+          </div>
+
+          <div class="cs-quote" data-i18n="case.6.quote">#1 on NEAR by transaction volume. 1M+ on-chain transactions. Up to 120 NFTs per transaction. No analogs on the market.</div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.underhood">Under the hood</div>
+            <ul class="cs-highlights" data-i18n="case.6.highlights">
+              <li>Up to 120 NFTs per transaction — custom workaround for NEAR throughput limits</li>
+              <li>Cross-chain across NEAR + TON + EVM + Solana through one interface</li>
+              <li>Wallet explorer parses 10K+ addresses with full on-chain data extraction</li>
+              <li>Reputation engine — every NFT carries a positive or negative coefficient, TOP+ and TOP- leaderboards</li>
+              <li>Alchemy Lab cross-chain crafting plugs in directly — distribution becomes a closed-loop economy</li>
+            </ul>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.results">Results</div>
+            <div class="case-metrics" data-i18n="case.6.metrics">
+              <span class="metric metric-accent">#1 on NEAR by tx volume</span>
+              <span class="metric">1M+ on-chain transactions</span>
+              <span class="metric">40 collections live</span>
+              <span class="metric">10K+ wallets in reputation</span>
+              <span class="metric">NEAR · TON · EVM · Solana</span>
+            </div>
+          </div>
+
           <div class="case-stack">
-            <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> TypeScript · NEAR SDK · Smart Contracts (Rust) · custom indexers · blockchain RPC
+            <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> TypeScript · NEAR SDK · Smart Contracts (Rust) · custom indexers · multi-chain interface (NEAR · TON · EVM · Solana)
           </div>
           <div class="case-links">
             <a href="https://sendler.xyz" class="case-link" target="_blank" rel="noopener" data-i18n="case.link.live">Live →</a>
@@ -1896,10 +2681,16 @@
         </div>
       </div>
 
-      <!-- 5. AI Content (text-only with video demo link) -->
-      <div class="case case-text-only">
-        <div class="case-body">
-          <div class="case-head">
+      <!-- 5. AI Content (no cover; video demo inside) -->
+      <div class="case" role="button" tabindex="0" onclick="openCase(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCase(this);}">
+        <div class="case-face">
+          <span class="case-tag" data-i18n="case.4.tag">AI · Pipeline</span>
+          <h3 data-i18n="case.4.title">AI Content Factory</h3>
+          <div class="case-face-stack">Python · GitHub Actions · ffmpeg · 10+ AI</div>
+          <span class="case-more" data-i18n="case.more">Details →</span>
+        </div>
+        <div class="case-details">
+          <div class="case-detail-head">
             <h3 data-i18n="case.4.title">AI Content Factory</h3>
             <span class="case-tag" data-i18n="case.4.tag">AI · Pipeline</span>
           </div>
@@ -1918,25 +2709,143 @@
         </div>
       </div>
 
-      <!-- 6. Alchemy Lab -->
-      <div class="case">
-        <div class="case-image"
-             data-shots="cases/alchemy/alchemy.jpeg,cases/alchemy/alchemy1.jpeg,cases/alchemy/alchemy2.jpeg,cases/alchemy/alchemy3.jpeg">
-          <div class="case-image-placeholder">cases/alchemy_title.jpeg</div>
-          <img src="cases/alchemy_title.jpeg" alt="" onerror="this.remove()">
+      <!-- 5b. YupJarvis — Ecosystem AI Agent Builder -->
+      <div class="case" role="button" tabindex="0" onclick="openCase(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCase(this);}">
+        <div class="case-face">
+          <span class="case-tag" data-i18n="case.9.tag">AI · No-code</span>
+          <h3 data-i18n="case.9.title">YupJarvis — Ecosystem AI Agent Builder</h3>
+          <div class="case-face-stack">Next.js · Supabase · AI SDK · React Flow</div>
+          <span class="case-more" data-i18n="case.more">Details →</span>
         </div>
-        <div class="case-body">
-          <div class="case-head">
+        <div class="case-details">
+          <div class="case-detail-head">
+            <h3 data-i18n="case.9.title">YupJarvis — Ecosystem AI Agent Builder</h3>
+            <span class="case-tag" data-i18n="case.9.tag">AI · No-code</span>
+          </div>
+
+          <div class="cs-meta-grid" data-i18n="case.9.metainfo">
+            <div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">Full-stack product</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Type</div><div class="cs-fact-value">Studio product</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Engine</div><div class="cs-fact-value">Next.js 15 + Supabase</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Scope</div><div class="cs-fact-value">16 nodes · 7 agents · 302 assertions</div></div>
+          </div>
+
+          <p class="cs-lead" data-i18n="case.9.overview">YupJarvis is a no-code visual builder for LLM agents and pipelines — a drag-and-drop graph editor that chains 7 kinds of agents (LLM, Classifier, Extractor, Tool, Memory/RAG, Judge, Orchestrator), with triggers, public API, RAG over pgvector and a run journal with drill-down. Designed and built end-to-end by the studio.</p>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.challenge">The challenge</div>
+            <p data-i18n="case.9.challenge">Building a production-grade LLM pipeline means stitching together agent types, retry logic, vector memory, tool calls, condition routing, run logs and access control by hand for every new project. The studio needed one substrate that turns this into a graph the team can draw, version and ship — not yet another framework wrapper.</p>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.solution">What we built</div>
+            <p data-i18n="case.9.solution">A full Next.js 15 + Supabase application with a React Flow editor (16 node types and 7 agent kinds), JMESPath-powered Mapper/Condition routing, RAG on pgvector with an embedding pipeline, public API + webhook trigger, and a run journal with metrics, limits and drilldown UI. Configs validated through Zod, strict TypeScript across the stack, 302 test assertions across 11 test files — schemas, runner, classifier routing, tool calls, memory, judge, orchestrator and API.</p>
+          </div>
+
+          <div class="cs-features" data-i18n="case.9.features"><div class="cs-feature"><h4>Visual graph editor</h4><p>React Flow with 16 node types, drag-and-drop wiring, Zod-validated configs per node — designers draw the pipeline instead of writing boilerplate.</p></div><div class="cs-feature"><h4>7 agent kinds out of the box</h4><p>LLM, Classifier, Extractor, Tool, Memory/RAG, Judge, Orchestrator. Each one a first-class node with typed schema, retries and observability.</p></div><div class="cs-feature"><h4>RAG inside Supabase</h4><p>pgvector storage, a separate embedding pipeline (OpenAI), retrieval as its own node type. Memory and RAG share the same substrate.</p></div><div class="cs-feature"><h4>Run journal &amp; public API</h4><p>Every run logged with token and duration metrics, per-project limits, drilldown UI. Webhook trigger and public REST API expose any agent to the outside world.</p></div></div>
+
+          <p class="cs-quote" data-i18n="case.9.quote">16 node types, 7 agent kinds, 302 test assertions — built solo end-to-end on Next.js 15 + Supabase. Strict TypeScript, zero compile errors.</p>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.underhood">Under the hood</div>
+            <ul class="cs-highlights" data-i18n="case.9.highlights"><li>React Flow graph editor with 16 node types and Zod-validated per-node configs</li><li>7 agent kinds: LLM, Classifier, Extractor, Tool, Memory/RAG, Judge, Orchestrator</li><li>JMESPath-powered Mapper and Condition nodes for routing and transformation</li><li>pgvector RAG inside Supabase with a separate embedding pipeline (OpenAI)</li><li>Webhook trigger + public REST API for invoking any agent from outside</li><li>Run journal — every step logged with token/duration metrics, limits and drilldown UI</li><li>302 test assertions across 11 files: schemas, runner, classifier routing, tool, memory, judge, orchestrator, API keys, webhook</li><li>TypeScript strict, tsc --noEmit clean</li></ul>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.results">Results</div>
+            <div class="case-metrics" data-i18n="case.9.metrics">
+              <span class="metric metric-accent">Built end-to-end solo</span>
+              <span class="metric">16 node types</span>
+              <span class="metric">7 agent kinds</span>
+              <span class="metric">302 test assertions</span>
+              <span class="metric">0 type errors</span>
+            </div>
+          </div>
+
+          <div class="case-stack">
+            <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> Next.js 15 (App Router · RSC · Server Actions) · Supabase (Postgres 16 + pgvector + RLS + Auth) · AI SDK 4.3 (Anthropic + OpenAI) · React Flow 11 · Zod · TypeScript strict
+          </div>
+          <div class="case-links">
+            <!-- live URL / repo link — coming later -->
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Alchemy Lab -->
+      <div class="case" role="button" tabindex="0" onclick="openCase(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCase(this);}">
+        <div class="case-face">
+          <span class="case-tag" data-i18n="case.7.tag">Web3 · Multi-chain</span>
+          <h3 data-i18n="case.7.title">Alchemy Lab — Cross-Chain Crafting</h3>
+          <div class="case-face-stack">NEAR · TON · React · bridge logic</div>
+          <span class="case-more" data-i18n="case.more">Details →</span>
+        </div>
+        <div class="case-details">
+          <div class="case-detail-head">
             <h3 data-i18n="case.7.title">Alchemy Lab — Cross-Chain Crafting</h3>
             <span class="case-tag" data-i18n="case.7.tag">Web3 · Multi-chain</span>
           </div>
-          <p class="case-desc" data-i18n="case.7.desc">Unique multi-chain NFT crafting mechanic across NEAR + TON. Users combine NFT components by recipes to mint new NFTs. Closed-loop economy with liquidity from two blockchains simultaneously.</p>
-          <div class="case-metrics" data-i18n="case.7.metrics">
-            <span class="metric metric-accent">9K+ crafts</span>
-            <span class="metric">283 recipes</span>
-            <span class="metric">TOP-2 on HOTCraft</span>
-            <span class="metric">NEAR + TON</span>
+
+          <div class="cs-meta-grid" data-i18n="case.7.metainfo">
+            <div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">Cross-chain game mechanic</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Mechanic</div><div class="cs-fact-value">Trade → craft → burn → mint</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Chains</div><div class="cs-fact-value">NEAR + TON</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Recipes</div><div class="cs-fact-value">317 live</div></div>
           </div>
+
+          <div class="cs-hero case-image" data-shots="cases/alchemy_title.jpeg">
+            <div class="case-image-placeholder">cases/alchemy_title.jpeg</div>
+            <img src="cases/alchemy_title.jpeg" alt="" onerror="this.remove()">
+          </div>
+
+          <p class="cs-lead" data-i18n="case.7.overview">Alchemy Lab is a cross-chain NFT crafting mechanic unique on the market — players combine NFT components by recipes across NEAR and TON to mint brand-new NFTs in a closed-loop economy. Trade → craft → burn → mint, on two blockchains at once.</p>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.challenge">The challenge</div>
+            <p data-i18n="case.7.challenge">NFT inflation kills value: once mass-minted, collections sit in wallets with nowhere to go. The fix had to make burning attractive — a game where players want to take NFTs out of circulation — and work across two blockchains so liquidity flows from both. And it had to be easy enough for partners to drop their NFTs into the same loop without rebuilding anything.</p>
+          </div>
+
+          <div class="cs-shots-row">
+            <div class="cs-shot case-image" data-shots="cases/alchemy/alchemy.jpeg"><img src="cases/alchemy/alchemy.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/alchemy/alchemy1.jpeg"><img src="cases/alchemy/alchemy1.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/alchemy/alchemy2.jpeg"><img src="cases/alchemy/alchemy2.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.solution">What we built</div>
+            <p data-i18n="case.7.solution">A custom recipe engine on top of NEAR + TON smart contracts and cross-chain bridge logic. Players combine NFT components by recipe to mint new NFTs — and the burned originals leave circulation forever. The same surface accepts partner NFTs, so external projects plug into the lab and get instant collab without writing their own crafting layer. 317 live recipes today, 34K+ crafts completed, TOP-2 on HOTCraft.</p>
+          </div>
+
+          <div class="cs-features" data-i18n="case.7.features">
+            <div class="cs-feature"><h4>Cross-chain crafting</h4><p>NEAR + TON in one closed loop. Liquidity from two blockchains feeds the same recipe library — combine components from either chain to mint new NFTs.</p></div>
+            <div class="cs-feature"><h4>Burning solves inflation</h4><p>Players themselves take NFTs and tokens out of circulation via crafting. Mass-minted supply is removed not by penalties but by a mechanic players choose.</p></div>
+            <div class="cs-feature"><h4>Retention through recipes</h4><p>317 recipes ship today — from basic to rare combos and boosts. Players come back daily to chase rare results.</p></div>
+            <div class="cs-feature"><h4>Partner-ready surface</h4><p>External projects drop their NFTs into the Lab — instant collab. The recipe engine is generic enough for any project to plug in without rebuilding crafting from scratch.</p></div>
+          </div>
+
+          <div class="cs-quote" data-i18n="case.7.quote">317 recipes, 34K+ crafts completed, two blockchains in one mechanic — the closed-loop economy that turns mass-minted NFTs into something players want to burn.</div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.underhood">Under the hood</div>
+            <ul class="cs-highlights" data-i18n="case.7.highlights">
+              <li>Cross-chain bridge logic uniting NEAR + TON liquidity into one recipe pool</li>
+              <li>Custom recipe engine — any NFT bundle definable as a craftable input</li>
+              <li>Burning + minting in one transaction per recipe</li>
+              <li>Partner-ready surface — external NFTs plug in without code</li>
+              <li>317 recipes live, 34K+ crafts completed, TOP-2 on HOTCraft</li>
+            </ul>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.results">Results</div>
+            <div class="case-metrics" data-i18n="case.7.metrics">
+              <span class="metric metric-accent">34K+ crafts completed</span>
+              <span class="metric">317 recipes live</span>
+              <span class="metric">TOP-2 on HOTCraft</span>
+              <span class="metric">NEAR + TON in one mechanic</span>
+              <span class="metric">Partner-ready</span>
+            </div>
+          </div>
+
           <div class="case-stack">
             <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> NEAR/TON smart contracts · cross-chain bridge logic · React · custom recipe engine
           </div>
@@ -1947,37 +2856,87 @@
       </div>
 
       <!-- 7. YupDar -->
-      <div class="case">
-        <div class="case-image"
-             data-shots="cases/yupdar/yupdar.jpeg,cases/yupdar/yupdar2.jpeg,cases/yupdar/yupdar3.jpeg,cases/yupdar/yupdar4.jpeg,cases/yupdar/yupdar5.jpeg,cases/yupdar/yupdar6.jpeg,cases/yupdar/yupdar7.jpeg">
-          <div class="case-image-placeholder">cases/yupdar_title.jpeg</div>
-          <img src="cases/yupdar_title.jpeg" alt="" onerror="this.remove()">
+      <div class="case" role="button" tabindex="0" onclick="openCase(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCase(this);}">
+        <div class="case-face">
+          <span class="case-tag" data-i18n="case.8.tag">AI · Vibe-coding</span>
+          <h3 data-i18n="case.8.title">YupDar — AI Mini App for Self-Discovery</h3>
+          <div class="case-face-stack">TG Mini App · Web · DeepSeek · Supabase</div>
+          <span class="case-more" data-i18n="case.more">Details →</span>
         </div>
-        <div class="case-body">
-          <div class="case-head">
-            <h3 data-i18n="case.8.title">YupDar — AI Self-Discovery Platform</h3>
+        <div class="case-details">
+          <div class="case-detail-head">
+            <h3 data-i18n="case.8.title">YupDar — AI Mini App for Self-Discovery</h3>
             <span class="case-tag" data-i18n="case.8.tag">AI · Vibe-coding</span>
           </div>
-          <p class="case-desc" data-i18n="case.8.desc">Production AI platform built by a non-developer book author via Claude Code (vibe-coding). Telegram Mini App + web on one codebase, AI-generated psychological portraits, 6 content generation types, in-app payments, referral system, gamification.</p>
-          <div class="case-metrics" data-i18n="case.8.metrics">
-            <span class="metric metric-accent">Vibe-coding success</span>
-            <span class="metric">338 commits in 1 month</span>
-            <span class="metric">11 API endpoints</span>
-            <span class="metric">DeepSeek + Groq fallback</span>
+
+          <div class="cs-hero case-image"
+               data-shots="cases/yupdar/yupdar.jpeg,cases/yupdar/yupdar2.jpeg,cases/yupdar/yupdar3.jpeg,cases/yupdar/yupdar4.jpeg,cases/yupdar/yupdar5.jpeg,cases/yupdar/yupdar6.jpeg,cases/yupdar/yupdar7.jpeg">
+            <div class="case-image-placeholder">cases/yupdar_title.jpeg</div>
+            <img src="cases/yupdar_title.jpeg" alt="" onerror="this.remove()">
           </div>
+
+          <div class="cs-meta-grid" data-i18n="case.8.metainfo">
+            <div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">Full-stack vibe-coding</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Surfaces</div><div class="cs-fact-value">TG Mini App + Web · RU / EN / ES</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Team</div><div class="cs-fact-value">Book author + Claude Code</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Status</div><div class="cs-fact-value">Live · trilingual · scientific track</div></div>
+          </div>
+
+          <p class="cs-lead" data-i18n="case.8.overview">A trilingual self-discovery ecosystem (RU / EN / ES) on the 64 Daram system — Telegram Mini App + a public web landing on one codebase, with a premium daily-companion layer ARKA on top. AI-generated literary portraits (8 psychological sections per user), oracle as a card spread, compatibility, hero&#39;s journey 2.0 with cross-user Daram unlocks, shadow quests, PvP card game. Books published in EN / ES on Amazon and on Litres in RU. A scientific track in parallel — DAR-27v2 research questionnaire, scientific-article DOCX builders, application to the World Science Championship in Dubai. Built solo by the book&#39;s author with Claude Code.</p>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.challenge">The challenge</div>
+            <p data-i18n="case.8.challenge">Turning a published esoteric book on the 64 Darams into a living interactive product required AI capable of writing literary Russian indistinguishable from the author's voice. Off-the-shelf models produced &#34;professional&#34; Russian — methodical, cliché-laden, sprinkled with Latin tokens, with broken gender agreement. Declarative bans inside the prompt didn&#39;t hold. And the product had to ship as both a Telegram Mini App AND a public SEO-landing — one codebase, two surfaces.</p>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.solution">What we built</div>
+            <p data-i18n="case.8.solution">A two-layer Russian-AI quality stack: prompt v7 with the author&#39;s ~600-word reference text baked in as a stylistic anchor, plus a programmatic postprocessor russifyText() with 60+ regex defenses against forbidden constructions (clichés, Latin, broken gender, formulaic openings). Provider routing — DeepSeek-V3 primary (~$0.0024 per message), Groq Llama 3.3 70B as automatic fallback, Llama 3.1 8B as second fallback. response_format: json_object guarantees parseable output for 8-section portraits. Yandex Speller post-pass with a protected glossary. Same backend serves both the Mini App and the yupdar.com landing — split only at the HTML entrypoint level. On top of the base game the studio shipped a premium ARKA layer (a daily companion in the rhythm of the user&#39;s Daram — power windows, archetype-voiced rituals, AI strategy assistant, mentor brief, content plan), Hero&#39;s Journey 2.0 (a viral mechanic to unlock the Darams of close ones via referrals, crystals or direct payment), a Pricing v2 subscription system (1/3/6/12 months, up to −33% off, −50% first-month promo, YuKassa-wired), and a secondary doTERRA affiliate channel (essential oils mapped to each Daram). Full localization rolled out to English and Spanish across the entire interface, the encyclopedia and the in-app book reader (RU 94 / EN 99 / ES 87 chapters). In parallel a scientific track is running — the DAR-27v2 research questionnaire, DOCX builders for scientific articles, an application submitted to the World Science Championship in Dubai.</p>
+          </div>
+
+          <div class="cs-features" data-i18n="case.8.features"><div class="cs-feature"><h4>Literary AI portraits, trilingual</h4><p>8-section JSON output per user — Archetype, Essence, Superpowers, Flow, Relationships, Traps, Key to Self, Purpose. ~5K–6K chars of structured literary text per generation. Fully localized to Russian, English and Spanish across portraits, oracle and encyclopedia.</p></div><div class="cs-feature"><h4>ARKA premium daily layer</h4><p>A daily companion in the rhythm of the user&#39;s Daram, sitting above the base game. Power windows, archetype-voiced rituals tied to doTERRA essential oils, task tracker with load types, AI strategy assistant, mentor brief, finances, content plan, week review — all in the archetype&#39;s voice. Prototype isolated in a sandbox so prod stays untouched.</p></div><div class="cs-feature"><h4>Hero&#39;s Journey 2.0 — viral mechanic</h4><p>Users now unlock the Darams of close ones (partner, friends, parent of a child) via referrals, crystals or direct payment. Each user becomes a conductor into YupDar for the people around them — and a new revenue surface.</p></div><div class="cs-feature"><h4>Scientific track in parallel</h4><p>DAR-27v2 research questionnaire, DOCX builders for scientific articles, application submitted to the World Science Championship in Dubai. A dedicated &#34;Science 🔬&#34; tab in the new architecture preview. International recognition of the Daram system is an explicit goal.</p></div></div>
+
+          <p class="cs-quote" data-i18n="case.8.quote">Trilingual (RU / EN / ES). Premium ARKA layer on top of the base game. Viral cross-user Daram unlocks. Pricing v2 subscriptions. doTERRA affiliate. Scientific track to the World Science Championship in Dubai. Books on Amazon and Litres. All shipped solo by a book author through Claude Code.</p>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.underhood">Under the hood</div>
+            <ul class="cs-highlights" data-i18n="case.8.highlights"><li>DeepSeek-V3 primary, Groq Llama 3.3 70B fallback, Llama 3.1 8B as second fallback</li><li>response_format: json_object — guaranteed valid JSON for 8-section literary portraits</li><li>russifyText() programmatic postprocessor — 60+ regex defenses against forbidden constructions</li><li>Author&#39;s ~600-word reference text baked into prompt v7 as a stylistic anchor</li><li>Yandex Speller post-pass with a protected glossary for system terms</li><li>Full RU / EN / ES localization across interface, oracle, encyclopedia and the in-app book reader (RU 94 / EN 99 / ES 87 chapters)</li><li>ARKA premium layer: a daily companion in the rhythm of the user&#39;s Daram — sandboxed prototype isolated from prod (iram-prototype/)</li><li>Hero&#39;s Journey 2.0 — viral mechanic to unlock close-ones&#39; Darams via referrals / crystals / direct payment</li><li>Pricing v2 — 1/3/6/12-month subscriptions with discounts up to −33%, −50% first-month promo, YuKassa across all tiers and periods</li><li>doTERRA affiliate channel — essential oils mapped to each Daram, second monetization line</li><li>DAR-27v2 research questionnaire, DOCX builders for scientific articles, application submitted to the World Science Championship in Dubai</li><li>11 Vercel serverless endpoints; content.js routes 6 generation types</li><li>Supabase Postgres — 11+ tables, 11 SQL migrations, RLS + service-role split</li><li>HMAC-SHA256 validation of Telegram initData; anonymous web sessions with migration into Telegram</li><li>PDF.js-powered in-app reader for the 212-page authored book (RU / EN / ES)</li><li>Telegram Stars admin tab with live bot balance via API + DB reconciliation</li><li>Architecture preview rebuild — new 4-tab nav (Я / Семья / Сокровищница / ARKA) + Science 🔬 header, deployed to a separate preview surface</li><li>41 &#34;project laws&#34; in Claude Code memory system</li></ul>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.results">Results</div>
+            <div class="case-metrics" data-i18n="case.8.metrics">
+              <span class="metric metric-accent">Trilingual · RU / EN / ES</span>
+              <span class="metric">Premium ARKA layer live</span>
+              <span class="metric">Hero&#39;s Journey 2.0 viral mechanic</span>
+              <span class="metric">Pricing v2 subscriptions</span>
+              <span class="metric">doTERRA affiliate</span>
+              <span class="metric">DAR-27v2 + Dubai application</span>
+              <span class="metric">Books on Amazon + Litres</span>
+              <span class="metric">Built solo by book author</span>
+            </div>
+          </div>
+
           <div class="case-stack">
-            <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> Vanilla JS · HTML5 · Telegram Mini App SDK · Node.js · Vercel · Supabase · DeepSeek-V3 · Groq · YuKassa
+            <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> Vanilla JS · HTML5 · Telegram Mini App SDK · PDF.js · Node.js · Vercel Serverless · Supabase (Postgres) · DeepSeek-V3 · Groq Llama 3.3 70B / 3.1 8B · Yandex Speller · i18n (RU / EN / ES) · YuKassa subscriptions · doTERRA affiliate · Telegram Stars API · DOCX builders for scientific articles · GitHub worktrees → Vercel preview deployments
           </div>
           <div class="case-links">
+            <a href="https://yupdar.com" class="case-link" target="_blank" rel="noopener" data-i18n="case.link.live">Live →</a>
             <a href="https://t.me/YupDarBot?startapp=ref_1065894799" class="case-link" target="_blank" rel="noopener" data-i18n="case.link.bot">Open bot →</a>
           </div>
         </div>
       </div>
 
-      <!-- 8. Lottery (text-only, no title cover) -->
-      <div class="case case-text-only">
-        <div class="case-body">
-          <div class="case-head">
+      <!-- 8. Lottery (no cover) -->
+      <div class="case" role="button" tabindex="0" onclick="openCase(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCase(this);}">
+        <div class="case-face">
+          <span class="case-tag" data-i18n="case.10.tag">Automation</span>
+          <h3 data-i18n="case.10.title">Yupland Lottery — Live Stream Raffle</h3>
+          <div class="case-face-stack">TypeScript · Node.js · Telegram Bot API</div>
+          <span class="case-more" data-i18n="case.more">Details →</span>
+        </div>
+        <div class="case-details">
+          <div class="case-detail-head">
             <h3 data-i18n="case.10.title">Yupland Lottery — Live Stream Raffle</h3>
             <span class="case-tag" data-i18n="case.10.tag">Automation</span>
           </div>
@@ -1993,41 +2952,103 @@
         </div>
       </div>
 
-      <!-- 9. Duplo -->
-      <div class="case">
-        <div class="case-image"
-             data-shots="cases/duplo/duplo.png,cases/duplo/duplo2.png">
-          <div class="case-image-placeholder">cases/duplo_title.jpeg</div>
-          <img src="cases/duplo_title.jpeg" alt="" onerror="this.remove()">
+      <!-- 9. Duplo — On-chain Combo Game -->
+      <div class="case" role="button" tabindex="0" onclick="openCase(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCase(this);}">
+        <div class="case-face">
+          <span class="case-tag" data-i18n="case.11.tag">Web3 · Game</span>
+          <h3 data-i18n="case.11.title">Duplo — On-chain Combo Game</h3>
+          <div class="case-face-stack">TypeScript · NEAR + TON · parser engine</div>
+          <span class="case-more" data-i18n="case.more">Details →</span>
         </div>
-        <div class="case-body">
-          <div class="case-head">
-            <h3 data-i18n="case.11.title">Duplo Combo Tracker</h3>
-            <span class="case-tag" data-i18n="case.11.tag">Web3 · Parsing</span>
+        <div class="case-details">
+          <div class="case-detail-head">
+            <h3 data-i18n="case.11.title">Duplo — On-chain Combo Game</h3>
+            <span class="case-tag" data-i18n="case.11.tag">Web3 · Game</span>
           </div>
-          <p class="case-desc" data-i18n="case.11.desc">Blockchain-aware NFT combo tracker. Parses on-chain NFT/token transfers to a game wallet in real-time, identifies valid combinations, calculates rewards. Multi-asset combo detection (NFT + token bundles).</p>
-          <div class="case-metrics" data-i18n="case.11.metrics">
-            <span class="metric metric-accent">Real-time on-chain parsing</span>
-            <span class="metric">Multi-asset combos</span>
-            <span class="metric">Time-window logic</span>
+
+          <div class="cs-meta-grid" data-i18n="case.11.metainfo">
+            <div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">Web3 game + on-chain parser</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Mechanic</div><div class="cs-fact-value">Burn → combo → reward</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Versions</div><div class="cs-fact-value">Manual + automated</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Chains</div><div class="cs-fact-value">NEAR + TON</div></div>
           </div>
+
+          <div class="cs-hero case-image" data-shots="cases/duplo_title.jpeg">
+            <div class="case-image-placeholder">cases/duplo_title.jpeg</div>
+            <img src="cases/duplo_title.jpeg" alt="" onerror="this.remove()">
+          </div>
+
+          <p class="cs-lead" data-i18n="case.11.overview">Duplo is the burn-and-reward game at the heart of Yupland — players send NFTs and tokens to the Duplo wallet, the engine matches them by recipe and pays out rewards on-chain. Two implementations: the original game (manual play, with a rating) and the version integrated into YupLand Portal (automated, no rating, runs inside the daily loot loop).</p>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.challenge">The challenge</div>
+            <p data-i18n="case.11.challenge">An ecosystem with mass-minted NFTs needs a sink — a way to take supply out of circulation that feels like a game, not a penalty. Players also need a reason to actively combine the NFTs they own. The same mechanic had to work two ways: as an original game (manual play, leaderboard) and as an automated daily loop inside a larger portal (no rating, broad reach).</p>
+          </div>
+
+          <div class="cs-shots-row">
+            <div class="cs-shot case-image" data-shots="cases/duplo/duplo.png"><img src="cases/duplo/duplo.png" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/duplo/duplo2.png"><img src="cases/duplo/duplo2.png" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.solution">What we built</div>
+            <p data-i18n="case.11.solution">A burn-and-reward engine with two faces, sharing one on-chain wallet and one recipe library. Original game: a custom blockchain parser watches transfers to the Duplo wallet in real time, identifies multi-asset combinations by recipe (NFT + token bundles, time-window logic), computes rewards and maintains a leaderboard. Portal version: the same combo logic but fully automated inside YupLand Portal — players don&#39;t send transfers manually; the portal triggers burn → combo check → reward inside its daily loot loop. Both versions feed the same wallet, putting supply out of circulation across the whole ecosystem.</p>
+          </div>
+
+          <div class="cs-features" data-i18n="case.11.features">
+            <div class="cs-feature"><h4>Original game (with rating)</h4><p>Players send NFTs and tokens to the Duplo wallet manually. A custom parser identifies valid combinations in real time, computes rewards and maintains a leaderboard.</p></div>
+            <div class="cs-feature"><h4>Portal version (automated)</h4><p>Same combo logic, no manual transfers. YupLand Portal runs burn → combo check → reward inside its daily loot loop. No rating — designed for breadth, not competition.</p></div>
+            <div class="cs-feature"><h4>Multi-asset combo engine</h4><p>Detects bundles of NFTs + tokens by recipe. Time-window logic, configurable reward tables, multi-chain (NEAR + TON).</p></div>
+            <div class="cs-feature"><h4>Shared on-chain sink</h4><p>Both versions feed the same Duplo wallet — a fun supply sink at scale. Players take NFTs and tokens out of circulation because they want to, not because they have to.</p></div>
+          </div>
+
+          <div class="cs-quote" data-i18n="case.11.quote">Two implementations, one wallet, one recipe library — the burn-and-reward loop that sucks NFT supply out of circulation across the whole ecosystem.</div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.underhood">Under the hood</div>
+            <ul class="cs-highlights" data-i18n="case.11.highlights">
+              <li>Real-time on-chain parser watching the Duplo wallet for incoming bundles</li>
+              <li>Multi-asset combination detection (NFT + tokens) with time-window logic</li>
+              <li>Shared recipe library across both implementations</li>
+              <li>Automated burn → combo → reward path inside YupLand Portal (no manual tx)</li>
+              <li>Configurable reward tables, multi-chain (NEAR + TON)</li>
+            </ul>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.results">Results</div>
+            <div class="case-metrics" data-i18n="case.11.metrics">
+              <span class="metric metric-accent">~2M boxes / 30d (portal version)</span>
+              <span class="metric">Real-time on-chain parsing</span>
+              <span class="metric">Multi-asset NFT + token combos</span>
+              <span class="metric">Shared sink · 2 implementations</span>
+              <span class="metric">Multi-chain (NEAR + TON)</span>
+            </div>
+          </div>
+
           <div class="case-stack">
-            <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> TypeScript · blockchain RPC · custom parsing engines
+            <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> TypeScript · NEAR + TON RPC · custom parsing engine · recipe library · YupLand Portal integration
           </div>
         </div>
       </div>
 
       <!-- 10. NFT Launch -->
-      <div class="case">
-        <div class="case-image"
-             data-shots="cases/nft-launch/nft-launch.jpeg">
-          <div class="case-image-placeholder">cases/nft-launch_title.jpeg</div>
-          <img src="cases/nft-launch_title.jpeg" alt="" onerror="this.remove()">
+      <div class="case" role="button" tabindex="0" onclick="openCase(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCase(this);}">
+        <div class="case-face">
+          <span class="case-tag" data-i18n="case.12.tag">Web3 · Pipeline</span>
+          <h3 data-i18n="case.12.title">NFT Collection Launch Service</h3>
+          <div class="case-face-stack">NEAR · TON · image processing · Node.js</div>
+          <span class="case-more" data-i18n="case.more">Details →</span>
         </div>
-        <div class="case-body">
-          <div class="case-head">
+        <div class="case-details">
+          <div class="case-detail-head">
             <h3 data-i18n="case.12.title">NFT Collection Launch Service</h3>
             <span class="case-tag" data-i18n="case.12.tag">Web3 · Pipeline</span>
+          </div>
+          <div class="case-image"
+               data-shots="cases/nft-launch/nft-launch.jpeg">
+            <div class="case-image-placeholder">cases/nft-launch_title.jpeg</div>
+            <img src="cases/nft-launch_title.jpeg" alt="" onerror="this.remove()">
           </div>
           <p class="case-desc" data-i18n="case.12.desc">Full pipeline for launching custom NFT collections on NEAR and TON — from art assembly to on-chain deploy. Trait generator from art components, smart contract templates, custom token tooling, mint flow integrated with launch landings.</p>
           <div class="case-metrics" data-i18n="case.12.metrics">
@@ -2041,56 +3062,59 @@
         </div>
       </div>
 
-      <!--
-        Currently hidden — not in the new ordering. Uncomment to bring back.
-
-        AI Image Generation Bot (case.2):
-        <div class="case">
-          <div class="case-image"
-               data-shots="cases/ai-image/ai-image.jpeg,cases/ai-image/ai-image2.jpeg,cases/ai-image/ai-image3.jpeg,cases/ai-image/ai-image4.jpeg">
-            <div class="case-image-placeholder">cases/ai-image/ai-image.jpeg</div>
-            <img src="cases/ai-image/ai-image.jpeg" alt="" onerror="this.remove()">
+      <!-- 11. AI Image -->
+      <div class="case" role="button" tabindex="0" onclick="openCase(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCase(this);}">
+        <div class="case-face">
+          <span class="case-tag" data-i18n="case.2.tag">AI · Telegram</span>
+          <h3 data-i18n="case.2.title">AI Image Generation Bot</h3>
+          <div class="case-face-stack">Telegram · Supabase · image gen · crypto</div>
+          <span class="case-more" data-i18n="case.more">Details →</span>
+        </div>
+        <div class="case-details">
+          <div class="case-detail-head">
+            <h3 data-i18n="case.2.title">AI Image Generation Bot</h3>
+            <span class="case-tag" data-i18n="case.2.tag">AI · Telegram</span>
           </div>
-          <div class="case-body">
-            <div class="case-head">
-              <h3 data-i18n="case.2.title">AI Image Generation Bot</h3>
-              <span class="case-tag" data-i18n="case.2.tag">AI · Telegram</span>
-            </div>
-            <p class="case-desc" data-i18n="case.2.desc">Production Telegram bot generating stylized personal images with identity preserved across generations. Multimodal input layer, dual-API failover for cost optimization, async job architecture, crypto payments.</p>
+
+          <div class="cs-meta-grid" data-i18n="case.2.metainfo">
+            <div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">AI engineering</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Platform</div><div class="cs-fact-value">Telegram bot</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Type</div><div class="cs-fact-value">Client product</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Timeline</div><div class="cs-fact-value">10 days</div></div>
+          </div>
+
+          <p class="cs-lead" data-i18n="case.2.overview">A production Telegram bot that generates stylized personal images while keeping the user's identity recognizable across every generation.</p>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.challenge">The challenge</div>
+            <p data-i18n="case.2.challenge">Preserve a recognizable face through heavy stylization, keep generation costs under control and handle bursty async load — all shipped fast.</p>
+          </div>
+
+          <div class="cs-shots-row">
+            <div class="cs-shot case-image" data-shots="cases/ai-image/ai-image.jpeg"><img src="cases/ai-image/ai-image.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/ai-image/ai-image2.jpeg"><img src="cases/ai-image/ai-image2.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+            <div class="cs-shot case-image" data-shots="cases/ai-image/ai-image3.jpeg"><img src="cases/ai-image/ai-image3.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.solution">What we built</div>
+            <p data-i18n="case.2.solution">A multimodal input layer, dual-API failover for cost optimization, an async job architecture and crypto payments — live in 10 days.</p>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.results">Results</div>
             <div class="case-metrics" data-i18n="case.2.metrics">
               <span class="metric metric-accent">10 days to production</span>
               <span class="metric">Dual-API failover</span>
               <span class="metric">Crypto payments</span>
             </div>
-            <div class="case-stack">
-              <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> Node.js · Telegram Bot SDK · Express · Supabase · Image gen + fallback · STT · Blockchain payments
-            </div>
           </div>
-        </div>
 
-        Bee Farm Play-to-Earn (case.9):
-        <div class="case">
-          <div class="case-image">
-            <div class="case-image-placeholder">cases/beefarm/beefarm.jpeg</div>
-            <img src="cases/beefarm/beefarm.jpeg" alt="" onerror="this.remove()">
-          </div>
-          <div class="case-body">
-            <div class="case-head">
-              <h3 data-i18n="case.9.title">Bee Farm — Play-to-Earn Game</h3>
-              <span class="case-tag" data-i18n="case.9.tag">Web3 · Game</span>
-            </div>
-            <p class="case-desc" data-i18n="case.9.desc">HTML5 Play-to-Earn farming simulator with full Web3 integration on NEAR. Multi-resource economy, on-chain deposits, withdrawals, in-game purchases via smart contracts, real-time balance tracking.</p>
-            <div class="case-metrics" data-i18n="case.9.metrics">
-              <span class="metric metric-accent">P2E mechanics</span>
-              <span class="metric">On-chain economy</span>
-              <span class="metric">Real-time balance sync</span>
-            </div>
-            <div class="case-stack">
-              <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> TypeScript · HTML5 Canvas · NEAR smart contracts · Node.js backend
-            </div>
+          <div class="case-stack">
+            <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> Node.js · Telegram Bot SDK · Express · Supabase · Image gen + fallback · STT · Blockchain payments
           </div>
         </div>
-      -->
+      </div>
 
     </div>
   </div>
@@ -2252,8 +3276,8 @@
   <div class="container">
     <div class="section-head reveal">
       <div class="section-eyebrow" data-i18n="team.eyebrow">// The team</div>
-      <h2 class="section-title" data-i18n="team.title">Seven co-founders.<br/>Each shipped a flagship.</h2>
-      <p class="section-desc" data-i18n="team.desc">We're not a freelance marketplace or a generic dev shop. Every member of YupCode co-founded a product in our Yupland Web3 ecosystem — so we treat client work with the same ownership we treat our own.</p>
+      <h2 class="section-title" data-i18n="team.title">Seven builders.<br/>Each shipped a flagship.</h2>
+      <p class="section-desc" data-i18n="team.desc">We're not a freelance marketplace or a generic dev shop. Everyone on the team built a product in our own Yupland Web3 ecosystem — so we treat client work with the same ownership we treat our own.</p>
     </div>
 
     <div class="team reveal-stagger">
@@ -2433,6 +3457,14 @@
   </div>
 </div>
 
+<!-- Case detail modal -->
+<div class="case-modal" id="caseModal" aria-hidden="true" role="dialog" aria-label="Case details">
+  <div class="case-modal-card">
+    <button class="case-modal-close" type="button" onclick="closeCase()" aria-label="Close">×</button>
+    <div class="case-modal-body"></div>
+  </div>
+</div>
+
 <!-- Footer -->
 <footer>
   <div class="container">
@@ -2452,32 +3484,33 @@
   const I18N = {
     en: {
       "meta.title": "YupCode Studio — Ship AI products 3–5x faster",
-      "meta.desc": "Outsourced AI, Web3 and automation engineering studio. We ship in 2–4 weeks what traditional studios deliver in 6+. Vibe-coding on Claude, founder team, production-grade discipline.",
+      "meta.desc": "Outsourced AI, Web3 and automation engineering studio. We ship in 2–4 weeks what traditional studios deliver in 6+. Vibe-coding on Claude, a team that ships its own products, production-grade discipline.",
 
       "nav.services": "Services",
+      "nav.pricing": "Pricing",
       "nav.cases": "Cases",
       "nav.stack": "Stack",
       "nav.team": "Team",
       "nav.cta": "Book a call →",
 
-      "hero.badge": "Available for new projects · Founders, not freelancers",
+      "hero.badge": "Available for new projects · We build our own products",
       "hero.title": 'Ship AI products <span class="accent">3–5× faster</span><br/>than agencies hire engineers',
-      "hero.sub": "We're an outsourced studio building AI, Web3, automation, bots, and web apps end-to-end. What traditional teams deliver in 6+ weeks, we ship in 2 — through vibe-coding on Claude and a tight founder team that owns delivery from scope to handover.",
+      "hero.sub": "We're an outsourced studio building AI, Web3, automation, bots, and web apps end-to-end. What traditional teams deliver in 6+ weeks, we ship in 2 — through vibe-coding on Claude and a tight team that owns delivery from scope to handover.",
       "hero.cta1": "Book a 30-min discovery call →",
       "hero.cta2": "See our work",
 
       "stats.1": "On-chain transactions<br/>(#1 on NEAR Protocol)",
       "stats.2": "Production AI &amp; Web3<br/>products shipped",
       "stats.3": "Fastest first-commit<br/>to live production",
-      "stats.4": "Co-founders, each<br/>shipped a flagship",
+      "stats.4": "in the team, each<br/>shipped a flagship",
 
       "why.eyebrow": "// Why teams choose us",
       "why.title": "Hiring takes months.<br/>We ship in weeks.",
       "why.desc": "No hiring cycle, no onboarding, no long-term commitment. You bring a scoped problem — we deliver a working product, documented for handover.",
       "pillar.1.title": "AI-accelerated delivery",
       "pillar.1.desc": "Claude is the core of our workflow. One engineer with the right AI flow ships what used to take a team of 5.",
-      "pillar.2.title": "Founder team, not staff",
-      "pillar.2.desc": "7 co-founders, each owns a product in our own ecosystem. We treat client work with the same accountability.",
+      "pillar.2.title": "We own what we build",
+      "pillar.2.desc": "Each of us builds and runs a product in our own ecosystem — so we treat client work with the same accountability.",
       "pillar.3.title": "Production discipline",
       "pillar.3.desc": "Two-environment CI/CD, healthchecks, rollback playbooks, documented handover. Not prototypes — products.",
       "pillar.4.title": "End-to-end ownership",
@@ -2499,6 +3532,27 @@
       "service.6.title": "Mobile (Capacitor)",
       "service.6.items": "<li>Native iOS &amp; Android via Capacitor 8</li><li>Single-codebase, multi-platform delivery</li><li>Payment integration in regulated markets</li><li>Push notifications &amp; deep links</li><li>Native bridges for hardware features</li><li>App Store &amp; Play Store submission</li><li>Mobile-first PWA conversion</li><li>Performance optimization for mobile web</li>",
 
+      "pricing.eyebrow": "// Pricing",
+      "pricing.title": "Popular services &amp; starting prices",
+      "pricing.desc": "Our most-requested directions. Final price depends on scope.",
+      "pricing.note": "Final price is set after a free discovery call — it depends on scope and complexity.",
+      "price.from": "from",
+      "price.1.title": "AI implementation",
+      "price.1.desc": "AI agents, RAG, LLM chatbots, AI-driven process automation",
+      "price.1.amount": "$1,500",
+      "price.2.title": "Web development",
+      "price.2.desc": "Landing pages, websites, web apps, SaaS dashboards, admin panels",
+      "price.2.amount": "$1,000",
+      "price.3.title": "Telegram bots &amp; Mini Apps",
+      "price.3.desc": "Bots with logic, payments, CRM integration, Mini Apps",
+      "price.3.amount": "$800",
+      "price.4.title": "Automation &amp; integrations",
+      "price.4.desc": "Connecting services via API, CRM, notifications, CI/CD, cron jobs",
+      "price.4.amount": "$700",
+      "price.5.title": "Big data processing",
+      "price.5.desc": "Parsing, scraping, data pipelines, databases, analytics",
+      "price.5.amount": "$1,200",
+
       "cases.eyebrow": "// Selected work",
       "cases.title": "12 production products,<br/>shipped end-to-end",
       "cases.desc": "A mix of confidential client work (under NDA) and products from our own Web3 ecosystem. Each case is real, in production, with measurable outcomes.",
@@ -2506,6 +3560,42 @@
       "case.link.live": "Live →",
       "case.link.bot": "Open bot →",
       "case.link.demo": "Watch demo →",
+      "case.more": "Details →",
+      "case.1.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">AI engineering</div></div><div class="cs-fact"><div class="cs-fact-label">Platforms</div><div class="cs-fact-value">TG Mini App + iOS &amp; Android</div></div><div class="cs-fact"><div class="cs-fact-label">Type</div><div class="cs-fact-value">Client product</div></div><div class="cs-fact"><div class="cs-fact-label">Backend</div><div class="cs-fact-value">1 unified</div></div>',
+      "case.1.overview": "An end-to-end AI music platform delivered across three surfaces — a Telegram Mini App and native iOS &amp; Android apps — all on one unified backend.",
+      "case.1.challenge": "Generate music reliably at scale and accept payments in a regulated market — all from a single codebase that ships to web and both app stores.",
+      "case.1.solution": "A multi-stage AI pipeline with retry/failover, one backend powering all three clients, three payment integrations including card acquiring in a regulated market, and two-environment CI/CD with Sentry monitoring.",
+      "case.2.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">AI engineering</div></div><div class="cs-fact"><div class="cs-fact-label">Platform</div><div class="cs-fact-value">Telegram bot</div></div><div class="cs-fact"><div class="cs-fact-label">Type</div><div class="cs-fact-value">Client product</div></div><div class="cs-fact"><div class="cs-fact-label">Timeline</div><div class="cs-fact-value">10 days</div></div>',
+      "case.2.overview": "A production Telegram bot that generates stylized personal images while keeping the user's identity recognizable across every generation.",
+      "case.2.challenge": "Preserve a recognizable face through heavy stylization, keep generation costs under control and handle bursty async load — all shipped fast.",
+      "case.2.solution": "A multimodal input layer, dual-API failover for cost optimization, an async job architecture and crypto payments — live in 10 days.",
+      "case.3.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">AI + full-stack</div></div><div class="cs-fact"><div class="cs-fact-label">Platform</div><div class="cs-fact-value">Web + Telegram</div></div><div class="cs-fact"><div class="cs-fact-label">Type</div><div class="cs-fact-value">Client (online school)</div></div><div class="cs-fact"><div class="cs-fact-label">Timeline</div><div class="cs-fact-value">6 weeks</div></div>',
+      "case.3.overview": "A complete AI-powered sales funnel for an online education business — from landing pages to a RAG agent that answers in the founder's own voice.",
+      "case.3.challenge": "Turn a founder's huge content library into an always-on sales agent that genuinely sounds like them — wired into the existing CRM and protected from referral fraud.",
+      "case.3.solution": "Two landing pages, a multi-step Telegram onboarding bot, a RAG agent trained on the full content library, GetCourse CRM integration, an anti-fraud referral system and an admin dashboard — delivered in 6 weeks.",
+      "cs.challenge": "The challenge",
+      "cs.solution": "What we built",
+      "cs.results": "Results",
+      "case.5.meta": "Full-cycle Web3 · NEAR + TON · self-funded",
+      "case.5.overview": "A self-built, multi-chain Web3 ecosystem on NEAR — 15+ products linked by one economy and 21 tokens, where real users have lived, traded and crafted for two years across two market cycles.",
+      "case.5.challenge": "Web3 games die with the market — in a bear, NFTs rot in wallets, communities scatter and metrics are bot-inflated. The goal: an ecosystem whose on-chain activity doesn't depend on price, driven by real wallets, not bots.",
+      "case.5.solution": "The Reputation Game — an antifragile loop of trade → craft → burn → win that gets stronger under pressure. Cross-chain crafting (Alchemy Lab), a burn wallet (Duplo), mass NFT distribution (Sender — 120 NFTs per tx) and AI products, all live on NEAR + TON on custom indexers and smart contracts.",
+      "cs.underhood": "Under the hood",
+      "case.5.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">Full-cycle Web3</div></div><div class="cs-fact"><div class="cs-fact-label">Timeline</div><div class="cs-fact-value">1.5 years live</div></div><div class="cs-fact"><div class="cs-fact-label">Chains</div><div class="cs-fact-value">NEAR + TON</div></div><div class="cs-fact"><div class="cs-fact-label">Funding</div><div class="cs-fact-value">Self-funded</div></div>',
+      "case.5.features": '<div class="cs-feature"><h4>Alchemy Lab</h4><p>Cross-chain NFT crafting across NEAR + TON — 29K+ crafts, 283 recipes. Burning solves inflation; recipes drive retention.</p></div><div class="cs-feature"><h4>NFT-Sender</h4><p>Mass multi-chain distribution at 120 NFTs per transaction, past the NEAR throughput limit — no analogs on the market.</p></div><div class="cs-feature"><h4>YupSoul — AI Music Oracle</h4><p>The flagship AI product: personal songs from a natal chart across web, Telegram, VK, iOS &amp; Android in 5 languages.</p></div>',
+      "case.5.quote": "5.7M+ on-chain transactions, 123K+ holders, 21 tokens — all self-built, on a chain that ignored us.",
+      "case.5.highlights": '<li>Custom NEAR indexers tracking every on-chain event in real time</li><li>Sender pushing 120 NFTs per transaction past the NEAR throughput limit</li><li>Cross-chain bridge logic uniting NEAR + TON liquidity in one loop</li><li>Self-sustaining for 1.5 years — zero grants, zero VC</li>',
+      "case.5.shotscaption": "Screenshots: YupPortal — the ecosystem's hub &amp; navigator web app (marketplace · DEX · incubator)",
+      "case.13.tag": "Web3 · Portal",
+      "case.13.title": "YupLand Portal — Ecosystem Hub",
+      "case.13.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">Full-stack</div></div><div class="cs-fact"><div class="cs-fact-label">Platform</div><div class="cs-fact-value">Web + Telegram Mini App</div></div><div class="cs-fact"><div class="cs-fact-label">Built by</div><div class="cs-fact-value">1 engineer</div></div><div class="cs-fact"><div class="cs-fact-label">Live since</div><div class="cs-fact-value">Oct 2025</div></div>',
+      "case.13.overview": "YupLand Portal is the navigation layer of the Yupland ecosystem — one app, web + Telegram Mini App, that bundles a custom CMS, DEX, incubator, wiki, gamification layer (levels / achievements / quests / loot boxes / NFT staking), YupPay, prediction market (Polymarket-style), YupDrop, subscriptions, referrals, social graph and a Telegram notification engine. Built solo by one engineer.",
+      "case.13.challenge": "The Yupland ecosystem has 15+ products and 21 tokens spread across NEAR + TON. Users needed one place to navigate the whole world — wallet, balances, staking, games, marketplace, governance — without bouncing between apps. The portal also had to host games and services built by the community and incubator projects, not just by the studio.",
+      "case.13.solution": "A single full-stack app — web + Telegram Mini App on one codebase — wrapping the entire YupLand world. Custom CMS, DEX trading every ecosystem token pair (13 NEAR FTs + 8 TON jettons), incubator with no-strings community funding, gamification layer (levels, achievements, quests, daily loot boxes, NFT staking), YupPay, YupDrop, Polymarket-style prediction market, subscriptions in Darai, in-portal transactions, friends graph, events calendar, promo codes, reward pool and a Telegram notification engine for users and admins. Vibe-coded end-to-end.",
+      "case.13.features": '<div class="cs-feature"><h4>Wallet &amp; DEX</h4><p>Connect a wallet, see your Yupland tokens live on-chain, watch the Darai chart. Built-in DEX trades every ecosystem pair across 13 NEAR FTs and 8 TON jettons — from MED to Darai to bees.</p></div><div class="cs-feature"><h4>Gamification + Energy economy</h4><p>Levels, achievements, quests and the daily Duplo loot loop — ~2M boxes opened per month (rewards batched into single transactions to save NEAR gas). NFT staking earns Energy, spent on the same loot loop.</p></div><div class="cs-feature"><h4>Games marketplace (hybrid build)</h4><p>10+ mini-games in one portal — Flappy, 2048+, Reputation Calculator, YupLottery, YupLink, feeding checkers, plus deep links into YupSoul, YupDar, Sender and KeksVPN. Built by the studio, by the community and via the incubator.</p></div><div class="cs-feature"><h4>Incubator (no-strings crowdfunding)</h4><p>Project applies → admin approves → community funds it freely in NEAR / USDT / Energy / Darai. 9 projects live. Some become standalone ecosystem products.</p></div>',
+      "case.13.quote": "~2M loot boxes opened in 30 days, a DEX trading every token in the ecosystem, 9 funded projects in the incubator — all from a Web + TMA app built solo by one engineer.",
+      "case.13.highlights": '<li>Web and Telegram Mini App share a single codebase</li><li>Custom indexer mirrors YupAI NFTs from the wallet without moving them</li><li>Loot-reward batching — multiple rewards stacked into one transaction to save NEAR gas</li><li>Throughout: workarounds for NEAR API rate limits and throughput constraints</li><li>Telegram notification engine — rewards for users, low-pool alerts for admins</li>',
+      "case.13.metrics": '<span class="metric metric-accent">~2M loot boxes / 30d</span><span class="metric">MAU ~200</span><span class="metric">~700 wallets connected</span><span class="metric">9 projects in incubator</span><span class="metric">Built solo · vibe-coded</span>',
 
       "case.1.title": "AI Music Generation Platform",
       "case.1.tag": "AI · Mobile",
@@ -2527,40 +3617,73 @@
       "case.4.desc": "Production AI pipeline generating videos and presentations from a single prompt: scripts, voice, visuals, motion, music, effects — fully automated. Fallback chains at every level across 10+ AI providers, hybrid free/paid for cost-efficiency.",
       "case.4.metrics": '<span class="metric metric-accent">10+ AI APIs orchestrated</span><span class="metric">Fallback at every stage</span><span class="metric">CI-based generation</span>',
 
+      "case.9.title": "YupJarvis — Ecosystem AI Agent Builder",
+      "case.9.tag": "AI · No-code",
+      "case.9.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">Full-stack product</div></div><div class="cs-fact"><div class="cs-fact-label">Type</div><div class="cs-fact-value">Studio product</div></div><div class="cs-fact"><div class="cs-fact-label">Engine</div><div class="cs-fact-value">Next.js 15 + Supabase</div></div><div class="cs-fact"><div class="cs-fact-label">Scope</div><div class="cs-fact-value">16 nodes · 7 agents · 302 assertions</div></div>',
+      "case.9.overview": "YupJarvis is a no-code visual builder for LLM agents and pipelines — a drag-and-drop graph editor that chains 7 kinds of agents (LLM, Classifier, Extractor, Tool, Memory/RAG, Judge, Orchestrator), with triggers, public API, RAG over pgvector and a run journal with drill-down. Designed and built end-to-end by the studio.",
+      "case.9.challenge": "Building a production-grade LLM pipeline means stitching together agent types, retry logic, vector memory, tool calls, condition routing, run logs and access control by hand for every new project. The studio needed one substrate that turns this into a graph the team can draw, version and ship — not yet another framework wrapper.",
+      "case.9.solution": "A full Next.js 15 + Supabase application with a React Flow editor (16 node types and 7 agent kinds), JMESPath-powered Mapper/Condition routing, RAG on pgvector with an embedding pipeline, public API + webhook trigger, and a run journal with metrics, limits and drilldown UI. Configs validated through Zod, strict TypeScript across the stack, 302 test assertions across 11 test files — schemas, runner, classifier routing, tool calls, memory, judge, orchestrator and API.",
+      "case.9.features": '<div class="cs-feature"><h4>Visual graph editor</h4><p>React Flow with 16 node types, drag-and-drop wiring, Zod-validated configs per node — designers draw the pipeline instead of writing boilerplate.</p></div><div class="cs-feature"><h4>7 agent kinds out of the box</h4><p>LLM, Classifier, Extractor, Tool, Memory/RAG, Judge, Orchestrator. Each one a first-class node with typed schema, retries and observability.</p></div><div class="cs-feature"><h4>RAG inside Supabase</h4><p>pgvector storage, a separate embedding pipeline (OpenAI), retrieval as its own node type. Memory and RAG share the same substrate.</p></div><div class="cs-feature"><h4>Run journal &amp; public API</h4><p>Every run logged with token and duration metrics, per-project limits, drilldown UI. Webhook trigger and public REST API expose any agent to the outside world.</p></div>',
+      "case.9.quote": "16 node types, 7 agent kinds, 302 test assertions — built solo end-to-end on Next.js 15 + Supabase. Strict TypeScript, zero compile errors.",
+      "case.9.highlights": '<li>React Flow graph editor with 16 node types and Zod-validated per-node configs</li><li>7 agent kinds: LLM, Classifier, Extractor, Tool, Memory/RAG, Judge, Orchestrator</li><li>JMESPath-powered Mapper and Condition nodes for routing and transformation</li><li>pgvector RAG inside Supabase with a separate embedding pipeline (OpenAI)</li><li>Webhook trigger + public REST API for invoking any agent from outside</li><li>Run journal — every step logged with token/duration metrics, limits and drilldown UI</li><li>302 test assertions across 11 files: schemas, runner, classifier routing, tool, memory, judge, orchestrator, API keys, webhook</li><li>TypeScript strict, tsc --noEmit clean</li>',
+      "case.9.metrics": '<span class="metric metric-accent">Built end-to-end solo</span><span class="metric">16 node types</span><span class="metric">7 agent kinds</span><span class="metric">302 test assertions</span><span class="metric">0 type errors</span>',
+
       "case.5.title": "Yupland — Web3 Ecosystem",
       "case.5.tag": "Web3 · Flagship",
       "case.5.desc": 'Decentralized gaming ecosystem on NEAR Protocol with a unique "Reputation Game" mechanic. NFT marketplace, incubator, multi-chain crafting, games, clans, tokenomics. Active activity that doesn\'t depend on the bear market.',
-      "case.5.metrics": '<span class="metric metric-accent">2M+ on-chain tx (#1 NEAR)</span><span class="metric">150K NFTs</span><span class="metric">9K+ reputation wallets</span><span class="metric">$3K BitGet pitch win</span>',
+      "case.5.metrics": '<span class="metric metric-accent">5.7M+ on-chain tx</span><span class="metric">#1 by activity on NEAR</span><span class="metric">123K+ holders</span><span class="metric">190K+ NFTs</span><span class="metric">15+ products · 21 tokens</span><span class="metric">$3K BitGet win</span>',
 
-      "case.6.title": "NFT Sender Infrastructure",
+      "case.6.title": "NFT-Sender — Multichain NFT Infrastructure",
       "case.6.tag": "Web3 · Infra",
-      "case.6.desc": "Multi-chain NFT operations platform powering all collection launches in our ecosystem. Mass-distribution to 10K+ wallets (120 NFTs per transaction with throttling workaround), marketplace with Sells/Orders/Auctions, portfolio management, reputation system.",
-      "case.6.metrics": '<span class="metric metric-accent">10K+ wallets per campaign</span><span class="metric">120 NFTs per tx</span><span class="metric">#1 NFT distribution on NEAR</span>',
+      "case.6.desc": "Multichain NFT infrastructure powering bulk distribution, marketplace, on-chain auctions, an explorer and a reputation game across NEAR, TON, EVM and Solana. #1 on NEAR by transaction volume.",
+      "case.6.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">Web3 infrastructure</div></div><div class="cs-fact"><div class="cs-fact-label">Throughput</div><div class="cs-fact-value">Up to 120 NFTs / tx</div></div><div class="cs-fact"><div class="cs-fact-label">Chains</div><div class="cs-fact-value">NEAR · TON · EVM · Solana</div></div><div class="cs-fact"><div class="cs-fact-label">Status</div><div class="cs-fact-value">#1 on NEAR by tx</div></div>',
+      "case.6.overview": "NFT-Sender is the multichain NFT infrastructure powering bulk distribution, marketplace, on-chain auctions, an explorer and a reputation game across NEAR, TON, EVM and Solana. Currently #1 on NEAR by transaction volume — 1M+ on-chain transactions, 40 collections live, 10K+ wallets in the reputation system. Built from scratch — no analogs on the market.",
+      "case.6.challenge": "Mass NFT distribution on NEAR runs straight into the chain's throughput limit — a few NFTs per transaction means days to airdrop a 10K-wallet campaign. Beyond raw distribution, an NFT ecosystem also needs the layers around it: a marketplace, auctions, a wallet-level explorer, and a reason for holders to actually engage with what they own. Ideally it should reach across chains, not just one.",
+      "case.6.solution": "A custom infrastructure that pushes up to 120 NFTs per transaction on NEAR — a workaround for the chain's throughput limit, with no analogs on the market. Around the distribution sit a built-in marketplace and on-chain auctions, an explorer that parses 10K+ wallet addresses with full on-chain data extraction, and a reputation game where each NFT carries a positive or negative reputation coefficient and wallets compete for TOP+ and TOP- rankings. Alchemy Lab — the cross-chain crafting mechanic — plugs in here too. Cross-chain by design: NEAR, TON, EVM and Solana through one interface.",
+      "case.6.features": '<div class="cs-feature"><h4>Mass distribution at scale</h4><p>Up to 120 NFTs per transaction — a workaround for NEAR&#39;s throughput limit. A 10K-wallet campaign goes out in a few transactions, not hundreds. Automated airdrops and reward systems for collection launches.</p></div><div class="cs-feature"><h4>Cross-chain by design</h4><p>NEAR, TON, EVM and Solana collections work through one interface. Single tooling for cross-chain airdrops, drops and partner collaborations.</p></div><div class="cs-feature"><h4>Marketplace, auctions &amp; explorer</h4><p>Sells, Orders and on-chain auctions inside the same service. A wallet explorer parses 10K+ addresses with full on-chain data extraction — holders, NFTs and tokens, all queryable.</p></div><div class="cs-feature"><h4>Reputation game built in</h4><p>Each NFT carries a positive or negative reputation coefficient. Wallets compete for TOP+ and TOP- rankings. Alchemy Lab — the cross-chain crafting mechanic — plugs in right here, turning distribution into a closed-loop economy.</p></div>',
+      "case.6.quote": "#1 on NEAR by transaction volume. 1M+ on-chain transactions. Up to 120 NFTs per transaction. No analogs on the market.",
+      "case.6.highlights": '<li>Up to 120 NFTs per transaction — custom workaround for NEAR throughput limits</li><li>Cross-chain across NEAR + TON + EVM + Solana through one interface</li><li>Wallet explorer parses 10K+ addresses with full on-chain data extraction</li><li>Reputation engine — every NFT carries a positive or negative coefficient, TOP+ and TOP- leaderboards</li><li>Alchemy Lab cross-chain crafting plugs in directly — distribution becomes a closed-loop economy</li>',
+      "case.6.metrics": '<span class="metric metric-accent">#1 on NEAR by tx volume</span><span class="metric">1M+ on-chain transactions</span><span class="metric">40 collections live</span><span class="metric">10K+ wallets in reputation</span><span class="metric">NEAR · TON · EVM · Solana</span>',
 
       "case.7.title": "Alchemy Lab — Cross-Chain Crafting",
       "case.7.tag": "Web3 · Multi-chain",
       "case.7.desc": "Unique multi-chain NFT crafting mechanic across NEAR + TON. Users combine NFT components by recipes to mint new NFTs. Closed-loop economy with liquidity from two blockchains simultaneously.",
-      "case.7.metrics": '<span class="metric metric-accent">9K+ crafts</span><span class="metric">283 recipes</span><span class="metric">TOP-2 on HOTCraft</span><span class="metric">NEAR + TON</span>',
+      "case.7.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">Cross-chain game mechanic</div></div><div class="cs-fact"><div class="cs-fact-label">Mechanic</div><div class="cs-fact-value">Trade → craft → burn → mint</div></div><div class="cs-fact"><div class="cs-fact-label">Chains</div><div class="cs-fact-value">NEAR + TON</div></div><div class="cs-fact"><div class="cs-fact-label">Recipes</div><div class="cs-fact-value">317 live</div></div>',
+      "case.7.overview": "Alchemy Lab is a cross-chain NFT crafting mechanic unique on the market — players combine NFT components by recipes across NEAR and TON to mint brand-new NFTs in a closed-loop economy. Trade → craft → burn → mint, on two blockchains at once.",
+      "case.7.challenge": "NFT inflation kills value: once mass-minted, collections sit in wallets with nowhere to go. The fix had to make burning attractive — a game where players want to take NFTs out of circulation — and work across two blockchains so liquidity flows from both. And it had to be easy enough for partners to drop their NFTs into the same loop without rebuilding anything.",
+      "case.7.solution": "A custom recipe engine on top of NEAR + TON smart contracts and cross-chain bridge logic. Players combine NFT components by recipe to mint new NFTs — and the burned originals leave circulation forever. The same surface accepts partner NFTs, so external projects plug into the lab and get instant collab without writing their own crafting layer. 317 live recipes today, 34K+ crafts completed, TOP-2 on HOTCraft.",
+      "case.7.features": '<div class="cs-feature"><h4>Cross-chain crafting</h4><p>NEAR + TON in one closed loop. Liquidity from two blockchains feeds the same recipe library — combine components from either chain to mint new NFTs.</p></div><div class="cs-feature"><h4>Burning solves inflation</h4><p>Players themselves take NFTs and tokens out of circulation via crafting. Mass-minted supply is removed not by penalties but by a mechanic players choose.</p></div><div class="cs-feature"><h4>Retention through recipes</h4><p>317 recipes ship today — from basic to rare combos and boosts. Players come back daily to chase rare results.</p></div><div class="cs-feature"><h4>Partner-ready surface</h4><p>External projects drop their NFTs into the Lab — instant collab. The recipe engine is generic enough for any project to plug in without rebuilding crafting from scratch.</p></div>',
+      "case.7.quote": "317 recipes, 34K+ crafts completed, two blockchains in one mechanic — the closed-loop economy that turns mass-minted NFTs into something players want to burn.",
+      "case.7.highlights": '<li>Cross-chain bridge logic uniting NEAR + TON liquidity into one recipe pool</li><li>Custom recipe engine — any NFT bundle definable as a craftable input</li><li>Burning + minting in one transaction per recipe</li><li>Partner-ready surface — external NFTs plug in without code</li><li>317 recipes live, 34K+ crafts completed, TOP-2 on HOTCraft</li>',
+      "case.7.metrics": '<span class="metric metric-accent">34K+ crafts completed</span><span class="metric">317 recipes live</span><span class="metric">TOP-2 on HOTCraft</span><span class="metric">NEAR + TON in one mechanic</span><span class="metric">Partner-ready</span>',
 
-      "case.8.title": "YupDar — AI Self-Discovery Platform",
+      "case.8.title": "YupDar — Trilingual AI Mini App for Self-Discovery",
       "case.8.tag": "AI · Vibe-coding",
-      "case.8.desc": "Production AI platform built by a non-developer book author via Claude Code (vibe-coding). Telegram Mini App + web on one codebase, AI-generated psychological portraits, 6 content generation types, in-app payments, referral system, gamification.",
-      "case.8.metrics": '<span class="metric metric-accent">Vibe-coding success</span><span class="metric">338 commits in 1 month</span><span class="metric">11 API endpoints</span><span class="metric">DeepSeek + Groq fallback</span>',
-
-      "case.9.title": "Bee Farm — Play-to-Earn Game",
-      "case.9.tag": "Web3 · Game",
-      "case.9.desc": "HTML5 Play-to-Earn farming simulator with full Web3 integration on NEAR. Multi-resource economy, on-chain deposits, withdrawals, in-game purchases via smart contracts, real-time balance tracking.",
-      "case.9.metrics": '<span class="metric metric-accent">P2E mechanics</span><span class="metric">On-chain economy</span><span class="metric">Real-time balance sync</span>',
+      "case.8.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">Full-stack vibe-coding</div></div><div class="cs-fact"><div class="cs-fact-label">Surfaces</div><div class="cs-fact-value">TG Mini App + Web · RU / EN / ES</div></div><div class="cs-fact"><div class="cs-fact-label">Team</div><div class="cs-fact-value">Book author + Claude Code</div></div><div class="cs-fact"><div class="cs-fact-label">Status</div><div class="cs-fact-value">Live · trilingual · scientific track</div></div>',
+      "case.8.overview": "A trilingual self-discovery ecosystem (RU / EN / ES) on the 64 Daram system — Telegram Mini App + a public web landing on one codebase, with a premium daily-companion layer ARKA on top. AI-generated literary portraits (8 psychological sections per user), oracle as a card spread, compatibility, hero&#39;s journey 2.0 with cross-user Daram unlocks, shadow quests, PvP card game. Books published in EN / ES on Amazon and on Litres in RU. A scientific track in parallel — DAR-27v2 research questionnaire, scientific-article DOCX builders, application to the World Science Championship in Dubai. Built solo by the book&#39;s author with Claude Code.",
+      "case.8.challenge": "Turning a published esoteric book on the 64 Darams into a living interactive product required AI capable of writing literary Russian indistinguishable from the author&#39;s voice. Off-the-shelf models produced &#34;professional&#34; Russian — methodical, cliché-laden, sprinkled with Latin tokens, with broken gender agreement. Declarative bans inside the prompt didn&#39;t hold. And the product had to ship as both a Telegram Mini App AND a public SEO-landing — one codebase, two surfaces. Later: open the system to a global audience in English and Spanish without losing the author&#39;s literary voice, then add a premium daily-companion layer on top without touching the base game in prod.",
+      "case.8.solution": "A two-layer Russian-AI quality stack: prompt v7 with the author&#39;s ~600-word reference text baked in as a stylistic anchor, plus a programmatic postprocessor russifyText() with 60+ regex defenses against forbidden constructions (clichés, Latin, broken gender, formulaic openings). Provider routing — DeepSeek-V3 primary (~$0.0024 per message), Groq Llama 3.3 70B as automatic fallback, Llama 3.1 8B as second fallback. response_format: json_object guarantees parseable output for 8-section portraits. Yandex Speller post-pass with a protected glossary. Same backend serves both the Mini App and the yupdar.com landing — split only at the HTML entrypoint level. On top of the base game the studio shipped a premium ARKA layer (a daily companion in the rhythm of the user&#39;s Daram — power windows, archetype-voiced rituals, AI strategy assistant, mentor brief, content plan), Hero&#39;s Journey 2.0 (a viral mechanic to unlock the Darams of close ones via referrals, crystals or direct payment), a Pricing v2 subscription system (1/3/6/12 months, up to −33% off, −50% first-month promo, YuKassa-wired), and a secondary doTERRA affiliate channel (essential oils mapped to each Daram). Full localization rolled out to English and Spanish across the entire interface, the encyclopedia and the in-app book reader (RU 94 / EN 99 / ES 87 chapters). In parallel a scientific track is running — the DAR-27v2 research questionnaire, DOCX builders for scientific articles, an application submitted to the World Science Championship in Dubai.",
+      "case.8.features": '<div class="cs-feature"><h4>Literary AI portraits, trilingual</h4><p>8-section JSON output per user — Archetype, Essence, Superpowers, Flow, Relationships, Traps, Key to Self, Purpose. ~5K–6K chars of structured literary text per generation. Fully localized to Russian, English and Spanish across portraits, oracle and encyclopedia.</p></div><div class="cs-feature"><h4>ARKA premium daily layer</h4><p>A daily companion in the rhythm of the user&#39;s Daram, sitting above the base game. Power windows, archetype-voiced rituals tied to doTERRA essential oils, task tracker with load types, AI strategy assistant, mentor brief, finances, content plan, week review — all in the archetype&#39;s voice. Prototype isolated in a sandbox so prod stays untouched.</p></div><div class="cs-feature"><h4>Hero&#39;s Journey 2.0 — viral mechanic</h4><p>Users now unlock the Darams of close ones (partner, friends, parent of a child) via referrals, crystals or direct payment. Each user becomes a conductor into YupDar for the people around them — and a new revenue surface.</p></div><div class="cs-feature"><h4>Scientific track in parallel</h4><p>DAR-27v2 research questionnaire, DOCX builders for scientific articles, application submitted to the World Science Championship in Dubai. A dedicated &#34;Science 🔬&#34; tab in the new architecture preview. International recognition of the Daram system is an explicit goal.</p></div>',
+      "case.8.quote": "Trilingual (RU / EN / ES). Premium ARKA layer on top of the base game. Viral cross-user Daram unlocks. Pricing v2 subscriptions. doTERRA affiliate. Scientific track to the World Science Championship in Dubai. Books on Amazon and Litres. All shipped solo by a book author through Claude Code.",
+      "case.8.highlights": '<li>DeepSeek-V3 primary, Groq Llama 3.3 70B fallback, Llama 3.1 8B as second fallback</li><li>response_format: json_object — guaranteed valid JSON for 8-section literary portraits</li><li>russifyText() programmatic postprocessor — 60+ regex defenses against forbidden constructions</li><li>Author&#39;s ~600-word reference text baked into prompt v7 as a stylistic anchor</li><li>Yandex Speller post-pass with a protected glossary for system terms</li><li>Full RU / EN / ES localization across interface, oracle, encyclopedia and the in-app book reader (RU 94 / EN 99 / ES 87 chapters)</li><li>ARKA premium layer: a daily companion in the rhythm of the user&#39;s Daram — sandboxed prototype isolated from prod (iram-prototype/)</li><li>Hero&#39;s Journey 2.0 — viral mechanic to unlock close-ones&#39; Darams via referrals / crystals / direct payment</li><li>Pricing v2 — 1/3/6/12-month subscriptions with discounts up to −33%, −50% first-month promo, YuKassa across all tiers and periods</li><li>doTERRA affiliate channel — essential oils mapped to each Daram, second monetization line</li><li>DAR-27v2 research questionnaire, DOCX builders for scientific articles, application submitted to the World Science Championship in Dubai</li><li>11 Vercel serverless endpoints; content.js routes 6 generation types</li><li>Supabase Postgres — 11+ tables, 11 SQL migrations, RLS + service-role split</li><li>HMAC-SHA256 validation of Telegram initData; anonymous web sessions with migration into Telegram</li><li>PDF.js-powered in-app reader for the 212-page authored book (RU / EN / ES)</li><li>Telegram Stars admin tab with live bot balance via API + DB reconciliation</li><li>Architecture preview rebuild — new 4-tab nav (Я / Семья / Сокровищница / ARKA) + Science 🔬 header, deployed to a separate preview surface</li><li>41 &#34;project laws&#34; in Claude Code memory system</li>',
+      "case.8.metrics": '<span class="metric metric-accent">Trilingual · RU / EN / ES</span><span class="metric">Premium ARKA layer live</span><span class="metric">Hero&#39;s Journey 2.0 viral mechanic</span><span class="metric">Pricing v2 subscriptions</span><span class="metric">doTERRA affiliate</span><span class="metric">DAR-27v2 + Dubai application</span><span class="metric">Books on Amazon + Litres</span><span class="metric">Built solo by book author</span>',
 
       "case.10.title": "Yupland Lottery — Live Stream Raffle",
       "case.10.tag": "Automation",
       "case.10.desc": "Automated service for live-stream raffles. Replaced manual stream management with one-click automation: fair randomizer, admin dashboard, Telegram bot integration, real-time audience view, custom result formatting.",
       "case.10.metrics": '<span class="metric metric-accent">One-click automation</span><span class="metric">Real-time event sync</span><span class="metric">Telegram delivery</span>',
 
-      "case.11.title": "Duplo Combo Tracker",
-      "case.11.tag": "Web3 · Parsing",
+      "case.11.title": "Duplo — On-chain Combo Game",
+      "case.11.tag": "Web3 · Game",
       "case.11.desc": "Blockchain-aware NFT combo tracker. Parses on-chain NFT/token transfers to a game wallet in real-time, identifies valid combinations, calculates rewards. Multi-asset combo detection (NFT + token bundles).",
-      "case.11.metrics": '<span class="metric metric-accent">Real-time on-chain parsing</span><span class="metric">Multi-asset combos</span><span class="metric">Time-window logic</span>',
+      "case.11.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">Web3 game + on-chain parser</div></div><div class="cs-fact"><div class="cs-fact-label">Mechanic</div><div class="cs-fact-value">Burn → combo → reward</div></div><div class="cs-fact"><div class="cs-fact-label">Versions</div><div class="cs-fact-value">Manual + automated</div></div><div class="cs-fact"><div class="cs-fact-label">Chains</div><div class="cs-fact-value">NEAR + TON</div></div>',
+      "case.11.overview": "Duplo is the burn-and-reward game at the heart of Yupland — players send NFTs and tokens to the Duplo wallet, the engine matches them by recipe and pays out rewards on-chain. Two implementations: the original game (manual play, with a rating) and the version integrated into YupLand Portal (automated, no rating, runs inside the daily loot loop).",
+      "case.11.challenge": "An ecosystem with mass-minted NFTs needs a sink — a way to take supply out of circulation that feels like a game, not a penalty. Players also need a reason to actively combine the NFTs they own. The same mechanic had to work two ways: as an original game (manual play, leaderboard) and as an automated daily loop inside a larger portal (no rating, broad reach).",
+      "case.11.solution": "A burn-and-reward engine with two faces, sharing one on-chain wallet and one recipe library. Original game: a custom blockchain parser watches transfers to the Duplo wallet in real time, identifies multi-asset combinations by recipe (NFT + token bundles, time-window logic), computes rewards and maintains a leaderboard. Portal version: the same combo logic but fully automated inside YupLand Portal — players don't send transfers manually; the portal triggers burn → combo check → reward inside its daily loot loop. Both versions feed the same wallet, putting supply out of circulation across the whole ecosystem.",
+      "case.11.features": '<div class="cs-feature"><h4>Original game (with rating)</h4><p>Players send NFTs and tokens to the Duplo wallet manually. A custom parser identifies valid combinations in real time, computes rewards and maintains a leaderboard.</p></div><div class="cs-feature"><h4>Portal version (automated)</h4><p>Same combo logic, no manual transfers. YupLand Portal runs burn → combo check → reward inside its daily loot loop. No rating — designed for breadth, not competition.</p></div><div class="cs-feature"><h4>Multi-asset combo engine</h4><p>Detects bundles of NFTs + tokens by recipe. Time-window logic, configurable reward tables, multi-chain (NEAR + TON).</p></div><div class="cs-feature"><h4>Shared on-chain sink</h4><p>Both versions feed the same Duplo wallet — a fun supply sink at scale. Players take NFTs and tokens out of circulation because they want to, not because they have to.</p></div>',
+      "case.11.quote": "Two implementations, one wallet, one recipe library — the burn-and-reward loop that sucks NFT supply out of circulation across the whole ecosystem.",
+      "case.11.highlights": '<li>Real-time on-chain parser watching the Duplo wallet for incoming bundles</li><li>Multi-asset combination detection (NFT + tokens) with time-window logic</li><li>Shared recipe library across both implementations</li><li>Automated burn → combo → reward path inside YupLand Portal (no manual tx)</li><li>Configurable reward tables, multi-chain (NEAR + TON)</li>',
+      "case.11.metrics": '<span class="metric metric-accent">~2M boxes / 30d (portal version)</span><span class="metric">Real-time on-chain parsing</span><span class="metric">Multi-asset NFT + token combos</span><span class="metric">Shared sink · 2 implementations</span><span class="metric">Multi-chain (NEAR + TON)</span>',
 
       "case.12.title": "NFT Collection Launch Service",
       "case.12.tag": "Web3 · Pipeline",
@@ -2597,8 +3720,8 @@
       "stack.tag.memory": "Claude Code memory system",
 
       "team.eyebrow": "// The team",
-      "team.title": "Seven co-founders.<br/>Each shipped a flagship.",
-      "team.desc": "We're not a freelance marketplace or a generic dev shop. Every member of YupCode co-founded a product in our Yupland Web3 ecosystem — so we treat client work with the same ownership we treat our own.",
+      "team.title": "Seven builders.<br/>Each shipped a flagship.",
+      "team.desc": "We're not a freelance marketplace or a generic dev shop. Everyone on the team built a product in our own Yupland Web3 ecosystem — so we treat client work with the same ownership we treat our own.",
       "member.1.name": "Angelina",
       "member.1.role": "// Founder · CCO",
       "member.1.bio": "Founder of YupCode and Yupland, concept designer of the ecosystem, public face of the team.",
@@ -2654,32 +3777,33 @@
 
     ru: {
       "meta.title": "YupCode Studio — Запускаем AI-продукты в 3–5× быстрее",
-      "meta.desc": "Outsource-студия разработки AI, Web3 и автоматизации. Запускаем за 2–4 недели то, на что обычным студиям нужно 6+. Vibe-coding на Claude, команда фаундеров, production-дисциплина.",
+      "meta.desc": "Outsource-студия разработки AI, Web3 и автоматизации. Запускаем за 2–4 недели то, на что обычным студиям нужно 6+. Vibe-coding на Claude, команда со своими продуктами, production-дисциплина.",
 
       "nav.services": "Услуги",
+      "nav.pricing": "Цены",
       "nav.cases": "Кейсы",
       "nav.stack": "Стек",
       "nav.team": "Команда",
       "nav.cta": "Связаться →",
 
-      "hero.badge": "Открыты для новых проектов · Фаундеры, а не фрилансеры",
+      "hero.badge": "Открыты для новых проектов · Делаем свои продукты",
       "hero.title": 'Запускаем AI-продукты <span class="accent">в 3–5× быстрее</span>,<br/>чем агентства нанимают инженеров',
-      "hero.sub": "Мы — outsource-студия. Делаем AI, Web3, автоматизацию, ботов и веб-приложения под ключ. То, что обычные команды делают 6+ недель, мы релизим за 2 — за счёт vibe-coding на Claude и сплочённой команды фаундеров, которая ведёт проект от ТЗ до сдачи.",
+      "hero.sub": "Мы — outsource-студия. Делаем AI, Web3, автоматизацию, ботов и веб-приложения под ключ. То, что обычные команды делают 6+ недель, мы релизим за 2 — за счёт vibe-coding на Claude и сплочённой команды, которая ведёт проект от ТЗ до сдачи.",
       "hero.cta1": "Заказать 30-минутный созвон →",
       "hero.cta2": "Посмотреть работы",
 
       "stats.1": "On-chain транзакций<br/>(#1 на NEAR Protocol)",
       "stats.2": "Production-продуктов<br/>в AI и Web3 запущено",
       "stats.3": "От первого коммита<br/>до production",
-      "stats.4": "Со-фаундеров,<br/>каждый запустил флагман",
+      "stats.4": "человек в команде,<br/>у каждого свой флагман",
 
       "why.eyebrow": "// Почему выбирают нас",
       "why.title": "Найм идёт месяцами.<br/>Мы релизим за недели.",
       "why.desc": "Никакого цикла найма, онбординга и долгосрочных обязательств. Вы приносите задачу — мы отдаём рабочий продукт с документацией для передачи.",
       "pillar.1.title": "Разработка с AI-ускорением",
       "pillar.1.desc": "Claude — основа нашего workflow. Один инженер с правильным AI-флоу делает то, на что раньше уходила команда из 5 человек.",
-      "pillar.2.title": "Команда фаундеров, не наёмники",
-      "pillar.2.desc": "7 со-фаундеров, у каждого свой продукт в нашей экосистеме. К клиентским задачам относимся с той же ответственностью.",
+      "pillar.2.title": "Работаем как над своим",
+      "pillar.2.desc": "Каждый ведёт свой продукт в нашей экосистеме — поэтому к клиентским задачам относимся так же ответственно, как к своим.",
       "pillar.3.title": "Production-дисциплина",
       "pillar.3.desc": "CI/CD с двумя средами, healthcheck'и, playbook'и отката, документация для передачи. Не прототипы — продукты.",
       "pillar.4.title": "Полное владение задачей",
@@ -2701,6 +3825,27 @@
       "service.6.title": "Мобильные приложения (Capacitor)",
       "service.6.items": "<li>Нативные iOS и Android через Capacitor 8</li><li>Единая кодовая база, мультиплатформенная сборка</li><li>Платежи в регулируемых рынках</li><li>Push-уведомления и deep links</li><li>Нативные мосты к hardware-фичам</li><li>Публикация в App Store и Play Store</li><li>Конвертация в mobile-first PWA</li><li>Оптимизация производительности под мобайл</li>",
 
+      "pricing.eyebrow": "// Цены",
+      "pricing.title": "Популярные услуги и цены «от»",
+      "pricing.desc": "Самые востребованные направления. Финальная цена зависит от объёма.",
+      "pricing.note": "Финальную цену фиксируем после бесплатного созвона — зависит от объёма и сложности.",
+      "price.from": "от",
+      "price.1.title": "Внедрение ИИ",
+      "price.1.desc": "AI-агенты, RAG, чат-боты на LLM, автоматизация процессов через ИИ",
+      "price.1.amount": "110 000 ₽",
+      "price.2.title": "Веб-разработка",
+      "price.2.desc": "Лендинги, сайты, веб-приложения, SaaS-дашборды, админки",
+      "price.2.amount": "80 000 ₽",
+      "price.3.title": "Telegram-боты и Mini Apps",
+      "price.3.desc": "Боты с логикой, платежами, CRM-интеграцией, мини-приложения",
+      "price.3.amount": "60 000 ₽",
+      "price.4.title": "Автоматизация и интеграции",
+      "price.4.desc": "Связка сервисов через API, CRM, уведомления, CI/CD, cron-задачи",
+      "price.4.amount": "50 000 ₽",
+      "price.5.title": "Обработка больших данных",
+      "price.5.desc": "Парсинг, скрейпинг, пайплайны данных, базы, аналитика",
+      "price.5.amount": "90 000 ₽",
+
       "cases.eyebrow": "// Избранные работы",
       "cases.title": "12 production-продуктов,<br/>запущенных под ключ",
       "cases.desc": "Микс конфиденциальных клиентских проектов (под NDA) и продуктов нашей собственной Web3-экосистемы. Каждый кейс — реальный, в production, с измеримым результатом.",
@@ -2708,6 +3853,42 @@
       "case.link.live": "Открыть →",
       "case.link.bot": "Открыть бот →",
       "case.link.demo": "Смотреть демо →",
+      "case.more": "Подробнее →",
+      "case.1.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Роль</div><div class="cs-fact-value">AI-инженерия</div></div><div class="cs-fact"><div class="cs-fact-label">Платформы</div><div class="cs-fact-value">TG Mini App + iOS и Android</div></div><div class="cs-fact"><div class="cs-fact-label">Тип</div><div class="cs-fact-value">Клиентский продукт</div></div><div class="cs-fact"><div class="cs-fact-label">Бэкенд</div><div class="cs-fact-value">1 общий</div></div>',
+      "case.1.overview": "AI-платформа генерации музыки на трёх поверхностях — Telegram Mini App и нативные iOS и Android — на одном общем бэкенде.",
+      "case.1.challenge": "Стабильно генерировать музыку под нагрузкой и принимать платежи на регулируемом рынке — из единой кодовой базы, которая едет в веб и оба стора.",
+      "case.1.solution": "Многоступенчатый AI-пайплайн с retry/failover, один бэкенд для всех трёх клиентов, три платёжные интеграции включая карточный эквайринг и two-env CI/CD с мониторингом Sentry.",
+      "case.2.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Роль</div><div class="cs-fact-value">AI-инженерия</div></div><div class="cs-fact"><div class="cs-fact-label">Платформа</div><div class="cs-fact-value">Telegram-бот</div></div><div class="cs-fact"><div class="cs-fact-label">Тип</div><div class="cs-fact-value">Клиентский продукт</div></div><div class="cs-fact"><div class="cs-fact-label">Сроки</div><div class="cs-fact-value">10 дней</div></div>',
+      "case.2.overview": "Production Telegram-бот, генерирующий стилизованные персональные изображения с сохранением узнаваемой личности в каждой генерации.",
+      "case.2.challenge": "Сохранить узнаваемое лицо при сильной стилизации, держать стоимость генераций под контролем и выдерживать всплески async-нагрузки — и всё это быстро.",
+      "case.2.solution": "Мультимодальный входной слой, dual-API failover для оптимизации стоимости, async-архитектура задач и крипто-платежи — в проде за 10 дней.",
+      "case.3.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Роль</div><div class="cs-fact-value">AI + фулл-стек</div></div><div class="cs-fact"><div class="cs-fact-label">Платформа</div><div class="cs-fact-value">Веб + Telegram</div></div><div class="cs-fact"><div class="cs-fact-label">Тип</div><div class="cs-fact-value">Клиент (онлайн-школа)</div></div><div class="cs-fact"><div class="cs-fact-label">Сроки</div><div class="cs-fact-value">6 недель</div></div>',
+      "case.3.overview": "Полноценная AI-воронка продаж для онлайн-школы — от лендингов до RAG-агента, отвечающего голосом самого автора.",
+      "case.3.challenge": "Превратить огромную библиотеку контента автора в постоянно работающего агента продаж, который реально звучит как он — с подключением к существующей CRM и защитой от реферального фрода.",
+      "case.3.solution": "Два лендинга, многошаговый Telegram-онбординг-бот, RAG-агент на полной библиотеке контента, интеграция с GetCourse CRM, антифрод-рефералка и админ-дашборд — за 6 недель.",
+      "cs.challenge": "Задача",
+      "cs.solution": "Что сделали",
+      "cs.results": "Результат",
+      "case.5.meta": "Полный цикл Web3 · NEAR + TON · self-funded",
+      "case.5.overview": "Самостоятельно построенная мультичейн Web3-экосистема на NEAR — 15+ продуктов, связанных одной экономикой и 21 токеном, где реальные пользователи живут, торгуют и крафтят уже два года через два рыночных цикла.",
+      "case.5.challenge": "Web3-игры умирают вместе с рынком — на медвежке NFT пылятся в кошельках, сообщества рассыпаются, метрики накручены ботами. Задача: экосистема, чья on-chain активность не зависит от цены и держится на реальных кошельках, а не на ботах.",
+      "case.5.solution": "«Игра в репутацию» — антихрупкий цикл торгуй → крафти → сжигай → побеждай, который крепнет под давлением. Кросс-чейн крафтинг (Alchemy Lab), burn-кошелёк (Duplo), массовая раздача NFT (Sender — 120 NFT за транзакцию) и AI-продукты — всё живое на NEAR + TON, на кастомных индексерах и смарт-контрактах.",
+      "cs.underhood": "Под капотом",
+      "case.5.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Роль</div><div class="cs-fact-value">Полный цикл Web3</div></div><div class="cs-fact"><div class="cs-fact-label">Срок</div><div class="cs-fact-value">1.5 года в проде</div></div><div class="cs-fact"><div class="cs-fact-label">Сети</div><div class="cs-fact-value">NEAR + TON</div></div><div class="cs-fact"><div class="cs-fact-label">Финансы</div><div class="cs-fact-value">Без VC и грантов</div></div>',
+      "case.5.features": '<div class="cs-feature"><h4>Alchemy Lab</h4><p>Кросс-чейн крафтинг NFT между NEAR + TON — 29K+ крафтов, 283 рецепта. Сжигание решает инфляцию, рецепты держат retention.</p></div><div class="cs-feature"><h4>NFT-Sender</h4><p>Массовая мультичейн-раздача по 120 NFT за транзакцию, в обход лимита пропускной способности NEAR — аналогов на рынке нет.</p></div><div class="cs-feature"><h4>YupSoul — AI Music Oracle</h4><p>Флагманский AI-продукт: персональные песни по натальной карте на web, Telegram, VK, iOS &amp; Android на 5 языках.</p></div>',
+      "case.5.quote": "5.7M+ on-chain транзакций, 123K+ холдеров, 21 токен — всё построено своими силами, на чейне, который нас не замечал.",
+      "case.5.highlights": '<li>Кастомные NEAR-индексеры, отслеживающие каждое on-chain событие в реальном времени</li><li>Sender, раздающий по 120 NFT за транзакцию в обход лимита NEAR</li><li>Кросс-чейн bridge-логика, объединяющая ликвидность NEAR + TON в один цикл</li><li>Self-funded 1.5 года — ноль грантов, ноль VC</li>',
+      "case.5.shotscaption": "Скриншоты: YupPortal — портал-навигатор по экосистеме (маркетплейс · DEX · инкубатор)",
+      "case.13.tag": "Web3 · Портал",
+      "case.13.title": "YupLand Portal — хаб экосистемы",
+      "case.13.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Роль</div><div class="cs-fact-value">Фулл-стек</div></div><div class="cs-fact"><div class="cs-fact-label">Платформа</div><div class="cs-fact-value">Web + Telegram Mini App</div></div><div class="cs-fact"><div class="cs-fact-label">Создал</div><div class="cs-fact-value">1 инженер</div></div><div class="cs-fact"><div class="cs-fact-label">В проде</div><div class="cs-fact-value">с окт. 2025</div></div>',
+      "case.13.overview": "YupLand Portal — навигационный слой экосистемы Yupland: одно приложение, web + Telegram Mini App, в котором кастомная CMS, DEX, инкубатор, вики, слой геймификации (уровни / ачивки / задания / лутбоксы / стейкинг NFT), YupPay, прогнозный рынок (Polymarket-style), YupDrop, подписки, рефералка, социальный граф и движок Telegram-уведомлений. Собран в одиночку одним инженером.",
+      "case.13.challenge": "В экосистеме Yupland 15+ продуктов и 21 токен на NEAR + TON. Юзерам нужно было одно место для навигации по всему миру — кошелёк, балансы, стейкинг, игры, маркетплейс, управление — не прыгая между приложениями. Плюс портал должен был размещать игры и сервисы, сделанные комьюнити и проектами инкубатора, не только студией.",
+      "case.13.solution": "Одно фулл-стек приложение — web + Telegram Mini App на единой кодовой базе — обёртка над всем миром YupLand. Кастомная CMS, DEX торгует все пары токенов экосистемы (13 NEAR FT + 8 TON jettons), инкубатор с поддержкой комьюнити без условий, слой геймификации (уровни, ачивки, задания, ежедневные лутбоксы, стейкинг NFT), YupPay, YupDrop, прогнозный рынок (Polymarket-style), подписки в Darai, транзакции прямо из портала, граф друзей, календарь событий, промокоды, пул наград и движок Telegram-уведомлений для юзеров и админов. Vibe-coded end-to-end.",
+      "case.13.features": '<div class="cs-feature"><h4>Кошелёк &amp; DEX</h4><p>Подключаешь кошелёк, видишь свои токены Yupland живьём on-chain, график Darai в реальном времени. Встроенный DEX торгует каждую пару экосистемы — 13 NEAR FT и 8 TON jettons, от MED до Darai и BEES.</p></div><div class="cs-feature"><h4>Геймификация + энергия</h4><p>Уровни, ачивки, задания и ежедневный Duplo-лутбоксный цикл — ~2M коробок открыто за месяц (награды батчатся в одну транзакцию для экономии газа на NEAR). Стейкинг NFT даёт энергию, которую тратишь в этом же лутбоксном цикле.</p></div><div class="cs-feature"><h4>Маркетплейс игр (гибридный)</h4><p>10+ мини-игр в одном портале — Flappy, 2048+, калькулятор репутации, YupLottery, YupLink, чеккеры кормления, плюс ссылки на YupSoul, YupDar, Sender и KeksVPN. Часть делает студия, часть — комьюнити, часть приходит через инкубатор.</p></div><div class="cs-feature"><h4>Инкубатор (без условий)</h4><p>Подаёшь заявку на проект → админ одобряет → сообщество донатит свободно в NEAR / USDT / энергии / Darai. 9 проектов живых. Часть становятся самостоятельными продуктами экосистемы.</p></div>',
+      "case.13.quote": "~2M лутбоксов открыто за 30 дней, DEX торгует каждый токен экосистемы, 9 проектов профинансировано в инкубаторе — всё это из web + TMA приложения, собранного одним инженером в одиночку.",
+      "case.13.highlights": '<li>Web и Telegram Mini App работают на одной кодовой базе</li><li>Кастомный индексер зеркалит YupAI NFT с кошелька, не перемещая их</li><li>Батчинг наград — несколько лутов стакаются в одну транзакцию, экономия газа на NEAR</li><li>Постоянные обходы лимитов и API-ограничений NEAR</li><li>Движок Telegram-уведомлений — юзерам про награды, админам про низкий пул</li>',
+      "case.13.metrics": '<span class="metric metric-accent">~2M лутбоксов / 30д</span><span class="metric">MAU ~200</span><span class="metric">~700 кошельков подключено</span><span class="metric">9 проектов в инкубаторе</span><span class="metric">Один разработчик · vibe-coded</span>',
 
       "case.1.title": "Платформа AI-генерации музыки",
       "case.1.tag": "AI · Mobile",
@@ -2729,40 +3910,73 @@
       "case.4.desc": "Production AI-пайплайн, генерирующий видео и презентации из одного промпта: сценарии, голос, визуал, движение, музыка, эффекты — полностью автоматически. Fallback на каждом уровне между 10+ AI-провайдерами, гибрид free/paid для оптимизации стоимости.",
       "case.4.metrics": '<span class="metric metric-accent">10+ AI API в оркестрации</span><span class="metric">Fallback на каждом шаге</span><span class="metric">Генерация на CI</span>',
 
+      "case.9.title": "YupJarvis — AI-конструктор агентов экосистемы",
+      "case.9.tag": "AI · No-code",
+      "case.9.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Роль</div><div class="cs-fact-value">Фулл-стек продукт</div></div><div class="cs-fact"><div class="cs-fact-label">Тип</div><div class="cs-fact-value">Свой продукт студии</div></div><div class="cs-fact"><div class="cs-fact-label">Движок</div><div class="cs-fact-value">Next.js 15 + Supabase</div></div><div class="cs-fact"><div class="cs-fact-label">Объём</div><div class="cs-fact-value">16 узлов · 7 агентов · 302 теста</div></div>',
+      "case.9.overview": "YupJarvis — no-code визуальный конструктор LLM-агентов и пайплайнов. Drag-and-drop редактор графа соединяет 7 типов агентов (LLM, Classifier, Extractor, Tool, Memory/RAG, Judge, Orchestrator) с триггерами, публичным API, RAG поверх pgvector и журналом запусков с drilldown. Спроектирован и реализован студией end-to-end.",
+      "case.9.challenge": "Собрать production-готовый LLM-пайплайн — значит вручную сшивать типы агентов, retry, векторную память, tool calls, маршрутизацию по условиям, логи запусков и контроль доступа под каждый новый проект. Студии нужен был один слой, который превращает это в граф, который команда рисует, версионирует и выкатывает — а не очередная обёртка над фреймворком.",
+      "case.9.solution": "Полное приложение на Next.js 15 + Supabase: редактор React Flow (16 типов узлов и 7 типов агентов), Mapper/Condition с JMESPath для маршрутизации, RAG поверх pgvector с пайплайном эмбеддингов, публичное API + webhook-триггер, журнал запусков с метриками, лимитами и drilldown UI. Конфиги валидируются через Zod, strict TypeScript по всему стеку, 302 assertion&#39;а в 11 тест-файлах — схемы, runner, classifier-маршрутизация, tool calls, память, judge, оркестратор и API.",
+      "case.9.features": '<div class="cs-feature"><h4>Визуальный редактор графа</h4><p>React Flow с 16 типами узлов, drag-and-drop связи, конфиги под Zod на каждый узел — дизайнеры рисуют пайплайн вместо boilerplate.</p></div><div class="cs-feature"><h4>7 типов агентов «из коробки»</h4><p>LLM, Classifier, Extractor, Tool, Memory/RAG, Judge, Orchestrator. Каждый — first-class узел с типизированной схемой, ретраями и наблюдаемостью.</p></div><div class="cs-feature"><h4>RAG внутри Supabase</h4><p>Хранилище на pgvector, отдельный пайплайн эмбеддингов (OpenAI), retrieval как самостоятельный тип узла. Память и RAG живут в одной подложке.</p></div><div class="cs-feature"><h4>Журнал запусков и публичное API</h4><p>Каждый запуск логируется с метриками по токенам и длительности, лимиты на проект, drilldown UI. Webhook-триггер и публичное REST API открывают любого агента наружу.</p></div>',
+      "case.9.quote": "16 типов узлов, 7 типов агентов, 302 assertion&#39;а в тестах — собран в одиночку end-to-end на Next.js 15 + Supabase. Strict TypeScript, ноль ошибок компиляции.",
+      "case.9.highlights": '<li>Редактор графа на React Flow: 16 типов узлов, конфиги под Zod на каждый</li><li>7 типов агентов: LLM, Classifier, Extractor, Tool, Memory/RAG, Judge, Orchestrator</li><li>Mapper и Condition на JMESPath — маршрутизация и трансформация данных</li><li>RAG на pgvector внутри Supabase, отдельный пайплайн эмбеддингов (OpenAI)</li><li>Webhook-триггер + публичное REST API для вызова любого агента снаружи</li><li>Журнал запусков — каждый шаг логируется (токены/время), лимиты, drilldown UI</li><li>302 assertion&#39;а в 11 файлах тестов: схемы, runner, classifier, tool, память, judge, оркестратор, API-ключи, webhook</li><li>TypeScript strict, tsc --noEmit без ошибок</li>',
+      "case.9.metrics": '<span class="metric metric-accent">Собран end-to-end в одиночку</span><span class="metric">16 типов узлов</span><span class="metric">7 типов агентов</span><span class="metric">302 assertion в тестах</span><span class="metric">0 ошибок типов</span>',
+
       "case.5.title": "Yupland — Web3-экосистема",
       "case.5.tag": "Web3 · Флагман",
       "case.5.desc": 'Децентрализованная игровая экосистема на NEAR Protocol с уникальной механикой «Игра в репутацию». NFT-маркетплейс, инкубатор, кросс-чейн крафтинг, игры, кланы, токеномика. Активность, которая не зависит от медвежьего рынка.',
-      "case.5.metrics": '<span class="metric metric-accent">2M+ on-chain tx (#1 NEAR)</span><span class="metric">150K NFT</span><span class="metric">9K+ репутационных кошельков</span><span class="metric">$3K за победу на BitGet</span>',
+      "case.5.metrics": '<span class="metric metric-accent">5.7M+ on-chain транзакций</span><span class="metric">#1 по активности на NEAR</span><span class="metric">123K+ холдеров</span><span class="metric">190K+ NFT</span><span class="metric">15+ продуктов · 21 токен</span><span class="metric">$3K от BitGet</span>',
 
-      "case.6.title": "NFT Sender — инфраструктура",
+      "case.6.title": "NFT-Sender — мультичейн NFT-инфраструктура",
       "case.6.tag": "Web3 · Инфра",
-      "case.6.desc": "Мульти-чейн платформа NFT-операций, которая обслуживает все запуски коллекций в нашей экосистеме. Массовая раздача на 10K+ кошельков (120 NFT за транзакцию с обходом throttling), маркетплейс с Sells/Orders/Auctions, управление портфолио, репутационная система.",
-      "case.6.metrics": '<span class="metric metric-accent">10K+ кошельков за кампанию</span><span class="metric">120 NFT за tx</span><span class="metric">#1 раздача NFT на NEAR</span>',
+      "case.6.desc": "Мультичейн NFT-инфраструктура: массовая раздача, маркетплейс, on-chain аукционы, эксплорер и игра в репутацию на NEAR, TON, EVM и Solana. #1 на NEAR по объёму транзакций.",
+      "case.6.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Роль</div><div class="cs-fact-value">Web3-инфраструктура</div></div><div class="cs-fact"><div class="cs-fact-label">Скорость</div><div class="cs-fact-value">До 120 NFT / транзакцию</div></div><div class="cs-fact"><div class="cs-fact-label">Сети</div><div class="cs-fact-value">NEAR · TON · EVM · Solana</div></div><div class="cs-fact"><div class="cs-fact-label">Статус</div><div class="cs-fact-value">#1 на NEAR по транзакциям</div></div>',
+      "case.6.overview": "NFT-Sender — мультичейн NFT-инфраструктура: массовая раздача, маркетплейс, on-chain аукционы, эксплорер и игра в репутацию на NEAR, TON, EVM и Solana. Сейчас #1 на NEAR по объёму транзакций — 1M+ on-chain транзакций, 40 коллекций живых, 10K+ кошельков в системе репутации. Построен с нуля — аналогов на рынке нет.",
+      "case.6.challenge": "Массовая раздача NFT на NEAR упирается в лимит пропускной способности чейна — несколько NFT за транзакцию означает дни на airdrop кампании в 10K кошельков. Кроме самой раздачи NFT-экосистеме нужны слои вокруг: маркетплейс, аукционы, эксплорер на уровне кошельков и причина для холдеров действительно взаимодействовать с тем, что у них есть. И в идеале это должно работать на нескольких чейнах, не только на одном.",
+      "case.6.solution": "Кастомная инфраструктура, которая отправляет до 120 NFT за транзакцию на NEAR — обход лимита пропускной способности чейна, аналогов на рынке нет. Вокруг раздачи — встроенный маркетплейс и on-chain аукционы, эксплорер, парсящий 10K+ адресов кошельков с полной выгрузкой on-chain данных, и игра в репутацию: у каждой NFT свой коэффициент (с плюсом и минусом), кошельки соревнуются за ТОП+ и ТОП- рейтинги. Сюда же подключена Alchemy Lab — кросс-чейн механика крафтинга. Мультичейн по архитектуре: NEAR, TON, EVM и Solana через один интерфейс.",
+      "case.6.features": '<div class="cs-feature"><h4>Массовая раздача на масштабе</h4><p>До 120 NFT за транзакцию — обход лимита пропускной способности NEAR. Раздача кампании на 10K кошельков укладывается в несколько транзакций, не в сотни. Автоматизированные airdrop&#39;ы и системы наград под запуски коллекций.</p></div><div class="cs-feature"><h4>Мультичейн с нуля</h4><p>NEAR, TON, EVM и Solana коллекции работают через один интерфейс. Единый инструмент для кросс-чейн airdrop&#39;ов, drops и партнёрских коллабов.</p></div><div class="cs-feature"><h4>Маркетплейс, аукционы и эксплорер</h4><p>Продажи, Ордера, on-chain аукционы внутри одного сервиса. Эксплорер кошельков парсит 10K+ адресов с полной выгрузкой on-chain данных — холдеры, NFT и токены, всё доступно для запросов.</p></div><div class="cs-feature"><h4>Встроенная игра в репутацию</h4><p>Каждая NFT несёт коэффициент репутации (с плюсом или минусом). Кошельки соревнуются за ТОП+ и ТОП- рейтинги. Сюда же подключена Alchemy Lab — кросс-чейн механика крафтинга, превращающая раздачу в замкнутую экономику.</p></div>',
+      "case.6.quote": "#1 на NEAR по объёму транзакций. 1M+ on-chain транзакций. До 120 NFT за транзакцию. Аналогов на рынке нет.",
+      "case.6.highlights": '<li>До 120 NFT за транзакцию — кастомный обход лимита пропускной способности NEAR</li><li>Мультичейн на NEAR + TON + EVM + Solana через один интерфейс</li><li>Эксплорер кошельков парсит 10K+ адресов с полной выгрузкой on-chain данных</li><li>Движок репутации — каждая NFT с коэффициентом (плюсом или минусом), лидерборды ТОП+ и ТОП-</li><li>Alchemy Lab (кросс-чейн крафтинг) подключается прямо сюда — раздача становится замкнутой экономикой</li>',
+      "case.6.metrics": '<span class="metric metric-accent">#1 на NEAR по транзакциям</span><span class="metric">1M+ on-chain транзакций</span><span class="metric">40 коллекций живых</span><span class="metric">10K+ кошельков в репутации</span><span class="metric">NEAR · TON · EVM · Solana</span>',
 
       "case.7.title": "Alchemy Lab — кросс-чейн крафтинг",
       "case.7.tag": "Web3 · Multi-chain",
       "case.7.desc": "Уникальная мульти-чейн механика крафтинга NFT через NEAR + TON. Пользователи комбинируют NFT-компоненты по рецептам и минтят новые NFT. Замкнутая экономика с ликвидностью одновременно из двух блокчейнов.",
-      "case.7.metrics": '<span class="metric metric-accent">9K+ крафтов</span><span class="metric">283 рецепта</span><span class="metric">TOP-2 на HOTCraft</span><span class="metric">NEAR + TON</span>',
+      "case.7.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Роль</div><div class="cs-fact-value">Кросс-чейн игровая механика</div></div><div class="cs-fact"><div class="cs-fact-label">Механика</div><div class="cs-fact-value">Торгуй → крафти → сжигай → минти</div></div><div class="cs-fact"><div class="cs-fact-label">Сети</div><div class="cs-fact-value">NEAR + TON</div></div><div class="cs-fact"><div class="cs-fact-label">Рецепты</div><div class="cs-fact-value">317 живых</div></div>',
+      "case.7.overview": "Alchemy Lab — кросс-чейн механика крафта NFT, уникальная на рынке: игроки комбинируют NFT-компоненты по рецептам между NEAR и TON, чтобы минтить новые NFT в замкнутой экономике. Торгуй → крафти → сжигай → минти — на двух блокчейнах одновременно.",
+      "case.7.challenge": "Инфляция NFT убивает ценность: после массового минта коллекции лежат в кошельках без применения. Решение должно было сделать сжигание желанным — игра, в которой игроки хотят выводить NFT из обращения — и работать сразу на двух блокчейнах, чтобы ликвидность шла с обоих. Плюс это должно быть достаточно просто, чтобы партнёры могли подключать свои NFT в тот же цикл без переписывания всего.",
+      "case.7.solution": "Кастомный движок рецептов поверх смарт-контрактов на NEAR + TON и кросс-чейн bridge-логики. Игроки комбинируют NFT-компоненты по рецептам, чтобы получить новые NFT — а сожжённые оригиналы навсегда уходят из обращения. Тот же интерфейс принимает партнёрские NFT, поэтому внешние проекты подключаются к лабе и получают мгновенный коллаб без написания собственного крафт-слоя. 317 живых рецептов, 34K+ крафтов уже выполнено, TOP-2 на HOTCraft.",
+      "case.7.features": '<div class="cs-feature"><h4>Кросс-чейн крафтинг</h4><p>NEAR + TON в одном замкнутом цикле. Ликвидность с двух блокчейнов питает одну библиотеку рецептов — комбинируешь компоненты с любого чейна, чтобы минтить новые NFT.</p></div><div class="cs-feature"><h4>Сжигание решает инфляцию</h4><p>Игроки сами выводят NFT и токены из обращения через крафт. Массовый минт уходит не за счёт штрафов, а через механику, которую игроки выбирают сами.</p></div><div class="cs-feature"><h4>Retention через рецепты</h4><p>317 живых рецептов — от базовых до редких комбо и бустов. Игроки возвращаются ежедневно за редкими результатами.</p></div><div class="cs-feature"><h4>Surface для партнёров</h4><p>Внешние проекты подключают свои NFT к лабе — мгновенный коллаб. Движок рецептов универсальный, любой проект может подключиться без переписывания крафта с нуля.</p></div>',
+      "case.7.quote": "317 рецептов, 34K+ крафтов выполнено, два блокчейна в одной механике — замкнутая экономика, которая превращает массовый минт NFT в то, что игроки хотят сжечь.",
+      "case.7.highlights": '<li>Кросс-чейн bridge-логика, объединяющая ликвидность NEAR + TON в один пул рецептов</li><li>Кастомный движок рецептов — любой бандл NFT можно описать как крафтовый вход</li><li>Сжигание + минт в одной транзакции на рецепт</li><li>Surface для партнёров — внешние NFT подключаются без кода</li><li>317 живых рецептов, 34K+ крафтов, TOP-2 на HOTCraft</li>',
+      "case.7.metrics": '<span class="metric metric-accent">34K+ крафтов выполнено</span><span class="metric">317 живых рецептов</span><span class="metric">TOP-2 на HOTCraft</span><span class="metric">NEAR + TON в одной механике</span><span class="metric">Готов к партнёрам</span>',
 
-      "case.8.title": "YupDar — AI-платформа самопознания",
+      "case.8.title": "YupDar — трёхъязычное AI Mini App самопознания",
       "case.8.tag": "AI · Vibe-coding",
-      "case.8.desc": "Production AI-платформа, построенная не-разработчиком (автором книги) через Claude Code (vibe-coding). Telegram Mini App + веб на одной кодовой базе, AI-генерация психологических портретов, 6 типов контента, in-app платежи, реферальная система, геймификация.",
-      "case.8.metrics": '<span class="metric metric-accent">Успешный vibe-coding</span><span class="metric">338 коммитов за месяц</span><span class="metric">11 API endpoint-ов</span><span class="metric">DeepSeek + Groq fallback</span>',
-
-      "case.9.title": "Bee Farm — игра Play-to-Earn",
-      "case.9.tag": "Web3 · Игра",
-      "case.9.desc": "HTML5 P2E фермерский симулятор с полной Web3-интеграцией на NEAR. Многоресурсная экономика, on-chain депозиты, выводы, внутриигровые покупки через смарт-контракты, real-time трекинг баланса.",
-      "case.9.metrics": '<span class="metric metric-accent">P2E механика</span><span class="metric">On-chain экономика</span><span class="metric">Real-time баланс</span>',
+      "case.8.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Роль</div><div class="cs-fact-value">Фулл-стек vibe-coding</div></div><div class="cs-fact"><div class="cs-fact-label">Поверхности</div><div class="cs-fact-value">TG Mini App + Веб · RU / EN / ES</div></div><div class="cs-fact"><div class="cs-fact-label">Команда</div><div class="cs-fact-value">Автор книги + Claude Code</div></div><div class="cs-fact"><div class="cs-fact-label">Статус</div><div class="cs-fact-value">В проде · 3 языка · научный трек</div></div>',
+      "case.8.overview": "Трёхъязычная экосистема самопознания (RU / EN / ES) по системе 64 Даров — Telegram Mini App + публичный веб-landing на одной кодовой базе, с премиум-надстройкой АРКА (daily companion) сверху. AI-генерация литературных портретов (8 психологических секций на пользователя), оракул как расклад, совместимость, Путь Героя 2.0 с открытием Даров близких, теневые квесты, PvP-карточная игра. Книги опубликованы на Amazon (EN / ES) и Литрес (RU). Параллельно — научный трек: исследовательский опросник ДАР-27v2, сборщики DOCX для научных статей, заявка на Всемирный научный чемпионат в Дубаи. Собрано в одиночку автором книги через Claude Code.",
+      "case.8.challenge": "Превратить опубликованную эзотерическую книгу о 64 Дарах в живой интерактивный продукт нужен был AI, пишущий литературный русский, неотличимый от голоса автора. Готовые модели выдавали «методичный» русский — клише, латинские вставки, поломанная гендерная согласованность. Декларативные запреты в промте не держали. И продукт должен был выйти одновременно как Telegram Mini App И как публичный SEO-landing — одна кодовая база, две поверхности. Дальше — открыть систему глобальной аудитории на английском и испанском, не теряя авторского голоса, и сверху построить премиум daily-companion слой, не тронув базовую игру в проде.",
+      "case.8.solution": "Двухслойный стек качества русского AI: промт v7 с авторским эталонным текстом (~600 слов), вшитым как опорный образец стиля, плюс программный постпроцессор russifyText() с 60+ regex-защитами от запрещённых конструкций (клише, латиница, поломанный род, шаблонные начала). Маршрутизация провайдеров — DeepSeek-V3 основной (~$0.0024 за послание), Groq Llama 3.3 70B как автоматический fallback, Llama 3.1 8B как fallback второго уровня. response_format: json_object гарантирует валидный JSON для 8-секционных портретов. Пост-обработка через Yandex Speller с защищённым словарём. Один backend обслуживает и Mini App, и landing yupdar.com — разделение только на уровне HTML-точек входа. Сверху над базовой игрой собрана премиум-надстройка АРКА (daily companion в ритме Дара — окна силы, ритуалы в голосе архетипа, AI-стратег, бриф наставника, контент-план), Путь Героя 2.0 (виральная механика открытия Даров близких через рефералы, кристаллы или прямую оплату), Pricing v2 — система подписок (1/3/6/12 мес, скидки до −33%, промо −50% на первый месяц, ЮKassa на все тарифы), и вторая монетизация через doTERRA (эфирные масла под каждый Дар). Полная локализация раскатана на английский и испанский по всему интерфейсу, энциклопедии и ридеру авторской книги (RU 94 / EN 99 / ES 87 глав). Параллельно идёт научный трек — исследовательский опросник ДАР-27v2, сборщики DOCX для научных статей, отправлена заявка на Всемирный научный чемпионат в Дубаи.",
+      "case.8.features": '<div class="cs-feature"><h4>Литературные AI-портреты на 3 языках</h4><p>JSON в 8 секциях на пользователя — Архетип, Суть, Суперсилы, Поток Изобилия, Отношения, Ловушки, Ключ к Себе, Предназначение. ~5–6К знаков структурированного литературного текста за генерацию. Полная локализация на RU / EN / ES — портреты, оракул, энциклопедия.</p></div><div class="cs-feature"><h4>АРКА — премиум daily-надстройка</h4><p>Ежедневный спутник в ритме Дара пользователя, надстройка над базовой игрой. Окна силы, ритуалы с эфирными маслами doTERRA в голосе архетипа, трекер задач с типами нагрузки, AI-стратег, бриф наставника, финансы, контент-план, разбор недели — всё в голосе архетипа. Прототип в изолированной песочнице, прод не тронут.</p></div><div class="cs-feature"><h4>Путь Героя 2.0 — виральная механика</h4><p>Пользователи открывают Дары близких (партнёр, друзья, родитель ребёнка) через рефералы, кристаллы или прямую оплату. Каждый юзер становится проводником в YupDar для своих — и новой выручкой одновременно.</p></div><div class="cs-feature"><h4>Научный трек параллельно</h4><p>Исследовательский опросник ДАР-27v2, сборщики DOCX для научных статей, отправлена заявка на Всемирный научный чемпионат в Дубаи. Отдельная вкладка «Наука 🔬» в новой preview-архитектуре. Международное научное признание системы Даров — открытая цель.</p></div>',
+      "case.8.quote": "Трёхъязычно (RU / EN / ES). Премиум-надстройка АРКА над базовой игрой. Виральное открытие Даров близких. Pricing v2 — подписки. doTERRA-партнёрка. Научный трек на Всемирный чемпионат в Дубаи. Книги на Amazon и Литрес. Всё — автором книги через Claude Code.",
+      "case.8.highlights": '<li>DeepSeek-V3 основной, Groq Llama 3.3 70B автоматический fallback, Llama 3.1 8B как fallback второго уровня</li><li>response_format: json_object — гарантия валидного JSON для 8-секционных литературных портретов</li><li>russifyText() — программный постпроцессор, 60+ regex-защит от запрещённых конструкций</li><li>Авторский эталонный текст (~600 слов) вшит в промт v7 как опорный образец стиля</li><li>Yandex Speller с защищённым словарём системных терминов</li><li>Полная локализация RU / EN / ES — интерфейс, оракул, энциклопедия и встроенный ридер книги (RU 94 / EN 99 / ES 87 глав)</li><li>Премиум-надстройка АРКА: daily companion в ритме Дара — прототип в изолированной песочнице (iram-prototype/), прод не тронут</li><li>Путь Героя 2.0 — виральная механика открытия Даров близких через рефералы / кристаллы / прямую оплату</li><li>Pricing v2 — подписки 1/3/6/12 мес, скидки до −33%, промо −50% на первый месяц, ЮKassa на все тарифы и периоды</li><li>doTERRA-партнёрка — эфирные масла под каждый Дар, вторая линия монетизации</li><li>Исследовательский опросник ДАР-27v2, сборщики DOCX для научных статей, отправлена заявка на Всемирный научный чемпионат в Дубаи</li><li>11 endpoint-ов на Vercel Serverless; content.js маршрутизирует 6 типов генерации</li><li>Supabase Postgres — 11+ таблиц, 11 SQL-миграций, разделение RLS + service-role</li><li>Валидация Telegram initData через HMAC-SHA256; анонимные веб-сессии с миграцией в Telegram</li><li>PDF.js встроенный ридер авторской книги, 212 страниц на RU / EN / ES</li><li>Админ-вкладка Telegram Stars — реальный баланс бота через API + сверка с БД</li><li>Пересборка архитектуры в preview: новый 4-табовый nav (Я / Семья / Сокровищница / АРКА) + хедер «Наука 🔬», задеплоено на отдельную preview-поверхность</li><li>41 «закон проекта» в memory-системе Claude Code</li>',
+      "case.8.metrics": '<span class="metric metric-accent">Трёхъязычно · RU / EN / ES</span><span class="metric">Премиум АРКА в проде</span><span class="metric">Путь Героя 2.0 — виральная механика</span><span class="metric">Pricing v2 — подписки</span><span class="metric">doTERRA-партнёрка</span><span class="metric">ДАР-27v2 + заявка в Дубаи</span><span class="metric">Книги на Amazon + Литрес</span><span class="metric">Собрано автором книги в одиночку</span>',
 
       "case.10.title": "Yupland Lottery — розыгрыши на эфирах",
       "case.10.tag": "Автоматизация",
       "case.10.desc": "Автоматический сервис для розыгрышей на прямых эфирах. Заменили ручное управление стримом на one-click автоматизацию: честный рандомайзер, админ-дашборд, интеграция с Telegram-ботом, real-time view для аудитории, кастомный формат вывода результатов.",
       "case.10.metrics": '<span class="metric metric-accent">One-click автоматизация</span><span class="metric">Real-time синхронизация</span><span class="metric">Доставка в Telegram</span>',
 
-      "case.11.title": "Duplo Combo Tracker",
-      "case.11.tag": "Web3 · Парсинг",
+      "case.11.title": "Duplo — on-chain комбо-игра",
+      "case.11.tag": "Web3 · Игра",
       "case.11.desc": "Blockchain-aware трекер NFT-комбо. Парсит on-chain переводы NFT/токенов на игровой кошелёк в реальном времени, определяет валидные комбинации, рассчитывает награды. Мульти-ассет детекция (бандлы NFT + токены).",
-      "case.11.metrics": '<span class="metric metric-accent">Real-time on-chain парсинг</span><span class="metric">Мульти-ассет комбо</span><span class="metric">Логика временного окна</span>',
+      "case.11.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Роль</div><div class="cs-fact-value">Web3-игра + on-chain парсер</div></div><div class="cs-fact"><div class="cs-fact-label">Механика</div><div class="cs-fact-value">Сжигание → комбо → награда</div></div><div class="cs-fact"><div class="cs-fact-label">Реализации</div><div class="cs-fact-value">Ручная + автоматизированная</div></div><div class="cs-fact"><div class="cs-fact-label">Сети</div><div class="cs-fact-value">NEAR + TON</div></div>',
+      "case.11.overview": "Duplo — игра-механика «сжигай → комбинируй → получай награду» в сердце Yupland: игроки отправляют NFT и токены в Duplo-кошелёк, движок ищет совпадения по рецептам и выплачивает награды on-chain. Две реализации: оригинальная игра (ручная, с рейтингом) и версия, встроенная в YupLand Portal (автоматизированная, без рейтинга, работает внутри ежедневного лутбоксного цикла).",
+      "case.11.challenge": "Экосистеме с массовым минтом NFT нужен сток — способ выводить supply из обращения как игру, а не штраф. Игрокам нужна причина активно комбинировать NFT, а не просто их держать. Та же механика должна была работать в двух режимах: как оригинальная игра (ручная, с лидербордом) и как автоматизированный ежедневный цикл внутри большого портала (без рейтинга, для массового охвата).",
+      "case.11.solution": "Движок «сжигай → получай награду» с двумя реализациями, которые делят один on-chain кошелёк и одну библиотеку рецептов. Оригинальная игра: кастомный блокчейн-парсер отслеживает переводы в Duplo-кошелёк в реальном времени, ищет мульти-ассетные комбинации по рецептам (NFT + токены, логика временных окон), считает награды и ведёт лидерборд. Портальная версия: та же логика комбо, но полностью автоматизирована внутри YupLand Portal — игроки не отправляют переводы вручную, портал запускает сжигание → проверку комбо → награду внутри ежедневного лутбоксного цикла. Обе версии питают один и тот же кошелёк, выводя supply из обращения по всей экосистеме.",
+      "case.11.features": '<div class="cs-feature"><h4>Оригинальная игра (с рейтингом)</h4><p>Игроки отправляют NFT и токены в Duplo-кошелёк вручную. Кастомный парсер ищет валидные комбинации в реальном времени, считает награды и ведёт лидерборд.</p></div><div class="cs-feature"><h4>Портальная версия (автоматизированная)</h4><p>Та же логика комбо, без ручных переводов. YupLand Portal запускает сжигание → проверку комбо → награду внутри ежедневного лутбоксного цикла. Без рейтинга — упор на широту, не на соревнование.</p></div><div class="cs-feature"><h4>Движок мульти-ассетного комбо</h4><p>Распознаёт связки NFT + токены по рецептам. Логика временных окон, конфигурируемые таблицы наград, multi-chain (NEAR + TON).</p></div><div class="cs-feature"><h4>Общий on-chain сток</h4><p>Обе версии питают один и тот же Duplo-кошелёк. Большой игровой сток — игроки выводят NFT и токены из обращения, потому что хотят, а не потому что должны.</p></div>',
+      "case.11.quote": "Две реализации, один кошелёк, одна библиотека рецептов — цикл «сжигай и получай», который выводит NFT-supply из обращения по всей экосистеме.",
+      "case.11.highlights": '<li>Парсер реального времени отслеживает входящие связки в Duplo-кошелёк</li><li>Распознавание мульти-ассетных комбинаций (NFT + токены) с логикой временных окон</li><li>Общая библиотека рецептов для обеих реализаций</li><li>Автоматизированный путь сжигание → комбо → награда внутри YupLand Portal (без ручных tx)</li><li>Конфигурируемые таблицы наград, multi-chain (NEAR + TON)</li>',
+      "case.11.metrics": '<span class="metric metric-accent">~2M коробок / 30д (портальная)</span><span class="metric">Парсинг on-chain в реальном времени</span><span class="metric">Мульти-ассетные NFT + токен комбо</span><span class="metric">Общий сток · 2 реализации</span><span class="metric">Multi-chain (NEAR + TON)</span>',
 
       "case.12.title": "Сервис запуска NFT-коллекций",
       "case.12.tag": "Web3 · Pipeline",
@@ -2799,8 +4013,8 @@
       "stack.tag.memory": "Claude Code memory system",
 
       "team.eyebrow": "// Команда",
-      "team.title": "Семь со-фаундеров.<br/>У каждого свой флагман.",
-      "team.desc": "Мы не фриланс-маркетплейс и не общая dev-студия. Каждый в YupCode со-фаундер продукта в нашей экосистеме Yupland — поэтому к клиентским задачам относимся с тем же уровнем ответственности, что и к своим.",
+      "team.title": "Семь человек.<br/>У каждого свой флагман.",
+      "team.desc": "Мы не фриланс-маркетплейс и не общая dev-студия. Каждый в команде создал продукт в нашей экосистеме Yupland — поэтому к клиентским задачам относимся с тем же уровнем ответственности, что и к своим.",
       "member.1.name": "Ангелина",
       "member.1.role": "// Фаундер · CCO",
       "member.1.bio": "Фаундер YupCode и Yupland, концептуальный дизайнер экосистемы, лицо команды.",
@@ -2966,7 +4180,8 @@
     const lb = document.getElementById('lightbox');
     lb.classList.remove('open');
     lb.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    const cm = document.getElementById('caseModal');
+    if (!cm || !cm.classList.contains('open')) document.body.style.overflow = '';
   }
 
   function prevShot() {
@@ -3037,7 +4252,7 @@
     document.addEventListener('keydown', (e) => {
       const lb = document.getElementById('lightbox');
       if (!lb.classList.contains('open')) return;
-      if (e.key === 'Escape')     closeLightbox();
+      if (e.key === 'Escape')     { closeLightbox(); e.stopImmediatePropagation(); }
       if (e.key === 'ArrowLeft')  prevShot();
       if (e.key === 'ArrowRight') nextShot();
     });
@@ -3050,6 +4265,44 @@
     });
 
     updateShotBadges();
+  }
+
+  /* ========== case detail modal ========== */
+  function openCase(card) {
+    const details = card.querySelector('.case-details');
+    if (!details) return;
+    const modal = document.getElementById('caseModal');
+    const body = modal.querySelector('.case-modal-body');
+    details._homeCard = card;
+    body.appendChild(details);            // move element (keeps event listeners intact)
+    body.scrollTop = 0;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCase() {
+    const modal = document.getElementById('caseModal');
+    const body = modal.querySelector('.case-modal-body');
+    const details = body.querySelector('.case-details');
+    if (details && details._homeCard) details._homeCard.appendChild(details); // move back home
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    const lb = document.getElementById('lightbox');
+    if (!lb || !lb.classList.contains('open')) document.body.style.overflow = '';
+  }
+
+  function initCaseModal() {
+    const modal = document.getElementById('caseModal');
+    if (!modal) return;
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeCase();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      if (document.getElementById('lightbox').classList.contains('open')) return; // lightbox handles its own ESC
+      if (modal.classList.contains('open')) closeCase();
+    });
   }
 
   /* ========== contact modal ========== */
@@ -3144,6 +4397,7 @@
     safe(initReveal);                 // first: makes all content visible
     safe(function () { setLang(saved); });
     safe(initCaseLightbox);
+    safe(initCaseModal);
     safe(initContactModal);
     safe(initTeamCarousel);
   })();
