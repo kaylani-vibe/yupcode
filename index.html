@@ -1797,6 +1797,96 @@
     opacity: 0.9;
   }
 
+  /* Security section: nogo list (red-toned) + standards row (green-toned) */
+  .security-nogo {
+    margin-top: 40px;
+    background: rgba(255, 122, 107, 0.04);
+    border: 1px solid rgba(255, 122, 107, 0.18);
+    border-radius: 14px;
+    padding: 24px 28px;
+  }
+  .security-nogo h3 {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #ff7a6b;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  .security-nogo h3::before { content: '// '; opacity: 0.6; }
+  .security-nogo ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 28px;
+  }
+  .security-nogo li {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+  .security-nogo .nogo-x {
+    color: #ff7a6b;
+    font-weight: 700;
+    margin-right: 8px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  .security-nogo code {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 12.5px;
+    color: var(--text);
+  }
+
+  .security-standards {
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 12px;
+    padding: 18px 22px;
+    background: rgba(200, 255, 90, 0.04);
+    border: 1px solid rgba(200, 255, 90, 0.16);
+    border-radius: 12px;
+  }
+  .standards-label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-right: 4px;
+  }
+  .standard-tag {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    padding: 4px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .standards-cta {
+    margin-left: auto;
+    font-size: 12.5px;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  @media (max-width: 720px) {
+    .security-nogo { padding: 18px 16px; }
+    .security-nogo ul { grid-template-columns: 1fr; }
+    .security-standards { padding: 14px 16px; }
+    .standards-cta { margin-left: 0; width: 100%; font-size: 11.5px; }
+  }
+
   /* under-the-hood highlights — terminal output */
   .cs-highlights {
     list-style: none;
@@ -2004,6 +2094,7 @@
       </div>
       <div class="nav-links">
         <a href="#services" data-i18n="nav.services">Services</a>
+        <a href="#security" data-i18n="nav.security">Security</a>
         <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
         <a href="#cases" data-i18n="nav.cases">Cases</a>
         <a href="#stack" data-i18n="nav.stack">Stack</a>
@@ -2096,6 +2187,57 @@
         <h3 data-i18n="pillar.4.title">End-to-end ownership</h3>
         <p data-i18n="pillar.4.desc">System design, AI pipelines, infra, billing, mobile builds, SEO, content automation — we cover the whole stack.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- Security -->
+<section id="security">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="section-eyebrow" data-i18n="security.eyebrow">// Security &amp; data</div>
+      <h2 class="section-title" data-i18n="security.title">Security by default —<br/>not an add-on</h2>
+      <p class="section-desc" data-i18n="security.desc">For mid-market and corporate clients in regulated markets (152-ФЗ, GDPR, PII, financial data) security is the #1 criterion. We design the architecture so client data never reaches public LLMs, never leaks through logs, never trains foreign models. The model is treated as an untrusted user; rights live in a deterministic tool layer with audit and human approval on irreversible actions.</p>
+    </div>
+
+    <div class="pillars reveal-stagger">
+      <div class="pillar">
+        <div class="pillar-icon">🔒</div>
+        <h3 data-i18n="security.1.title">LLM = untrusted user, not a service</h3>
+        <p data-i18n="security.1.desc">The model holds no rights directly. Every action goes through a deterministic tool layer that checks permissions in the context of a specific human user. A prompt injection can&#39;t &#34;ask&#34; to delete data — the policy engine rejects the call.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🛡️</div>
+        <h3 data-i18n="security.2.title">Sensitive data → internal contour</h3>
+        <p data-i18n="security.2.desc">For PII, financial and regulated data — a local model (vLLM / Ollama on your GPUs) or enterprise tiers with Zero Data Retention. Public LLMs never see raw data. Sensitivity-aware routing through an AI Gateway (LiteLLM).</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">📋</div>
+        <h3 data-i18n="security.3.title">Audit on every action</h3>
+        <p data-i18n="security.3.desc">Each tool call is written to an immutable audit log: who, what, when, which prompt, what result, allowed or denied. Incident investigation takes minutes, not days. Alerts on anomalous request patterns.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">👤</div>
+        <h3 data-i18n="security.4.title">Human approval on irreversible</h3>
+        <p data-i18n="security.4.desc">Payments, data deletion, outbound mail, prod config changes — always through an approval queue. Autonomy only on read-only and reversible actions. No cascading-error scenarios.</p>
+      </div>
+    </div>
+
+    <!-- What we deliberately don't do -->
+    <div class="security-nogo reveal">
+      <h3 data-i18n="security.nogo.title">What we deliberately don&#39;t do</h3>
+      <ul data-i18n="security.nogo.items"><li><span class="nogo-x">×</span> Give the model raw <code>run_sql(query)</code> — that&#39;s a path to disaster</li><li><span class="nogo-x">×</span> Run agents under an admin service account</li><li><span class="nogo-x">×</span> &#34;Defend ourselves with a system prompt&#34; — that&#39;s text, not security</li><li><span class="nogo-x">×</span> RAG without document-level ACL</li><li><span class="nogo-x">×</span> Log raw prompts containing PII or secrets</li><li><span class="nogo-x">×</span> Direct model → DB / CRM / ERP connection</li></ul>
+    </div>
+
+    <!-- Standards row -->
+    <div class="security-standards reveal">
+      <span class="standards-label" data-i18n="security.standards.label">Working knowledge of:</span>
+      <span class="standard-tag">152-ФЗ (RF)</span>
+      <span class="standard-tag">GDPR</span>
+      <span class="standard-tag">ISO 27001 controls</span>
+      <span class="standard-tag">OWASP LLM Top 10</span>
+      <span class="standard-tag">SOC 2 patterns</span>
+      <span class="standards-cta" data-i18n="security.standards.cta">Full engineering brief (40-page guide) — on request</span>
     </div>
   </div>
 </section>
@@ -3601,6 +3743,7 @@
       "meta.desc": "Outsourced AI, Web3 and automation engineering studio. We ship in 2–4 weeks what traditional studios deliver in 6+. Vibe-coding on Claude, a team that ships its own products, production-grade discipline.",
 
       "nav.services": "Services",
+      "nav.security": "Security",
       "nav.pricing": "Pricing",
       "nav.cases": "Cases",
       "nav.stack": "Stack",
@@ -3630,6 +3773,22 @@
       "pillar.3.desc": "Speed comes from vibe-coding, but underneath sits classical full-stack engineering — we understand databases, load behavior, security, the code itself. Two-environment CI/CD, healthchecks, rollback playbooks, documented handover. Not prototypes — production-grade products that survive when the user count grows.",
       "pillar.4.title": "End-to-end ownership",
       "pillar.4.desc": "System design, AI pipelines, infra, billing, mobile builds, SEO, content automation — we cover the whole stack.",
+
+      "security.eyebrow": "// Security &amp; data",
+      "security.title": "Security by default —<br/>not an add-on",
+      "security.desc": "For mid-market and corporate clients in regulated markets (152-ФЗ, GDPR, PII, financial data) security is the #1 criterion. We design the architecture so client data never reaches public LLMs, never leaks through logs, never trains foreign models. The model is treated as an untrusted user; rights live in a deterministic tool layer with audit and human approval on irreversible actions.",
+      "security.1.title": "LLM = untrusted user, not a service",
+      "security.1.desc": "The model holds no rights directly. Every action goes through a deterministic tool layer that checks permissions in the context of a specific human user. A prompt injection can&#39;t &#34;ask&#34; to delete data — the policy engine rejects the call.",
+      "security.2.title": "Sensitive data → internal contour",
+      "security.2.desc": "For PII, financial and regulated data — a local model (vLLM / Ollama on your GPUs) or enterprise tiers with Zero Data Retention. Public LLMs never see raw data. Sensitivity-aware routing through an AI Gateway (LiteLLM).",
+      "security.3.title": "Audit on every action",
+      "security.3.desc": "Each tool call is written to an immutable audit log: who, what, when, which prompt, what result, allowed or denied. Incident investigation takes minutes, not days. Alerts on anomalous request patterns.",
+      "security.4.title": "Human approval on irreversible",
+      "security.4.desc": "Payments, data deletion, outbound mail, prod config changes — always through an approval queue. Autonomy only on read-only and reversible actions. No cascading-error scenarios.",
+      "security.nogo.title": "What we deliberately don&#39;t do",
+      "security.nogo.items": '<li><span class="nogo-x">×</span> Give the model raw <code>run_sql(query)</code> — that&#39;s a path to disaster</li><li><span class="nogo-x">×</span> Run agents under an admin service account</li><li><span class="nogo-x">×</span> &#34;Defend ourselves with a system prompt&#34; — that&#39;s text, not security</li><li><span class="nogo-x">×</span> RAG without document-level ACL</li><li><span class="nogo-x">×</span> Log raw prompts containing PII or secrets</li><li><span class="nogo-x">×</span> Direct model → DB / CRM / ERP connection</li>',
+      "security.standards.label": "Working knowledge of:",
+      "security.standards.cta": "Full engineering brief (40-page guide) — on request",
 
       "services.eyebrow": "// What we build",
       "services.title": "Six directions —<br/>one full-cycle team",
@@ -3916,6 +4075,7 @@
       "meta.desc": "Outsource-студия разработки AI, Web3 и автоматизации. Запускаем за 2–4 недели то, на что обычным студиям нужно 6+. Vibe-coding на Claude, команда со своими продуктами, production-дисциплина.",
 
       "nav.services": "Услуги",
+      "nav.security": "Безопасность",
       "nav.pricing": "Цены",
       "nav.cases": "Кейсы",
       "nav.stack": "Стек",
@@ -3945,6 +4105,22 @@
       "pillar.3.desc": "Скорость даёт vibe-coding, но под капотом — классическая full-stack разработка: понимаем как работают базы данных, поведение под нагрузкой, безопасность, сам код. CI/CD с двумя средами, healthcheck'и, playbook'и отката, документированная сдача. Не прототипы — production-grade продукты, которые выдерживают рост количества пользователей.",
       "pillar.4.title": "Полное владение задачей",
       "pillar.4.desc": "Архитектура, AI-пайплайны, инфра, биллинг, мобильные сборки, SEO, контент-автоматизация — закрываем весь стек.",
+
+      "security.eyebrow": "// Безопасность и данные",
+      "security.title": "Безопасность по умолчанию —<br/>не как опция",
+      "security.desc": "Для среднего и крупного бизнеса в регулируемых рынках (152-ФЗ, GDPR, PII, финансовые данные) безопасность — критерий №1. Архитектуру строим так, чтобы данные клиентов не попадали в публичные LLM, не утекали через логи и не уходили в обучение чужих моделей. Модель рассматриваем как недоверенного пользователя — права живут в детерминированном tool-слое с аудитом и человеческим подтверждением на необратимых действиях.",
+      "security.1.title": "LLM = недоверенный пользователь, не сервис",
+      "security.1.desc": "Модель не имеет прав напрямую. Все действия идут через детерминированный tool-слой, который проверяет права от имени конкретного пользователя. Prompt injection не может «попросить» удалить данные — policy engine отклоняет вызов.",
+      "security.2.title": "Чувствительные данные → внутренний контур",
+      "security.2.desc": "Для PII, финансовых и регулируемых данных — локальная модель (vLLM / Ollama на ваших GPU) или enterprise-тиры с Zero Data Retention. Публичные LLM не видят сырых данных. Маршрутизация по чувствительности через AI Gateway (LiteLLM).",
+      "security.3.title": "Аудит каждого действия",
+      "security.3.desc": "Каждый tool call логируется в иммутабельный audit: кто, что, когда, какой prompt, какой результат, разрешено или отклонено. Расследование инцидента — за минуты, не за дни. Алерты на аномальные паттерны запросов.",
+      "security.4.title": "Human approval на необратимом",
+      "security.4.desc": "Платежи, удаление данных, исходящие письма, изменения prod-конфигов — всегда через approval queue. Автономия — только для read-only и обратимых действий. Каскад ошибок невозможен.",
+      "security.nogo.title": "Что мы намеренно НЕ делаем",
+      "security.nogo.items": '<li><span class="nogo-x">×</span> Не даём модели сырой <code>run_sql(query)</code> — путь к катастрофе</li><li><span class="nogo-x">×</span> Не запускаем агентов под админ-сервис-аккаунтом</li><li><span class="nogo-x">×</span> Не «защищаемся системным промптом» — это текст, не безопасность</li><li><span class="nogo-x">×</span> Не делаем RAG без document-level ACL</li><li><span class="nogo-x">×</span> Не логируем сырые prompt&#39;ы с PII или секретами</li><li><span class="nogo-x">×</span> Не подключаем модель напрямую к БД / CRM / ERP</li>',
+      "security.standards.label": "Работаем по принципам:",
+      "security.standards.cta": "Полный инженерный гайд (40-страничный документ) — по запросу",
 
       "services.eyebrow": "// Что мы делаем",
       "services.title": "Шесть направлений —<br/>одна команда полного цикла",
