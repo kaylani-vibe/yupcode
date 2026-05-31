@@ -633,6 +633,33 @@
     flex-shrink: 0;
   }
 
+  /* Service expand/collapse — show first 3 bullets, hide rest until "+ Show more" */
+  .service ul li:nth-child(n+4) { display: none; }
+  .service.expanded ul li:nth-child(n+4) { display: flex; }
+  .service.expanded ul li:nth-last-child(1) { border-bottom: none; }
+  /* When collapsed, the 3rd visible item should not show its border */
+  .service:not(.expanded) ul li:nth-child(3) { border-bottom: none; }
+
+  .svc-toggle {
+    background: none;
+    border: 0;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 12px 0 0;
+    margin-top: 6px;
+    width: 100%;
+    text-align: left;
+    transition: opacity 0.2s var(--ease-out);
+  }
+  .svc-toggle:hover { opacity: 0.75; }
+  .svc-toggle-hide { display: none; }
+  .service.expanded .svc-toggle-show { display: none; }
+  .service.expanded .svc-toggle-hide { display: inline; }
+
   @media (max-width: 900px) {
     .services { grid-template-columns: repeat(2, 1fr); }
   }
@@ -2370,7 +2397,6 @@
     <div class="services reveal-stagger">
       <div class="service">
         <div class="service-head">
-          <span class="service-icon">🤖</span>
           <h3 data-i18n="service.1.title">AI implementation</h3>
         </div>
         <ul data-i18n="service.1.items">
@@ -2381,11 +2407,11 @@
           <li>AI failover — one provider goes down, automatically switches to another</li>
           <li>Cost control — hybrid of free and paid models tuned to the task</li>
         </ul>
+        <button type="button" class="svc-toggle" onclick="toggleService(this)"><span class="svc-toggle-show" data-i18n="svc.expand">+ Show more</span><span class="svc-toggle-hide" data-i18n="svc.collapse">− Show less</span></button>
       </div>
 
       <div class="service">
         <div class="service-head">
-          <span class="service-icon">⛓</span>
           <h3 data-i18n="service.2.title">Web3 and blockchain</h3>
         </div>
         <ul data-i18n="service.2.items">
@@ -2396,11 +2422,11 @@
           <li>Token launches and tokenomics design</li>
           <li>Crypto payment integrations and on-chain wallets</li>
         </ul>
+        <button type="button" class="svc-toggle" onclick="toggleService(this)"><span class="svc-toggle-show" data-i18n="svc.expand">+ Show more</span><span class="svc-toggle-hide" data-i18n="svc.collapse">− Show less</span></button>
       </div>
 
       <div class="service">
         <div class="service-head">
-          <span class="service-icon">💬</span>
           <h3 data-i18n="service.3.title">Telegram bots and Mini Apps</h3>
         </div>
         <ul data-i18n="service.3.items">
@@ -2411,11 +2437,11 @@
           <li>Admin panel for non-technical staff — managers manage without touching code</li>
           <li>Payments via YuKassa and crypto, referrals with anti-fraud</li>
         </ul>
+        <button type="button" class="svc-toggle" onclick="toggleService(this)"><span class="svc-toggle-show" data-i18n="svc.expand">+ Show more</span><span class="svc-toggle-hide" data-i18n="svc.collapse">− Show less</span></button>
       </div>
 
       <div class="service">
         <div class="service-head">
-          <span class="service-icon">🌐</span>
           <h3 data-i18n="service.4.title">Websites and web apps</h3>
         </div>
         <ul data-i18n="service.4.items">
@@ -2426,11 +2452,11 @@
           <li>Admin panels and back-office tools for daily team operations</li>
           <li>Wallet auth flows and Telegram login for Web3 / TG projects</li>
         </ul>
+        <button type="button" class="svc-toggle" onclick="toggleService(this)"><span class="svc-toggle-show" data-i18n="svc.expand">+ Show more</span><span class="svc-toggle-hide" data-i18n="svc.collapse">− Show less</span></button>
       </div>
 
       <div class="service">
         <div class="service-head">
-          <span class="service-icon">⚙️</span>
           <h3 data-i18n="service.5.title">Automation and integrations</h3>
         </div>
         <ul data-i18n="service.5.items">
@@ -2441,11 +2467,11 @@
           <li>CI/CD pipelines — auto-deploy on git push, no scrambling on release day</li>
           <li>Scheduled tasks — reports, mailings, syncs run automatically</li>
         </ul>
+        <button type="button" class="svc-toggle" onclick="toggleService(this)"><span class="svc-toggle-show" data-i18n="svc.expand">+ Show more</span><span class="svc-toggle-hide" data-i18n="svc.collapse">− Show less</span></button>
       </div>
 
       <div class="service">
         <div class="service-head">
-          <span class="service-icon">📱</span>
           <h3 data-i18n="service.6.title">Mobile (Capacitor)</h3>
         </div>
         <ul data-i18n="service.6.items">
@@ -2456,6 +2482,7 @@
           <li>Native bridges for hardware (camera, GPS, biometrics) — wherever the web isn&#39;t enough</li>
           <li>Migrating an existing web app to mobile in 2–3 weeks instead of writing native</li>
         </ul>
+        <button type="button" class="svc-toggle" onclick="toggleService(this)"><span class="svc-toggle-show" data-i18n="svc.expand">+ Show more</span><span class="svc-toggle-hide" data-i18n="svc.collapse">− Show less</span></button>
       </div>
     </div>
   </div>
@@ -4050,6 +4077,8 @@
       "service.5.items": "<li>Connect services through APIs — CRM, payments, accounting, analytics in one circuit</li><li>Data parsing — collect prices, reviews, contacts from public sources legally</li><li>Database engineering on PostgreSQL / Supabase — clean structure under load</li><li>Telegram notifications and alerts — about a sale, an outage, a key event</li><li>CI/CD pipelines — auto-deploy on git push, no scrambling on release day</li><li>Scheduled tasks — reports, mailings, syncs run automatically</li>",
       "service.6.title": "Mobile (Capacitor)",
       "service.6.items": "<li>Native iOS and Android from one codebase — cheaper and faster than two separate apps</li><li>App Store and Play Store submission — we know the moderation traps</li><li>Push notifications and deep links — bringing users back to the app</li><li>Payments in regulated markets — Apple/Google Pay and local providers</li><li>Native bridges for hardware (camera, GPS, biometrics) — wherever the web isn&#39;t enough</li><li>Migrating an existing web app to mobile in 2–3 weeks instead of writing native</li>",
+      "svc.expand": "+ Show more",
+      "svc.collapse": "− Show less",
 
       "pricing.eyebrow": "// Pricing",
       "pricing.title": "Popular services &amp; starting prices",
@@ -4382,6 +4411,8 @@
       "service.5.items": "<li>Связка сервисов через API — CRM, платежи, бухгалтерия, аналитика в одном контуре</li><li>Парсинг данных — собираем цены, отзывы, контакты из открытых источников легально</li><li>Базы данных на PostgreSQL / Supabase — чистая структура под нагрузку</li><li>Уведомления и алёрты в Telegram — о продаже, аварии, ключевом событии</li><li>CI/CD пайплайны — автоматический деплой при git push, без спешки в день релиза</li><li>Cron-задачи — отчёты, рассылки, синхронизации запускаются по расписанию автоматически</li>",
       "service.6.title": "Мобильные приложения (Capacitor)",
       "service.6.items": "<li>Нативный iOS и Android из одной кодовой базы — дешевле и быстрее, чем два отдельных приложения</li><li>Публикация в App Store и Play Store — знаем подводные камни модерации</li><li>Push-уведомления и deep links — возвращаем пользователей в приложение</li><li>Платежи в регулируемых рынках — Apple/Google Pay и локальные провайдеры</li><li>Нативные мосты к камере, GPS, биометрии — там, где веб не справляется</li><li>Перевод существующего веб-приложения в мобильное за 2–3 недели вместо переписывания на native</li>",
+      "svc.expand": "+ Развернуть",
+      "svc.collapse": "− Свернуть",
 
       "pricing.eyebrow": "// Цены",
       "pricing.title": "Популярные услуги и цены «от»",
@@ -4847,6 +4878,11 @@
   }
 
   /* ========== case detail modal ========== */
+  function toggleService(btn) {
+    const svc = btn.closest('.service');
+    if (svc) svc.classList.toggle('expanded');
+  }
+
   function openCase(card) {
     const details = card.querySelector('.case-details');
     if (!details) return;
