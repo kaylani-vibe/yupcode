@@ -428,6 +428,8 @@
     .stats { grid-template-columns: repeat(2, 1fr); }
     .stat:nth-child(2) { border-right: none; }
     .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--border); }
+    /* Compact provider list in stat #3 — long list breaks balance otherwise */
+    .stat:nth-child(3) .stat-label { font-size: 11px; line-height: 1.35; }
   }
 
   /* Section */
@@ -2006,6 +2008,7 @@
         <a href="#cases" data-i18n="nav.cases">Cases</a>
         <a href="#stack" data-i18n="nav.stack">Stack</a>
         <a href="#team" data-i18n="nav.team">Team</a>
+        <a href="#process" data-i18n="nav.process">Process</a>
         <button class="lang-switch" type="button" onclick="toggleLang()" aria-label="Switch language">RU</button>
         <a href="#contact" class="btn btn-primary" onclick="openContact(event)" data-i18n="nav.cta">
           Book a call →
@@ -2233,6 +2236,17 @@
 
       <div class="price-row">
         <div class="price-row-info">
+          <h3 data-i18n="price.6.title">Web3 &amp; blockchain</h3>
+          <p data-i18n="price.6.desc">Smart contracts, NFT infrastructure, multichain integrations, token launches</p>
+        </div>
+        <div class="price-tag">
+          <span class="price-from" data-i18n="price.from">from</span>
+          <span class="price-amount" data-i18n="price.6.amount">$1,800</span>
+        </div>
+      </div>
+
+      <div class="price-row">
+        <div class="price-row-info">
           <h3 data-i18n="price.2.title">Web development</h3>
           <p data-i18n="price.2.desc">Landing pages, websites, web apps, SaaS dashboards, admin panels</p>
         </div>
@@ -2266,12 +2280,12 @@
 
       <div class="price-row">
         <div class="price-row-info">
-          <h3 data-i18n="price.5.title">Big data processing</h3>
-          <p data-i18n="price.5.desc">Parsing, scraping, data pipelines, databases, analytics</p>
+          <h3 data-i18n="price.7.title">Mobile (Capacitor)</h3>
+          <p data-i18n="price.7.desc">Native iOS &amp; Android via Capacitor, single codebase, store submissions</p>
         </div>
         <div class="price-tag">
           <span class="price-from" data-i18n="price.from">from</span>
-          <span class="price-amount" data-i18n="price.5.amount">$1,200</span>
+          <span class="price-amount" data-i18n="price.7.amount">$900</span>
         </div>
       </div>
     </div>
@@ -2618,7 +2632,7 @@
             <img src="cases/nft-sender_title.jpeg" alt="" onerror="this.remove()">
           </div>
 
-          <p class="cs-lead" data-i18n="case.6.overview">NFT-Sender is the multichain NFT infrastructure powering bulk distribution, marketplace, on-chain auctions, an explorer and a reputation game across NEAR, TON, EVM and Solana. Currently #1 on NEAR by transaction volume — 1M+ on-chain transactions, 40 collections live, 10K+ wallets in the reputation system. Built from scratch — no analogs on the market.</p>
+          <p class="cs-lead" data-i18n="case.6.overview">NFT-Sender is the multichain NFT infrastructure powering bulk distribution, marketplace, on-chain auctions, an explorer and a reputation game across NEAR, TON, EVM and Solana. Currently #1 on NEAR by transaction volume — 1M+ tx on a single collection, 40 collections live, 10K+ wallets in the reputation system. Built from scratch — no analogs on the market.</p>
 
           <div class="cs-section">
             <div class="cs-label" data-i18n="cs.challenge">The challenge</div>
@@ -2648,7 +2662,7 @@
             <div class="cs-shot case-image" data-shots="cases/nft-sender/nft-sender5.jpeg"><img src="cases/nft-sender/nft-sender5.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
           </div>
 
-          <div class="cs-quote" data-i18n="case.6.quote">#1 on NEAR by transaction volume. 1M+ on-chain transactions. Up to 120 NFTs per transaction. No analogs on the market.</div>
+          <div class="cs-quote" data-i18n="case.6.quote">#1 on NEAR by transaction volume. 1M+ tx on a single collection. Up to 120 NFTs per transaction. No analogs on the market.</div>
 
           <div class="cs-section">
             <div class="cs-label" data-i18n="cs.underhood">Under the hood</div>
@@ -2665,7 +2679,7 @@
             <div class="cs-label" data-i18n="cs.results">Results</div>
             <div class="case-metrics" data-i18n="case.6.metrics">
               <span class="metric metric-accent">#1 on NEAR by tx volume</span>
-              <span class="metric">1M+ on-chain transactions</span>
+              <span class="metric">1M+ tx on a single collection</span>
               <span class="metric">40 collections live</span>
               <span class="metric">10K+ wallets in reputation</span>
               <span class="metric">NEAR · TON · EVM · Solana</span>
@@ -2694,12 +2708,46 @@
             <h3 data-i18n="case.4.title">AI Content Factory</h3>
             <span class="case-tag" data-i18n="case.4.tag">AI · Pipeline</span>
           </div>
-          <p class="case-desc" data-i18n="case.4.desc">Production AI pipeline generating videos and presentations from a single prompt: scripts, voice, visuals, motion, music, effects — fully automated. Fallback chains at every level across 10+ AI providers, hybrid free/paid for cost-efficiency.</p>
-          <div class="case-metrics" data-i18n="case.4.metrics">
-            <span class="metric metric-accent">10+ AI APIs orchestrated</span>
-            <span class="metric">Fallback at every stage</span>
-            <span class="metric">CI-based generation</span>
+
+          <div class="cs-meta-grid" data-i18n="case.4.metainfo">
+            <div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">AI engineering</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Output</div><div class="cs-fact-value">Video + slides from one prompt</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Providers</div><div class="cs-fact-value">10+ with fallback chain</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Runtime</div><div class="cs-fact-value">GitHub Actions CI</div></div>
           </div>
+
+          <p class="cs-lead" data-i18n="case.4.overview">A production AI pipeline that turns a single prompt into finished video or presentation — scripts, voice, visuals, motion, music, effects, fully automated end-to-end. Fallback chains at every stage across 10+ AI providers, with a hybrid free/paid layer keeping cost predictable.</p>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.challenge">The challenge</div>
+            <p data-i18n="case.4.challenge">Anyone can chain two AI APIs and ship a demo. Production content generation breaks the moment any single provider rate-limits, raises prices or quietly degrades quality. The pipeline needed to survive the failure of any single provider, balance free vs paid resources for cost-efficiency, and run unattended on CI — not in a tab.</p>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.solution">What we built</div>
+            <p data-i18n="case.4.solution">A multi-stage pipeline (script → voice → visuals → motion → music → effects → assembly) where every stage has a graceful fallback to another provider. TypeScript + Node for orchestration, Python for AI calls and asset processing, ffmpeg + Pillow for media stitching. Runs on GitHub Actions as the execution engine — every generation is a CI job, fully reproducible. 10+ AI providers behind one router.</p>
+          </div>
+
+          <div class="cs-features" data-i18n="case.4.features"><div class="cs-feature"><h4>Fallback at every stage</h4><p>Provider routing with automatic failover at script, voice, visuals, motion, music and effects layers — no single API can take down a generation.</p></div><div class="cs-feature"><h4>CI-based execution</h4><p>Runs as GitHub Actions jobs — unattended, reproducible, observable. Every generation is a CI run with logs, artifacts and retry semantics out of the box.</p></div><div class="cs-feature"><h4>Hybrid free / paid routing</h4><p>Free-tier providers wherever quality survives, paid providers where it doesn&#39;t. Cost stays predictable instead of bursting on every job.</p></div><div class="cs-feature"><h4>Single prompt → finished media</h4><p>Script + voice + visuals + motion + music + effects, chained automatically into a finished video or presentation. Prompt in, file out.</p></div></div>
+
+          <p class="cs-quote" data-i18n="case.4.quote">10+ AI providers, fallback at every stage, runs on CI — script → voice → visuals → motion → music → effects → assembly, all from a single prompt.</p>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.underhood">Under the hood</div>
+            <ul class="cs-highlights" data-i18n="case.4.highlights"><li>10+ AI providers orchestrated through one router with per-stage automatic failover</li><li>Pipeline stages: script → voice → visuals → motion → music → effects → final assembly</li><li>Hybrid free / paid routing balances quality vs cost predictably</li><li>GitHub Actions as the execution engine — every run is a CI job, fully reproducible</li><li>ffmpeg + Pillow stitch generated assets into finished video and presentation outputs</li><li>TypeScript + Node for orchestration, Python for AI calls and asset processing</li></ul>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.results">Results</div>
+            <div class="case-metrics" data-i18n="case.4.metrics">
+              <span class="metric metric-accent">10+ AI APIs orchestrated</span>
+              <span class="metric">Fallback at every stage</span>
+              <span class="metric">CI-based generation</span>
+              <span class="metric">Single-prompt → finished video</span>
+              <span class="metric">Hybrid free + paid routing</span>
+            </div>
+          </div>
+
           <div class="case-stack">
             <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> TypeScript · Node.js · Python · GitHub Actions · ffmpeg · Pillow · Gemini · DeepSeek · Claude · FLUX · LTX-Video · ElevenLabs
           </div>
@@ -2940,12 +2988,46 @@
             <h3 data-i18n="case.10.title">Yupland Lottery — Live Stream Raffle</h3>
             <span class="case-tag" data-i18n="case.10.tag">Automation</span>
           </div>
-          <p class="case-desc" data-i18n="case.10.desc">Automated service for live-stream raffles. Replaced manual stream management with one-click automation: fair randomizer, admin dashboard, Telegram bot integration, real-time audience view, custom result formatting.</p>
-          <div class="case-metrics" data-i18n="case.10.metrics">
-            <span class="metric metric-accent">One-click automation</span>
-            <span class="metric">Real-time event sync</span>
-            <span class="metric">Telegram delivery</span>
+
+          <div class="cs-meta-grid" data-i18n="case.10.metainfo">
+            <div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">Automation engineering</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Use case</div><div class="cs-fact-value">Live-stream raffles</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Surface</div><div class="cs-fact-value">Telegram + admin dashboard</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Replaces</div><div class="cs-fact-value">Manual stream-side ops</div></div>
           </div>
+
+          <p class="cs-lead" data-i18n="case.10.overview">An automated service for live-stream raffles — replaces the manual stream operator with a one-click pipeline. Streamer picks parameters, the system runs a fair randomizer, delivers the result through Telegram, syncs to a real-time admin view and renders output in the streamer&#39;s custom format.</p>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.challenge">The challenge</div>
+            <p data-i18n="case.10.challenge">Running a live raffle on a stream is fragile manual work — the operator collects entries off-camera, randomizes them in a spreadsheet, then tries to present the result believably. It eats time during the stream, breaks the moment anyone questions the randomness, and doesn&#39;t scale across multiple streamers running the same flow.</p>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.solution">What we built</div>
+            <p data-i18n="case.10.solution">A one-click automation: a TypeScript + Node service collects entries through a Telegram bot, runs a fair randomizer with verifiable output, syncs the result in real time to an admin dashboard the streamer reads from, posts the winner back to Telegram and renders results in a custom on-camera format. The streamer goes from &#34;okay let me pull up the spreadsheet&#34; to a single button press.</p>
+          </div>
+
+          <div class="cs-features" data-i18n="case.10.features"><div class="cs-feature"><h4>Fair randomizer</h4><p>Verifiable output that takes the trust question off the table during a live stream — no &#34;wait, who picked the winner?&#34; debates in chat.</p></div><div class="cs-feature"><h4>Real-time event sync</h4><p>Admin dashboard updates as entries arrive; the streamer reads from one view instead of switching tabs mid-stream.</p></div><div class="cs-feature"><h4>Telegram-native delivery</h4><p>Entries in, winner out, all through a Telegram bot. No external accounts to manage, no extra channels to publish to.</p></div><div class="cs-feature"><h4>Custom result formatting</h4><p>Output renders in the streamer&#39;s own style — ready to read on-camera without copy-paste gymnastics.</p></div></div>
+
+          <p class="cs-quote" data-i18n="case.10.quote">One click on stream, one fair winner — replaces what used to be a manual back-stage scramble.</p>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.underhood">Under the hood</div>
+            <ul class="cs-highlights" data-i18n="case.10.highlights"><li>Fair randomizer with verifiable output</li><li>Telegram Bot API integration for entries and result delivery</li><li>Admin dashboard with real-time event sync</li><li>Custom result formatting per streamer</li><li>One-click automation replaces manual stream-side raffle ops</li></ul>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.results">Results</div>
+            <div class="case-metrics" data-i18n="case.10.metrics">
+              <span class="metric metric-accent">One-click automation</span>
+              <span class="metric">Real-time event sync</span>
+              <span class="metric">Telegram delivery</span>
+              <span class="metric">Fair randomizer</span>
+              <span class="metric">Custom result formatting</span>
+            </div>
+          </div>
+
           <div class="case-stack">
             <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> TypeScript · Node.js · Telegram Bot API · real-time event sync
           </div>
@@ -3045,17 +3127,54 @@
             <h3 data-i18n="case.12.title">NFT Collection Launch Service</h3>
             <span class="case-tag" data-i18n="case.12.tag">Web3 · Pipeline</span>
           </div>
-          <div class="case-image"
-               data-shots="cases/nft-launch/nft-launch.jpeg">
+
+          <div class="cs-hero case-image" data-shots="cases/nft-launch_title.jpeg">
             <div class="case-image-placeholder">cases/nft-launch_title.jpeg</div>
             <img src="cases/nft-launch_title.jpeg" alt="" onerror="this.remove()">
           </div>
-          <p class="case-desc" data-i18n="case.12.desc">Full pipeline for launching custom NFT collections on NEAR and TON — from art assembly to on-chain deploy. Trait generator from art components, smart contract templates, custom token tooling, mint flow integrated with launch landings.</p>
-          <div class="case-metrics" data-i18n="case.12.metrics">
-            <span class="metric metric-accent">Used in multiple launches</span>
-            <span class="metric">NEAR + TON</span>
-            <span class="metric">Art → contract → mint</span>
+
+          <div class="cs-meta-grid" data-i18n="case.12.metainfo">
+            <div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">Web3 infrastructure</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Type</div><div class="cs-fact-value">Reusable studio pipeline</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Chains</div><div class="cs-fact-value">NEAR + TON</div></div>
+            <div class="cs-fact"><div class="cs-fact-label">Status</div><div class="cs-fact-value">Used in multiple launches</div></div>
           </div>
+
+          <p class="cs-lead" data-i18n="case.12.overview">A full pipeline for launching custom NFT collections on NEAR and TON — from art assembly to on-chain deploy. Trait generator from art components, smart contract templates, custom token tooling and a mint flow integrated with launch landings. Reused across multiple collection launches by the studio.</p>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.challenge">The challenge</div>
+            <p data-i18n="case.12.challenge">Every NFT collection launch hits the same pipeline: assemble traits into final images, deploy a smart contract, build a mint UI, wire it into a landing. Doing it from scratch each time burns weeks per launch. The studio needed a reusable pipeline that takes art components in and delivers a live mint on the other end.</p>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.solution">What we built</div>
+            <p data-i18n="case.12.solution">An end-to-end pipeline: a trait generator stitches art components into final NFT images by rarity rules, a smart contract template handles NEAR or TON deployment, custom token tooling manages token-side configuration, and the mint flow is integrated with launch landings as a drop-in component. Art in → button → live mint out.</p>
+          </div>
+
+          <div class="cs-shots-row">
+            <div class="cs-shot case-image" data-shots="cases/nft-launch/nft-launch.jpeg"><img src="cases/nft-launch/nft-launch.jpeg" alt="" onerror="this.closest('.cs-shot').remove()"></div>
+          </div>
+
+          <div class="cs-features" data-i18n="case.12.features"><div class="cs-feature"><h4>Trait generator</h4><p>Combines art components into final NFT images by rarity rules. Same input layer feeds both chains.</p></div><div class="cs-feature"><h4>Multi-chain smart contracts</h4><p>NEAR and TON contract templates plugged into the same pipeline — one configuration, two deploys.</p></div><div class="cs-feature"><h4>Custom token tooling</h4><p>Token-side configuration managed alongside contract deploy — collection metadata, supply, royalties.</p></div><div class="cs-feature"><h4>Mint flow + landing</h4><p>Drop-in mint component for the launch landing — wallet connect, mint button, supply counter, all wired in.</p></div></div>
+
+          <p class="cs-quote" data-i18n="case.12.quote">Art → contract → mint, multi-chain, reused across multiple launches by the studio.</p>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.underhood">Under the hood</div>
+            <ul class="cs-highlights" data-i18n="case.12.highlights"><li>Trait generator stitches art components into final NFT images per rarity rules</li><li>Smart contract templates for NEAR and TON, plugged into the same pipeline</li><li>Custom token tooling for token-side configuration (metadata, supply, royalties)</li><li>Mint flow integrated as a drop-in component for launch landings</li><li>Pipeline reused across multiple collection launches</li></ul>
+          </div>
+
+          <div class="cs-section">
+            <div class="cs-label" data-i18n="cs.results">Results</div>
+            <div class="case-metrics" data-i18n="case.12.metrics">
+              <span class="metric metric-accent">Used in multiple launches</span>
+              <span class="metric">NEAR + TON</span>
+              <span class="metric">Art → contract → mint</span>
+              <span class="metric">Drop-in mint component</span>
+            </div>
+          </div>
+
           <div class="case-stack">
             <span class="case-stack-label" data-i18n="case.stack.label">Stack:</span> TypeScript · NEAR/TON smart contracts · image processing · Node.js
           </div>
@@ -3491,6 +3610,7 @@
       "nav.cases": "Cases",
       "nav.stack": "Stack",
       "nav.team": "Team",
+      "nav.process": "Process",
       "nav.cta": "Book a call →",
 
       "hero.badge": "Available for new projects · We build our own products",
@@ -3549,9 +3669,12 @@
       "price.4.title": "Automation &amp; integrations",
       "price.4.desc": "Connecting services via API, CRM, notifications, CI/CD, cron jobs",
       "price.4.amount": "$700",
-      "price.5.title": "Big data processing",
-      "price.5.desc": "Parsing, scraping, data pipelines, databases, analytics",
-      "price.5.amount": "$1,200",
+      "price.6.title": "Web3 &amp; blockchain",
+      "price.6.desc": "Smart contracts, NFT infrastructure, multichain integrations, token launches",
+      "price.6.amount": "$1,800",
+      "price.7.title": "Mobile (Capacitor)",
+      "price.7.desc": "Native iOS &amp; Android via Capacitor, single codebase, store submissions",
+      "price.7.amount": "$900",
 
       "cases.eyebrow": "// Selected work",
       "cases.title": "13 production products,<br/>shipped end-to-end",
@@ -3614,8 +3737,14 @@
 
       "case.4.title": "AI Content Factory",
       "case.4.tag": "AI · Pipeline",
-      "case.4.desc": "Production AI pipeline generating videos and presentations from a single prompt: scripts, voice, visuals, motion, music, effects — fully automated. Fallback chains at every level across 10+ AI providers, hybrid free/paid for cost-efficiency.",
-      "case.4.metrics": '<span class="metric metric-accent">10+ AI APIs orchestrated</span><span class="metric">Fallback at every stage</span><span class="metric">CI-based generation</span>',
+      "case.4.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">AI engineering</div></div><div class="cs-fact"><div class="cs-fact-label">Output</div><div class="cs-fact-value">Video + slides from one prompt</div></div><div class="cs-fact"><div class="cs-fact-label">Providers</div><div class="cs-fact-value">10+ with fallback chain</div></div><div class="cs-fact"><div class="cs-fact-label">Runtime</div><div class="cs-fact-value">GitHub Actions CI</div></div>',
+      "case.4.overview": "A production AI pipeline that turns a single prompt into finished video or presentation — scripts, voice, visuals, motion, music, effects, fully automated end-to-end. Fallback chains at every stage across 10+ AI providers, with a hybrid free/paid layer keeping cost predictable.",
+      "case.4.challenge": "Anyone can chain two AI APIs and ship a demo. Production content generation breaks the moment any single provider rate-limits, raises prices or quietly degrades quality. The pipeline needed to survive the failure of any single provider, balance free vs paid resources for cost-efficiency, and run unattended on CI — not in a tab.",
+      "case.4.solution": "A multi-stage pipeline (script → voice → visuals → motion → music → effects → assembly) where every stage has a graceful fallback to another provider. TypeScript + Node for orchestration, Python for AI calls and asset processing, ffmpeg + Pillow for media stitching. Runs on GitHub Actions as the execution engine — every generation is a CI job, fully reproducible. 10+ AI providers behind one router.",
+      "case.4.features": '<div class="cs-feature"><h4>Fallback at every stage</h4><p>Provider routing with automatic failover at script, voice, visuals, motion, music and effects layers — no single API can take down a generation.</p></div><div class="cs-feature"><h4>CI-based execution</h4><p>Runs as GitHub Actions jobs — unattended, reproducible, observable. Every generation is a CI run with logs, artifacts and retry semantics out of the box.</p></div><div class="cs-feature"><h4>Hybrid free / paid routing</h4><p>Free-tier providers wherever quality survives, paid providers where it doesn&#39;t. Cost stays predictable instead of bursting on every job.</p></div><div class="cs-feature"><h4>Single prompt → finished media</h4><p>Script + voice + visuals + motion + music + effects, chained automatically into a finished video or presentation. Prompt in, file out.</p></div>',
+      "case.4.quote": "10+ AI providers, fallback at every stage, runs on CI — script → voice → visuals → motion → music → effects → assembly, all from a single prompt.",
+      "case.4.highlights": '<li>10+ AI providers orchestrated through one router with per-stage automatic failover</li><li>Pipeline stages: script → voice → visuals → motion → music → effects → final assembly</li><li>Hybrid free / paid routing balances quality vs cost predictably</li><li>GitHub Actions as the execution engine — every run is a CI job, fully reproducible</li><li>ffmpeg + Pillow stitch generated assets into finished video and presentation outputs</li><li>TypeScript + Node for orchestration, Python for AI calls and asset processing</li>',
+      "case.4.metrics": '<span class="metric metric-accent">10+ AI APIs orchestrated</span><span class="metric">Fallback at every stage</span><span class="metric">CI-based generation</span><span class="metric">Single-prompt → finished video</span><span class="metric">Hybrid free + paid routing</span>',
 
       "case.9.title": "YupJarvis — Ecosystem AI Agent Builder",
       "case.9.tag": "AI · No-code",
@@ -3637,13 +3766,13 @@
       "case.6.tag": "Web3 · Infra",
       "case.6.desc": "Multichain NFT infrastructure powering bulk distribution, marketplace, on-chain auctions, an explorer and a reputation game across NEAR, TON, EVM and Solana. #1 on NEAR by transaction volume.",
       "case.6.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">Web3 infrastructure</div></div><div class="cs-fact"><div class="cs-fact-label">Throughput</div><div class="cs-fact-value">Up to 120 NFTs / tx</div></div><div class="cs-fact"><div class="cs-fact-label">Chains</div><div class="cs-fact-value">NEAR · TON · EVM · Solana</div></div><div class="cs-fact"><div class="cs-fact-label">Status</div><div class="cs-fact-value">#1 on NEAR by tx</div></div>',
-      "case.6.overview": "NFT-Sender is the multichain NFT infrastructure powering bulk distribution, marketplace, on-chain auctions, an explorer and a reputation game across NEAR, TON, EVM and Solana. Currently #1 on NEAR by transaction volume — 1M+ on-chain transactions, 40 collections live, 10K+ wallets in the reputation system. Built from scratch — no analogs on the market.",
+      "case.6.overview": "NFT-Sender is the multichain NFT infrastructure powering bulk distribution, marketplace, on-chain auctions, an explorer and a reputation game across NEAR, TON, EVM and Solana. Currently #1 on NEAR by transaction volume — 1M+ tx on a single collection, 40 collections live, 10K+ wallets in the reputation system. Built from scratch — no analogs on the market.",
       "case.6.challenge": "Mass NFT distribution on NEAR runs straight into the chain's throughput limit — a few NFTs per transaction means days to airdrop a 10K-wallet campaign. Beyond raw distribution, an NFT ecosystem also needs the layers around it: a marketplace, auctions, a wallet-level explorer, and a reason for holders to actually engage with what they own. Ideally it should reach across chains, not just one.",
       "case.6.solution": "A custom infrastructure that pushes up to 120 NFTs per transaction on NEAR — a workaround for the chain's throughput limit, with no analogs on the market. Around the distribution sit a built-in marketplace and on-chain auctions, an explorer that parses 10K+ wallet addresses with full on-chain data extraction, and a reputation game where each NFT carries a positive or negative reputation coefficient and wallets compete for TOP+ and TOP- rankings. Alchemy Lab — the cross-chain crafting mechanic — plugs in here too. Cross-chain by design: NEAR, TON, EVM and Solana through one interface.",
       "case.6.features": '<div class="cs-feature"><h4>Mass distribution at scale</h4><p>Up to 120 NFTs per transaction — a workaround for NEAR&#39;s throughput limit. A 10K-wallet campaign goes out in a few transactions, not hundreds. Automated airdrops and reward systems for collection launches.</p></div><div class="cs-feature"><h4>Cross-chain by design</h4><p>NEAR, TON, EVM and Solana collections work through one interface. Single tooling for cross-chain airdrops, drops and partner collaborations.</p></div><div class="cs-feature"><h4>Marketplace, auctions &amp; explorer</h4><p>Sells, Orders and on-chain auctions inside the same service. A wallet explorer parses 10K+ addresses with full on-chain data extraction — holders, NFTs and tokens, all queryable.</p></div><div class="cs-feature"><h4>Reputation game built in</h4><p>Each NFT carries a positive or negative reputation coefficient. Wallets compete for TOP+ and TOP- rankings. Alchemy Lab — the cross-chain crafting mechanic — plugs in right here, turning distribution into a closed-loop economy.</p></div>',
-      "case.6.quote": "#1 on NEAR by transaction volume. 1M+ on-chain transactions. Up to 120 NFTs per transaction. No analogs on the market.",
+      "case.6.quote": "#1 on NEAR by transaction volume. 1M+ tx on a single collection. Up to 120 NFTs per transaction. No analogs on the market.",
       "case.6.highlights": '<li>Up to 120 NFTs per transaction — custom workaround for NEAR throughput limits</li><li>Cross-chain across NEAR + TON + EVM + Solana through one interface</li><li>Wallet explorer parses 10K+ addresses with full on-chain data extraction</li><li>Reputation engine — every NFT carries a positive or negative coefficient, TOP+ and TOP- leaderboards</li><li>Alchemy Lab cross-chain crafting plugs in directly — distribution becomes a closed-loop economy</li>',
-      "case.6.metrics": '<span class="metric metric-accent">#1 on NEAR by tx volume</span><span class="metric">1M+ on-chain transactions</span><span class="metric">40 collections live</span><span class="metric">10K+ wallets in reputation</span><span class="metric">NEAR · TON · EVM · Solana</span>',
+      "case.6.metrics": '<span class="metric metric-accent">#1 on NEAR by tx volume</span><span class="metric">1M+ tx on a single collection</span><span class="metric">40 collections live</span><span class="metric">10K+ wallets in reputation</span><span class="metric">NEAR · TON · EVM · Solana</span>',
 
       "case.7.title": "Alchemy Lab — Cross-Chain Crafting",
       "case.7.tag": "Web3 · Multi-chain",
@@ -3670,8 +3799,14 @@
 
       "case.10.title": "Yupland Lottery — Live Stream Raffle",
       "case.10.tag": "Automation",
-      "case.10.desc": "Automated service for live-stream raffles. Replaced manual stream management with one-click automation: fair randomizer, admin dashboard, Telegram bot integration, real-time audience view, custom result formatting.",
-      "case.10.metrics": '<span class="metric metric-accent">One-click automation</span><span class="metric">Real-time event sync</span><span class="metric">Telegram delivery</span>',
+      "case.10.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">Automation engineering</div></div><div class="cs-fact"><div class="cs-fact-label">Use case</div><div class="cs-fact-value">Live-stream raffles</div></div><div class="cs-fact"><div class="cs-fact-label">Surface</div><div class="cs-fact-value">Telegram + admin dashboard</div></div><div class="cs-fact"><div class="cs-fact-label">Replaces</div><div class="cs-fact-value">Manual stream-side ops</div></div>',
+      "case.10.overview": "An automated service for live-stream raffles — replaces the manual stream operator with a one-click pipeline. Streamer picks parameters, the system runs a fair randomizer, delivers the result through Telegram, syncs to a real-time admin view and renders output in the streamer&#39;s custom format.",
+      "case.10.challenge": "Running a live raffle on a stream is fragile manual work — the operator collects entries off-camera, randomizes them in a spreadsheet, then tries to present the result believably. It eats time during the stream, breaks the moment anyone questions the randomness, and doesn&#39;t scale across multiple streamers running the same flow.",
+      "case.10.solution": "A one-click automation: a TypeScript + Node service collects entries through a Telegram bot, runs a fair randomizer with verifiable output, syncs the result in real time to an admin dashboard the streamer reads from, posts the winner back to Telegram and renders results in a custom on-camera format. The streamer goes from &#34;okay let me pull up the spreadsheet&#34; to a single button press.",
+      "case.10.features": '<div class="cs-feature"><h4>Fair randomizer</h4><p>Verifiable output that takes the trust question off the table during a live stream — no &#34;wait, who picked the winner?&#34; debates in chat.</p></div><div class="cs-feature"><h4>Real-time event sync</h4><p>Admin dashboard updates as entries arrive; the streamer reads from one view instead of switching tabs mid-stream.</p></div><div class="cs-feature"><h4>Telegram-native delivery</h4><p>Entries in, winner out, all through a Telegram bot. No external accounts to manage, no extra channels to publish to.</p></div><div class="cs-feature"><h4>Custom result formatting</h4><p>Output renders in the streamer&#39;s own style — ready to read on-camera without copy-paste gymnastics.</p></div>',
+      "case.10.quote": "One click on stream, one fair winner — replaces what used to be a manual back-stage scramble.",
+      "case.10.highlights": '<li>Fair randomizer with verifiable output</li><li>Telegram Bot API integration for entries and result delivery</li><li>Admin dashboard with real-time event sync</li><li>Custom result formatting per streamer</li><li>One-click automation replaces manual stream-side raffle ops</li>',
+      "case.10.metrics": '<span class="metric metric-accent">One-click automation</span><span class="metric">Real-time event sync</span><span class="metric">Telegram delivery</span><span class="metric">Fair randomizer</span><span class="metric">Custom result formatting</span>',
 
       "case.11.title": "Duplo — On-chain Combo Game",
       "case.11.tag": "Web3 · Game",
@@ -3687,8 +3822,14 @@
 
       "case.12.title": "NFT Collection Launch Service",
       "case.12.tag": "Web3 · Pipeline",
-      "case.12.desc": "Full pipeline for launching custom NFT collections on NEAR and TON — from art assembly to on-chain deploy. Trait generator from art components, smart contract templates, custom token tooling, mint flow integrated with launch landings.",
-      "case.12.metrics": '<span class="metric metric-accent">Used in multiple launches</span><span class="metric">NEAR + TON</span><span class="metric">Art → contract → mint</span>',
+      "case.12.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Role</div><div class="cs-fact-value">Web3 infrastructure</div></div><div class="cs-fact"><div class="cs-fact-label">Type</div><div class="cs-fact-value">Reusable studio pipeline</div></div><div class="cs-fact"><div class="cs-fact-label">Chains</div><div class="cs-fact-value">NEAR + TON</div></div><div class="cs-fact"><div class="cs-fact-label">Status</div><div class="cs-fact-value">Used in multiple launches</div></div>',
+      "case.12.overview": "A full pipeline for launching custom NFT collections on NEAR and TON — from art assembly to on-chain deploy. Trait generator from art components, smart contract templates, custom token tooling and a mint flow integrated with launch landings. Reused across multiple collection launches by the studio.",
+      "case.12.challenge": "Every NFT collection launch hits the same pipeline: assemble traits into final images, deploy a smart contract, build a mint UI, wire it into a landing. Doing it from scratch each time burns weeks per launch. The studio needed a reusable pipeline that takes art components in and delivers a live mint on the other end.",
+      "case.12.solution": "An end-to-end pipeline: a trait generator stitches art components into final NFT images by rarity rules, a smart contract template handles NEAR or TON deployment, custom token tooling manages token-side configuration, and the mint flow is integrated with launch landings as a drop-in component. Art in → button → live mint out.",
+      "case.12.features": '<div class="cs-feature"><h4>Trait generator</h4><p>Combines art components into final NFT images by rarity rules. Same input layer feeds both chains.</p></div><div class="cs-feature"><h4>Multi-chain smart contracts</h4><p>NEAR and TON contract templates plugged into the same pipeline — one configuration, two deploys.</p></div><div class="cs-feature"><h4>Custom token tooling</h4><p>Token-side configuration managed alongside contract deploy — collection metadata, supply, royalties.</p></div><div class="cs-feature"><h4>Mint flow + landing</h4><p>Drop-in mint component for the launch landing — wallet connect, mint button, supply counter, all wired in.</p></div>',
+      "case.12.quote": "Art → contract → mint, multi-chain, reused across multiple launches by the studio.",
+      "case.12.highlights": '<li>Trait generator stitches art components into final NFT images per rarity rules</li><li>Smart contract templates for NEAR and TON, plugged into the same pipeline</li><li>Custom token tooling for token-side configuration (metadata, supply, royalties)</li><li>Mint flow integrated as a drop-in component for launch landings</li><li>Pipeline reused across multiple collection launches</li>',
+      "case.12.metrics": '<span class="metric metric-accent">Used in multiple launches</span><span class="metric">NEAR + TON</span><span class="metric">Art → contract → mint</span><span class="metric">Drop-in mint component</span>',
 
       "stack.eyebrow": "// Technology",
       "stack.title": "Full-stack across<br/>AI, Web3 and product",
@@ -3784,6 +3925,7 @@
       "nav.cases": "Кейсы",
       "nav.stack": "Стек",
       "nav.team": "Команда",
+      "nav.process": "Процесс",
       "nav.cta": "Связаться →",
 
       "hero.badge": "Открыты для новых проектов · Делаем свои продукты",
@@ -3842,9 +3984,12 @@
       "price.4.title": "Автоматизация и интеграции",
       "price.4.desc": "Связка сервисов через API, CRM, уведомления, CI/CD, cron-задачи",
       "price.4.amount": "50 000 ₽",
-      "price.5.title": "Обработка больших данных",
-      "price.5.desc": "Парсинг, скрейпинг, пайплайны данных, базы, аналитика",
-      "price.5.amount": "90 000 ₽",
+      "price.6.title": "Web3 и блокчейн",
+      "price.6.desc": "Смарт-контракты, NFT-инфраструктура, мультичейн-интеграции, запуски токенов",
+      "price.6.amount": "130 000 ₽",
+      "price.7.title": "Мобильная разработка (Capacitor)",
+      "price.7.desc": "Нативные iOS и Android через Capacitor, единая кодовая база, публикация в сторах",
+      "price.7.amount": "70 000 ₽",
 
       "cases.eyebrow": "// Избранные работы",
       "cases.title": "13 production-продуктов,<br/>запущенных под ключ",
@@ -3907,8 +4052,14 @@
 
       "case.4.title": "AI Content Factory",
       "case.4.tag": "AI · Pipeline",
-      "case.4.desc": "Production AI-пайплайн, генерирующий видео и презентации из одного промпта: сценарии, голос, визуал, движение, музыка, эффекты — полностью автоматически. Fallback на каждом уровне между 10+ AI-провайдерами, гибрид free/paid для оптимизации стоимости.",
-      "case.4.metrics": '<span class="metric metric-accent">10+ AI API в оркестрации</span><span class="metric">Fallback на каждом шаге</span><span class="metric">Генерация на CI</span>',
+      "case.4.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Роль</div><div class="cs-fact-value">AI-инженерия</div></div><div class="cs-fact"><div class="cs-fact-label">Выход</div><div class="cs-fact-value">Видео + презентация из одного промта</div></div><div class="cs-fact"><div class="cs-fact-label">Провайдеры</div><div class="cs-fact-value">10+ с fallback-цепочкой</div></div><div class="cs-fact"><div class="cs-fact-label">Runtime</div><div class="cs-fact-value">GitHub Actions CI</div></div>',
+      "case.4.overview": "Production AI-пайплайн, превращающий один промт в готовое видео или презентацию — сценарии, голос, визуал, движение, музыка, эффекты, полностью end-to-end автоматически. Fallback-цепочки на каждом шаге между 10+ AI-провайдерами, гибридный free/paid слой держит стоимость предсказуемой.",
+      "case.4.challenge": "Связать два AI API в demo может любой. Production-генерация контента ломается в тот же момент, как только один провайдер уходит в rate-limit, поднимает цены или тихо роняет качество. Пайплайн должен был выживать падение любого отдельного провайдера, балансировать free и paid ресурсы по стоимости и работать без присмотра на CI — а не во вкладке браузера.",
+      "case.4.solution": "Многошаговый пайплайн (сценарий → голос → визуал → движение → музыка → эффекты → сборка), где у каждого шага есть graceful fallback на другого провайдера. TypeScript + Node для оркестрации, Python для AI-вызовов и обработки ассетов, ffmpeg + Pillow для финальной сшивки медиа. Работает на GitHub Actions как execution engine — каждая генерация это CI-job, полностью воспроизводимая. 10+ AI-провайдеров за одним маршрутизатором.",
+      "case.4.features": '<div class="cs-feature"><h4>Fallback на каждом шаге</h4><p>Маршрутизация провайдеров с автоматическим failover на каждом слое (сценарий / голос / визуал / движение / музыка / эффекты) — ни один API не может уронить генерацию.</p></div><div class="cs-feature"><h4>Запуск на CI</h4><p>Работает как GitHub Actions job — без присмотра, воспроизводимо, наблюдаемо. Каждая генерация это CI-run с логами, артефактами и retry-семантикой из коробки.</p></div><div class="cs-feature"><h4>Гибрид free / paid</h4><p>Free-провайдеры там где качество выживает, paid там где нет. Стоимость остаётся предсказуемой вместо взрыва на каждом запуске.</p></div><div class="cs-feature"><h4>Один промт → готовое медиа</h4><p>Сценарий + голос + визуал + движение + музыка + эффекты, всё автоматически в готовое видео или презентацию. Промт на вход, файл на выход.</p></div>',
+      "case.4.quote": "10+ AI-провайдеров, fallback на каждом шаге, работает на CI — сценарий → голос → визуал → движение → музыка → эффекты → сборка, всё из одного промта.",
+      "case.4.highlights": '<li>10+ AI-провайдеров за одним маршрутизатором с автоматическим failover на каждом шаге</li><li>Этапы пайплайна: сценарий → голос → визуал → движение → музыка → эффекты → финальная сборка</li><li>Гибрид free / paid балансирует качество и стоимость предсказуемо</li><li>GitHub Actions как execution engine — каждый запуск это CI-job, полностью воспроизводимый</li><li>ffmpeg + Pillow сшивают сгенерированные ассеты в финальное видео и презентацию</li><li>TypeScript + Node для оркестрации, Python для AI-вызовов и обработки ассетов</li>',
+      "case.4.metrics": '<span class="metric metric-accent">10+ AI API в оркестрации</span><span class="metric">Fallback на каждом шаге</span><span class="metric">Генерация на CI</span><span class="metric">Один промт → готовое видео</span><span class="metric">Гибрид free + paid</span>',
 
       "case.9.title": "YupJarvis — AI-конструктор агентов экосистемы",
       "case.9.tag": "AI · No-code",
@@ -3930,13 +4081,13 @@
       "case.6.tag": "Web3 · Инфра",
       "case.6.desc": "Мультичейн NFT-инфраструктура: массовая раздача, маркетплейс, on-chain аукционы, эксплорер и игра в репутацию на NEAR, TON, EVM и Solana. #1 на NEAR по объёму транзакций.",
       "case.6.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Роль</div><div class="cs-fact-value">Web3-инфраструктура</div></div><div class="cs-fact"><div class="cs-fact-label">Скорость</div><div class="cs-fact-value">До 120 NFT / транзакцию</div></div><div class="cs-fact"><div class="cs-fact-label">Сети</div><div class="cs-fact-value">NEAR · TON · EVM · Solana</div></div><div class="cs-fact"><div class="cs-fact-label">Статус</div><div class="cs-fact-value">#1 на NEAR по транзакциям</div></div>',
-      "case.6.overview": "NFT-Sender — мультичейн NFT-инфраструктура: массовая раздача, маркетплейс, on-chain аукционы, эксплорер и игра в репутацию на NEAR, TON, EVM и Solana. Сейчас #1 на NEAR по объёму транзакций — 1M+ on-chain транзакций, 40 коллекций живых, 10K+ кошельков в системе репутации. Построен с нуля — аналогов на рынке нет.",
+      "case.6.overview": "NFT-Sender — мультичейн NFT-инфраструктура: массовая раздача, маркетплейс, on-chain аукционы, эксплорер и игра в репутацию на NEAR, TON, EVM и Solana. Сейчас #1 на NEAR по объёму транзакций — 1M+ tx на одной коллекции, 40 коллекций живых, 10K+ кошельков в системе репутации. Построен с нуля — аналогов на рынке нет.",
       "case.6.challenge": "Массовая раздача NFT на NEAR упирается в лимит пропускной способности чейна — несколько NFT за транзакцию означает дни на airdrop кампании в 10K кошельков. Кроме самой раздачи NFT-экосистеме нужны слои вокруг: маркетплейс, аукционы, эксплорер на уровне кошельков и причина для холдеров действительно взаимодействовать с тем, что у них есть. И в идеале это должно работать на нескольких чейнах, не только на одном.",
       "case.6.solution": "Кастомная инфраструктура, которая отправляет до 120 NFT за транзакцию на NEAR — обход лимита пропускной способности чейна, аналогов на рынке нет. Вокруг раздачи — встроенный маркетплейс и on-chain аукционы, эксплорер, парсящий 10K+ адресов кошельков с полной выгрузкой on-chain данных, и игра в репутацию: у каждой NFT свой коэффициент (с плюсом и минусом), кошельки соревнуются за ТОП+ и ТОП- рейтинги. Сюда же подключена Alchemy Lab — кросс-чейн механика крафтинга. Мультичейн по архитектуре: NEAR, TON, EVM и Solana через один интерфейс.",
       "case.6.features": '<div class="cs-feature"><h4>Массовая раздача на масштабе</h4><p>До 120 NFT за транзакцию — обход лимита пропускной способности NEAR. Раздача кампании на 10K кошельков укладывается в несколько транзакций, не в сотни. Автоматизированные airdrop&#39;ы и системы наград под запуски коллекций.</p></div><div class="cs-feature"><h4>Мультичейн с нуля</h4><p>NEAR, TON, EVM и Solana коллекции работают через один интерфейс. Единый инструмент для кросс-чейн airdrop&#39;ов, drops и партнёрских коллабов.</p></div><div class="cs-feature"><h4>Маркетплейс, аукционы и эксплорер</h4><p>Продажи, Ордера, on-chain аукционы внутри одного сервиса. Эксплорер кошельков парсит 10K+ адресов с полной выгрузкой on-chain данных — холдеры, NFT и токены, всё доступно для запросов.</p></div><div class="cs-feature"><h4>Встроенная игра в репутацию</h4><p>Каждая NFT несёт коэффициент репутации (с плюсом или минусом). Кошельки соревнуются за ТОП+ и ТОП- рейтинги. Сюда же подключена Alchemy Lab — кросс-чейн механика крафтинга, превращающая раздачу в замкнутую экономику.</p></div>',
-      "case.6.quote": "#1 на NEAR по объёму транзакций. 1M+ on-chain транзакций. До 120 NFT за транзакцию. Аналогов на рынке нет.",
+      "case.6.quote": "#1 на NEAR по объёму транзакций. 1M+ tx на одной коллекции. До 120 NFT за транзакцию. Аналогов на рынке нет.",
       "case.6.highlights": '<li>До 120 NFT за транзакцию — кастомный обход лимита пропускной способности NEAR</li><li>Мультичейн на NEAR + TON + EVM + Solana через один интерфейс</li><li>Эксплорер кошельков парсит 10K+ адресов с полной выгрузкой on-chain данных</li><li>Движок репутации — каждая NFT с коэффициентом (плюсом или минусом), лидерборды ТОП+ и ТОП-</li><li>Alchemy Lab (кросс-чейн крафтинг) подключается прямо сюда — раздача становится замкнутой экономикой</li>',
-      "case.6.metrics": '<span class="metric metric-accent">#1 на NEAR по транзакциям</span><span class="metric">1M+ on-chain транзакций</span><span class="metric">40 коллекций живых</span><span class="metric">10K+ кошельков в репутации</span><span class="metric">NEAR · TON · EVM · Solana</span>',
+      "case.6.metrics": '<span class="metric metric-accent">#1 на NEAR по транзакциям</span><span class="metric">1M+ tx на одной коллекции</span><span class="metric">40 коллекций живых</span><span class="metric">10K+ кошельков в репутации</span><span class="metric">NEAR · TON · EVM · Solana</span>',
 
       "case.7.title": "Alchemy Lab — кросс-чейн крафтинг",
       "case.7.tag": "Web3 · Multi-chain",
@@ -3963,8 +4114,14 @@
 
       "case.10.title": "Yupland Lottery — розыгрыши на эфирах",
       "case.10.tag": "Автоматизация",
-      "case.10.desc": "Автоматический сервис для розыгрышей на прямых эфирах. Заменили ручное управление стримом на one-click автоматизацию: честный рандомайзер, админ-дашборд, интеграция с Telegram-ботом, real-time view для аудитории, кастомный формат вывода результатов.",
-      "case.10.metrics": '<span class="metric metric-accent">One-click автоматизация</span><span class="metric">Real-time синхронизация</span><span class="metric">Доставка в Telegram</span>',
+      "case.10.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Роль</div><div class="cs-fact-value">Инженерия автоматизации</div></div><div class="cs-fact"><div class="cs-fact-label">Сценарий</div><div class="cs-fact-value">Розыгрыши на стриме</div></div><div class="cs-fact"><div class="cs-fact-label">Поверхность</div><div class="cs-fact-value">Telegram + админ-дашборд</div></div><div class="cs-fact"><div class="cs-fact-label">Заменяет</div><div class="cs-fact-value">Ручную работу на стриме</div></div>',
+      "case.10.overview": "Автоматический сервис для розыгрышей на прямых эфирах — заменяет ручного оператора стрима one-click пайплайном. Стример задаёт параметры, система запускает честный рандомайзер, отправляет результат через Telegram, синхронизирует с real-time админ-вью и выдаёт результат в кастомном формате.",
+      "case.10.challenge": "Сделать розыгрыш живьём на стриме — хрупкая ручная работа: оператор собирает заявки вне камеры, рандомизирует их в таблице, потом пытается подать результат правдоподобно. Жрёт время на стриме, ломается в момент, когда зрители усомнятся в честности, и не масштабируется на нескольких стримеров с тем же флоу.",
+      "case.10.solution": "One-click автоматизация: сервис на TypeScript + Node собирает заявки через Telegram-бота, запускает честный рандомайзер с верифицируемым выводом, синхронизирует результат в реальном времени с админ-дашбордом, который читает стример, постит победителя обратно в Telegram и выдаёт результат в кастомном формате для камеры. Стример переходит от «сейчас открою табличку» к нажатию одной кнопки.",
+      "case.10.features": '<div class="cs-feature"><h4>Честный рандомайзер</h4><p>Верифицируемый вывод снимает вопрос доверия в чате — никаких «а кто выбрал победителя?».</p></div><div class="cs-feature"><h4>Real-time event sync</h4><p>Админ-дашборд обновляется по мере поступления заявок; стример читает с одного экрана вместо переключения вкладок.</p></div><div class="cs-feature"><h4>Telegram-native доставка</h4><p>Заявки внутрь, победитель наружу — всё через Telegram-бота. Никаких внешних аккаунтов и каналов для публикации.</p></div><div class="cs-feature"><h4>Кастомный формат вывода</h4><p>Результат отрисовывается в собственном стиле стримера — готов к чтению на камеру без copy-paste акробатики.</p></div>',
+      "case.10.quote": "Один клик на стриме, один честный победитель — заменяет ручную закулисную возню.",
+      "case.10.highlights": '<li>Честный рандомайзер с верифицируемым выводом</li><li>Интеграция Telegram Bot API для заявок и доставки результата</li><li>Админ-дашборд с real-time event sync</li><li>Кастомный формат вывода под каждого стримера</li><li>One-click автоматизация заменяет ручную работу на стриме</li>',
+      "case.10.metrics": '<span class="metric metric-accent">One-click автоматизация</span><span class="metric">Real-time синхронизация</span><span class="metric">Доставка в Telegram</span><span class="metric">Честный рандомайзер</span><span class="metric">Кастомный формат вывода</span>',
 
       "case.11.title": "Duplo — on-chain комбо-игра",
       "case.11.tag": "Web3 · Игра",
@@ -3980,8 +4137,14 @@
 
       "case.12.title": "Сервис запуска NFT-коллекций",
       "case.12.tag": "Web3 · Pipeline",
-      "case.12.desc": "Полный пайплайн запуска кастомных NFT-коллекций на NEAR и TON — от сборки арта до on-chain деплоя. Генератор трейтов из арт-компонентов, шаблоны смарт-контрактов, инструменты под токены, mint-флоу с интеграцией в лендинги запуска.",
-      "case.12.metrics": '<span class="metric metric-accent">Использован в нескольких запусках</span><span class="metric">NEAR + TON</span><span class="metric">Арт → контракт → mint</span>',
+      "case.12.metainfo": '<div class="cs-fact"><div class="cs-fact-label">Роль</div><div class="cs-fact-value">Web3-инфраструктура</div></div><div class="cs-fact"><div class="cs-fact-label">Тип</div><div class="cs-fact-value">Переиспользуемый пайплайн студии</div></div><div class="cs-fact"><div class="cs-fact-label">Чейны</div><div class="cs-fact-value">NEAR + TON</div></div><div class="cs-fact"><div class="cs-fact-label">Статус</div><div class="cs-fact-value">Использован в нескольких запусках</div></div>',
+      "case.12.overview": "Полный пайплайн запуска кастомных NFT-коллекций на NEAR и TON — от сборки арта до on-chain деплоя. Генератор трейтов из арт-компонентов, шаблоны смарт-контрактов, инструменты под токены и mint-флоу с интеграцией в лендинги запуска. Переиспользован на нескольких запусках студии.",
+      "case.12.challenge": "Любой запуск NFT-коллекции упирается в один и тот же пайплайн: собрать трейты в финальные изображения, задеплоить смарт-контракт, собрать mint-UI, прикрутить к лендингу. Делать это с нуля под каждый запуск — недели работы. Студии нужен был переиспользуемый пайплайн, который берёт арт-компоненты на вход и выдаёт живой mint на выходе.",
+      "case.12.solution": "End-to-end пайплайн: генератор трейтов сшивает арт-компоненты в финальные NFT-картинки по правилам редкости, шаблон смарт-контракта берёт на себя деплой в NEAR или TON, кастомный токен-tooling управляет настройкой со стороны токена, а mint-флоу интегрирован в лендинг запуска как drop-in компонент. Арт на входе → кнопка → живой mint на выходе.",
+      "case.12.features": '<div class="cs-feature"><h4>Генератор трейтов</h4><p>Собирает арт-компоненты в финальные NFT-изображения по правилам редкости. Один входной слой кормит оба чейна.</p></div><div class="cs-feature"><h4>Multi-chain смарт-контракты</h4><p>Шаблоны контрактов NEAR и TON встроены в один пайплайн — одна конфигурация, два деплоя.</p></div><div class="cs-feature"><h4>Кастомный токен-tooling</h4><p>Настройка со стороны токена идёт рядом с деплоем контракта — метаданные коллекции, supply, роялти.</p></div><div class="cs-feature"><h4>Mint-флоу + лендинг</h4><p>Drop-in mint-компонент для лендинга запуска — кошелёк, кнопка минта, счётчик supply, всё уже подключено.</p></div>',
+      "case.12.quote": "Арт → контракт → mint, мультичейн, переиспользован на нескольких запусках студии.",
+      "case.12.highlights": '<li>Генератор трейтов сшивает арт-компоненты в финальные NFT-изображения по правилам редкости</li><li>Шаблоны смарт-контрактов для NEAR и TON, встроены в один пайплайн</li><li>Кастомный токен-tooling для настройки со стороны токена (метаданные, supply, роялти)</li><li>Mint-флоу как drop-in компонент для лендинга запуска</li><li>Пайплайн переиспользован на нескольких запусках коллекций</li>',
+      "case.12.metrics": '<span class="metric metric-accent">Использован в нескольких запусках</span><span class="metric">NEAR + TON</span><span class="metric">Арт → контракт → mint</span><span class="metric">Drop-in mint-компонент</span>',
 
       "stack.eyebrow": "// Технологии",
       "stack.title": "Full-stack по<br/>AI, Web3 и продукту",
