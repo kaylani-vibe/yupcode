@@ -11,3 +11,5 @@
 # Local
 *.original.*
 *.bak
+_*.md
+_*.markdown
