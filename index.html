@@ -1821,17 +1821,13 @@
     cursor: pointer;
     padding: 20px 22px;
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 1fr auto;
     gap: 14px;
     align-items: center;
     user-select: none;
   }
   .faq-item summary::-webkit-details-marker { display: none; }
   .faq-item summary::marker { display: none; }
-  .faq-q-icon {
-    font-size: 20px;
-    line-height: 1;
-  }
   .faq-q-text {
     font-size: 16px;
     font-weight: 500;
@@ -3749,7 +3745,6 @@
     <div class="faq-list reveal-stagger">
       <details class="faq-item">
         <summary>
-          <span class="faq-q-icon">🏗</span>
           <span class="faq-q-text" data-i18n="faq.2.q">Will it survive production load? Can vibe-coders handle that?</span>
           <span class="faq-toggle" aria-hidden="true">+</span>
         </summary>
@@ -3766,7 +3761,6 @@
 
       <details class="faq-item">
         <summary>
-          <span class="faq-q-icon">🧪</span>
           <span class="faq-q-text" data-i18n="faq.3.q">Can we start with a small pilot before committing?</span>
           <span class="faq-toggle" aria-hidden="true">+</span>
         </summary>
@@ -3783,7 +3777,6 @@
 
       <details class="faq-item">
         <summary>
-          <span class="faq-q-icon">📜</span>
           <span class="faq-q-text" data-i18n="faq.4.q">Who owns the code after the project?</span>
           <span class="faq-toggle" aria-hidden="true">+</span>
         </summary>
@@ -3800,7 +3793,6 @@
 
       <details class="faq-item">
         <summary>
-          <span class="faq-q-icon">🛠</span>
           <span class="faq-q-text" data-i18n="faq.5.q">What if something breaks after handover?</span>
           <span class="faq-toggle" aria-hidden="true">+</span>
         </summary>
@@ -3817,7 +3809,6 @@
 
       <details class="faq-item">
         <summary>
-          <span class="faq-q-icon">🤖</span>
           <span class="faq-q-text" data-i18n="faq.6.q">What if the AI makes a mistake in production?</span>
           <span class="faq-toggle" aria-hidden="true">+</span>
         </summary>
@@ -3834,7 +3825,6 @@
 
       <details class="faq-item">
         <summary>
-          <span class="faq-q-icon">🔒</span>
           <span class="faq-q-text" data-i18n="faq.1.q">How do you keep our data safe?</span>
           <span class="faq-toggle" aria-hidden="true">+</span>
         </summary>
